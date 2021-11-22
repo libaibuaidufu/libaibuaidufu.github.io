@@ -163,78 +163,6 @@
       </tags>
   </entry>
   <entry>
-    <title>github、gitlab、ssh密钥登录</title>
-    <url>/post/github%E3%80%81gitlab%E3%80%81ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95.html</url>
-    <content><![CDATA[<p>一直对ssh密钥登录半知半解，以前都是跟着教程自己走一遍，每次都去查看，这次就认真记录一下，可能遇到的情况。github多账号登录问题，github、gitlab多网站账户密钥问题以及ssh密钥登录问题。</p>
-<a id="more"></a>
-
-<h2 id="gitlab、gitlab"><a href="#gitlab、gitlab" class="headerlink" title="gitlab、gitlab"></a>gitlab、gitlab</h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line">or</span><br><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"><span class="comment">#####输出 </span></span><br><span class="line">Generating public/private ed25519 key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/libai/.ssh/id_ed25519): <span class="comment"># 文件存储位置</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment"># 输入密钥 密码 可留空</span></span><br><span class="line">Enter same passphrase again: <span class="comment"># 确认密码</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /c/Users/libai/.ssh/id_ed25519 <span class="comment"># 储存位置 私钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /c/Users/libai/.ssh/id_ed25519.pub <span class="comment"># 存储位置 公钥</span></span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:JiEaUc9F3/yd6WsU2nAnl5PHTcIXyS5K/4RnIV+Cx2Y dufukai@zhengzihui.com</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ED25519 256]--+</span></span><br><span class="line"><span class="string">|  ...  .o    ...o|</span></span><br><span class="line"><span class="string">|   . o . . o  ooo|</span></span><br><span class="line"><span class="string">|  . . +   . oo.=+|</span></span><br><span class="line"><span class="string">|   o . .   ..=EXX|</span></span><br><span class="line"><span class="string">|  .   . S . o+@*O|</span></span><br><span class="line"><span class="string">|       o   . +.B |</span></span><br><span class="line"><span class="string">|              *. |</span></span><br><span class="line"><span class="string">|               o.|</span></span><br><span class="line"><span class="string">|              .. |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
-
-<h3 id="复制公钥到-github、gitlab"><a href="#复制公钥到-github、gitlab" class="headerlink" title="复制公钥到 github、gitlab"></a>复制公钥到 github、gitlab</h3><blockquote>
-<p><strong>id_ed25519</strong> 为私钥</p>
-<p>id_ed25519.pub 为公钥</p>
-</blockquote>
-<p>打开公钥id_ed25519.pub，复制内容 到github或者 gitlab中。</p>
-<h3 id="测试ssh连接"><a href="#测试ssh连接" class="headerlink" title="测试ssh连接"></a>测试ssh连接</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">or</span><br><span class="line">ssh -T git@192.168.5.130 <span class="comment"># 自建gitlab地址</span></span><br><span class="line"></span><br><span class="line">您可能会看到类似如下的警告：</span><br><span class="line"></span><br><span class="line">&gt; The authenticity of host <span class="string">&#x27;github.com (IP ADDRESS)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">&gt; RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</span></span><br><span class="line"><span class="string">&gt; Are you sure you want to continue connecting (yes/no)?</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">输入 yes</span></span><br><span class="line"><span class="string">就可以了</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="github、gitlab不同邮箱（同样适用多个github不同邮箱）"><a href="#github、gitlab不同邮箱（同样适用多个github不同邮箱）" class="headerlink" title="github、gitlab不同邮箱（同样适用多个github不同邮箱）"></a>github、gitlab不同邮箱（同样适用多个github不同邮箱）</h3><p>上面生成密钥 -C 指定邮箱 ，如果你有多个github或者gitlab帐号，且使用不同邮箱。需要修改公钥和私钥名称配置<code>config</code>。</p>
-<p>当创建第一个github的密钥过后，修改公钥和私钥为<code>github_id_ed25519</code>、公钥为<code>github_id_ed25519.pub</code>，当然加上邮箱更好。<code>xx@gmail_github_id_ed25519</code></p>
-<p>在创建第二个gitlab。</p>
-<p>然后你就有了</p>
-<ol>
-<li><code>github_id_ed25519</code></li>
-<li><code>github_id_ed25519.pub</code></li>
-<li><code>gitlab_id_ed25519</code></li>
-<li><code>gitlab_id_ed25519.pub</code></li>
-</ol>
-<p>然后windows在<code>C:\Users\用户名\.ssh</code>，linux在 <code>~/.ssh</code>下。</p>
-<p>配置<code>config</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 添加config配置文件</span><br><span class="line"># vi ~&#x2F;.ssh&#x2F;config</span><br><span class="line"></span><br><span class="line"># 文件内容如下：</span><br><span class="line"># gitlab</span><br><span class="line"># github</span><br><span class="line">Host github-libaibuaidufu</span><br><span class="line">    HostName github.com</span><br><span class="line">    User libaibuaidufu</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;github_id_ed25519</span><br><span class="line"></span><br><span class="line">Host github-dfkai</span><br><span class="line">    HostName github.com</span><br><span class="line">    User dfkai</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;xxx@qq.com_github_id_ed25519</span><br><span class="line"></span><br><span class="line">Host 192.168.5.130</span><br><span class="line">    HostName 192.168.5.130</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;gitlab_id_ed25519</span><br><span class="line"></span><br><span class="line"># 配置文件参数</span><br><span class="line"># Host : Host可以看作是一个你要识别的模式，对识别的模式，进行配置对应的的主机名和ssh文件</span><br><span class="line"># HostName : 要登录主机的主机名</span><br><span class="line"># User : 登录名</span><br><span class="line"># IdentityFile : 指明上面User对应的identityFile路径  私钥位置</span><br><span class="line"># Port : 指定端口 默认 22</span><br></pre></td></tr></table></figure>
-
-<p>这样就可以在不同的账户之间都是用到ssh了。</p>
-<p>测试连接：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@host 上面的host</span><br><span class="line"></span><br><span class="line">ssh -T git@github-libaibuaidufu</span><br><span class="line"></span><br><span class="line">ssh -T git@github-dfkai</span><br><span class="line"></span><br><span class="line">ssh -T git@192.168.5.130</span><br></pre></td></tr></table></figure>
-
-<h2 id="服务器SSH连接"><a href="#服务器SSH连接" class="headerlink" title="服务器SSH连接"></a>服务器SSH连接</h2><h3 id="客户端创建密钥"><a href="#客户端创建密钥" class="headerlink" title="客户端创建密钥"></a>客户端创建密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line">一顿回车，如果需要修改配置请看上面的介绍</span><br><span class="line"></span><br><span class="line">生成id_rsa私钥，id_rsa.pub 公钥</span><br></pre></td></tr></table></figure>
-
-<h3 id="复制公钥内容到-服务器"><a href="#复制公钥内容到-服务器" class="headerlink" title="复制公钥内容到 服务器"></a>复制公钥内容到 服务器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"></span><br><span class="line">vi authorized_keys</span><br><span class="line"></span><br><span class="line">粘贴公钥内容到里面去</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">复制公钥文件到 服务器 ~/.ssh</span><br><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"></span><br><span class="line">cat id_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line"></span><br><span class="line">反正最后一定要复制进去，不管用什么方法</span><br><span class="line"></span><br><span class="line">设置权限 1可执行 2 可写  4 可读</span><br><span class="line">chmod 600 authorized_keys <span class="comment"># 可读可写</span></span><br><span class="line">chmod 700 ~/.ssh <span class="comment"># 可读可写可执行</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="配置ssh-打开密钥登录"><a href="#配置ssh-打开密钥登录" class="headerlink" title="配置ssh,打开密钥登录"></a>配置ssh,打开密钥登录</h3><p>编辑<code>/etc/ssh/sshd_config </code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br></pre></td></tr></table></figure>
-
-<p>另外，请留意 root 用户能否通过 SSH 登录：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：当你完成全部设置，并以密钥方式登录成功后，再禁用密码登录：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PasswordAuthentication no</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>最后，重启 SSH 服务：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@host .ssh]$ service sshd restart</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="连接服务器"><a href="#连接服务器" class="headerlink" title="连接服务器"></a>连接服务器</h3><p>使用xshell，输入服务器，选择密钥登录，选择你客户机上的私钥<code>id_rsa</code>,如果设置了私钥密码(看上面介绍),请输入私钥密码，没有就留空。则完成登录。</p>
-<p>或者 </p>
-<p>输入命令连接</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh 192.168.5.106</span><br><span class="line">xshell会让你输入用户名</span><br><span class="line">然后让你输入密码 或者选择密钥</span><br><span class="line">则完成登录 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>能不能跟简单一点呢。</p>
-<p>当然可以，例如上面我们配置的<code>config</code>一样</p>
-<p>在客户端加上以上配置。<code>~/.ssh/config</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Host 192.168.5.106</span><br><span class="line">    HostName 192.168.5.106</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    User root</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;id_rsa</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后测试</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh 192.168.5.106 </span><br><span class="line">就可以直接连接了</span><br><span class="line">使用xshell 依然会让你输入用户名和选择密钥位置</span><br><span class="line"></span><br><span class="line">使用cmd 或者 bash 则没有了 可能是xshell限制</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
-        <tag>ssh</tag>
-        <tag>密钥登录</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>gitlab 生产安全事故记录</title>
     <url>/post/gitlab-%E7%94%9F%E4%BA%A7%E5%AE%89%E5%85%A8%E4%BA%8B%E6%95%85%E8%AE%B0%E5%BD%95.html</url>
     <content><![CDATA[<p>问题：公司自建gitlab突然卡死 ，无法启动，启动后直接卡死虚拟机。</p>
@@ -374,6 +302,221 @@
       </categories>
   </entry>
   <entry>
+    <title>github、gitlab、ssh密钥登录</title>
+    <url>/post/github%E3%80%81gitlab%E3%80%81ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95.html</url>
+    <content><![CDATA[<p>一直对ssh密钥登录半知半解，以前都是跟着教程自己走一遍，每次都去查看，这次就认真记录一下，可能遇到的情况。github多账号登录问题，github、gitlab多网站账户密钥问题以及ssh密钥登录问题。</p>
+<a id="more"></a>
+
+<h2 id="gitlab、gitlab"><a href="#gitlab、gitlab" class="headerlink" title="gitlab、gitlab"></a>gitlab、gitlab</h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line">or</span><br><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"><span class="comment">#####输出 </span></span><br><span class="line">Generating public/private ed25519 key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/libai/.ssh/id_ed25519): <span class="comment"># 文件存储位置</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment"># 输入密钥 密码 可留空</span></span><br><span class="line">Enter same passphrase again: <span class="comment"># 确认密码</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /c/Users/libai/.ssh/id_ed25519 <span class="comment"># 储存位置 私钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /c/Users/libai/.ssh/id_ed25519.pub <span class="comment"># 存储位置 公钥</span></span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:JiEaUc9F3/yd6WsU2nAnl5PHTcIXyS5K/4RnIV+Cx2Y dufukai@zhengzihui.com</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ED25519 256]--+</span></span><br><span class="line"><span class="string">|  ...  .o    ...o|</span></span><br><span class="line"><span class="string">|   . o . . o  ooo|</span></span><br><span class="line"><span class="string">|  . . +   . oo.=+|</span></span><br><span class="line"><span class="string">|   o . .   ..=EXX|</span></span><br><span class="line"><span class="string">|  .   . S . o+@*O|</span></span><br><span class="line"><span class="string">|       o   . +.B |</span></span><br><span class="line"><span class="string">|              *. |</span></span><br><span class="line"><span class="string">|               o.|</span></span><br><span class="line"><span class="string">|              .. |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="复制公钥到-github、gitlab"><a href="#复制公钥到-github、gitlab" class="headerlink" title="复制公钥到 github、gitlab"></a>复制公钥到 github、gitlab</h3><blockquote>
+<p><strong>id_ed25519</strong> 为私钥</p>
+<p>id_ed25519.pub 为公钥</p>
+</blockquote>
+<p>打开公钥id_ed25519.pub，复制内容 到github或者 gitlab中。</p>
+<h3 id="测试ssh连接"><a href="#测试ssh连接" class="headerlink" title="测试ssh连接"></a>测试ssh连接</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">or</span><br><span class="line">ssh -T git@192.168.5.130 <span class="comment"># 自建gitlab地址</span></span><br><span class="line"></span><br><span class="line">您可能会看到类似如下的警告：</span><br><span class="line"></span><br><span class="line">&gt; The authenticity of host <span class="string">&#x27;github.com (IP ADDRESS)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">&gt; RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</span></span><br><span class="line"><span class="string">&gt; Are you sure you want to continue connecting (yes/no)?</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">输入 yes</span></span><br><span class="line"><span class="string">就可以了</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="github、gitlab不同邮箱（同样适用多个github不同邮箱）"><a href="#github、gitlab不同邮箱（同样适用多个github不同邮箱）" class="headerlink" title="github、gitlab不同邮箱（同样适用多个github不同邮箱）"></a>github、gitlab不同邮箱（同样适用多个github不同邮箱）</h3><p>上面生成密钥 -C 指定邮箱 ，如果你有多个github或者gitlab帐号，且使用不同邮箱。需要修改公钥和私钥名称配置<code>config</code>。</p>
+<p>当创建第一个github的密钥过后，修改公钥和私钥为<code>github_id_ed25519</code>、公钥为<code>github_id_ed25519.pub</code>，当然加上邮箱更好。<code>xx@gmail_github_id_ed25519</code></p>
+<p>在创建第二个gitlab。</p>
+<p>然后你就有了</p>
+<ol>
+<li><code>github_id_ed25519</code></li>
+<li><code>github_id_ed25519.pub</code></li>
+<li><code>gitlab_id_ed25519</code></li>
+<li><code>gitlab_id_ed25519.pub</code></li>
+</ol>
+<p>然后windows在<code>C:\Users\用户名\.ssh</code>，linux在 <code>~/.ssh</code>下。</p>
+<p>配置<code>config</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 添加config配置文件</span><br><span class="line"># vi ~&#x2F;.ssh&#x2F;config</span><br><span class="line"></span><br><span class="line"># 文件内容如下：</span><br><span class="line"># gitlab</span><br><span class="line"># github</span><br><span class="line">Host github-libaibuaidufu</span><br><span class="line">    HostName github.com</span><br><span class="line">    User libaibuaidufu</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;github_id_ed25519</span><br><span class="line"></span><br><span class="line">Host github-dfkai</span><br><span class="line">    HostName github.com</span><br><span class="line">    User dfkai</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;xxx@qq.com_github_id_ed25519</span><br><span class="line"></span><br><span class="line">Host 192.168.5.130</span><br><span class="line">    HostName 192.168.5.130</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;gitlab_id_ed25519</span><br><span class="line"></span><br><span class="line"># 配置文件参数</span><br><span class="line"># Host : Host可以看作是一个你要识别的模式，对识别的模式，进行配置对应的的主机名和ssh文件</span><br><span class="line"># HostName : 要登录主机的主机名</span><br><span class="line"># User : 登录名</span><br><span class="line"># IdentityFile : 指明上面User对应的identityFile路径  私钥位置</span><br><span class="line"># Port : 指定端口 默认 22</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以在不同的账户之间都是用到ssh了。</p>
+<p>测试连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@host 上面的host</span><br><span class="line"></span><br><span class="line">ssh -T git@github-libaibuaidufu</span><br><span class="line"></span><br><span class="line">ssh -T git@github-dfkai</span><br><span class="line"></span><br><span class="line">ssh -T git@192.168.5.130</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器SSH连接"><a href="#服务器SSH连接" class="headerlink" title="服务器SSH连接"></a>服务器SSH连接</h2><h3 id="客户端创建密钥"><a href="#客户端创建密钥" class="headerlink" title="客户端创建密钥"></a>客户端创建密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line">一顿回车，如果需要修改配置请看上面的介绍</span><br><span class="line"></span><br><span class="line">生成id_rsa私钥，id_rsa.pub 公钥</span><br></pre></td></tr></table></figure>
+
+<h3 id="复制公钥内容到-服务器"><a href="#复制公钥内容到-服务器" class="headerlink" title="复制公钥内容到 服务器"></a>复制公钥内容到 服务器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"></span><br><span class="line">vi authorized_keys</span><br><span class="line"></span><br><span class="line">粘贴公钥内容到里面去</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">复制公钥文件到 服务器 ~/.ssh</span><br><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"></span><br><span class="line">cat id_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line"></span><br><span class="line">反正最后一定要复制进去，不管用什么方法</span><br><span class="line"></span><br><span class="line">设置权限 1可执行 2 可写  4 可读</span><br><span class="line">chmod 600 authorized_keys <span class="comment"># 可读可写</span></span><br><span class="line">chmod 700 ~/.ssh <span class="comment"># 可读可写可执行</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置ssh-打开密钥登录"><a href="#配置ssh-打开密钥登录" class="headerlink" title="配置ssh,打开密钥登录"></a>配置ssh,打开密钥登录</h3><p>编辑<code>/etc/ssh/sshd_config </code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br></pre></td></tr></table></figure>
+
+<p>另外，请留意 root 用户能否通过 SSH 登录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：当你完成全部设置，并以密钥方式登录成功后，再禁用密码登录：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PasswordAuthentication no</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后，重启 SSH 服务：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@host .ssh]$ service sshd restart</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="连接服务器"><a href="#连接服务器" class="headerlink" title="连接服务器"></a>连接服务器</h3><p>使用xshell，输入服务器，选择密钥登录，选择你客户机上的私钥<code>id_rsa</code>,如果设置了私钥密码(看上面介绍),请输入私钥密码，没有就留空。则完成登录。</p>
+<p>或者 </p>
+<p>输入命令连接</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh 192.168.5.106</span><br><span class="line">xshell会让你输入用户名</span><br><span class="line">然后让你输入密码 或者选择密钥</span><br><span class="line">则完成登录 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>能不能跟简单一点呢。</p>
+<p>当然可以，例如上面我们配置的<code>config</code>一样</p>
+<p>在客户端加上以上配置。<code>~/.ssh/config</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Host 192.168.5.106</span><br><span class="line">    HostName 192.168.5.106</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    User root</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;id_rsa</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后测试</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh 192.168.5.106 </span><br><span class="line">就可以直接连接了</span><br><span class="line">使用xshell 依然会让你输入用户名和选择密钥位置</span><br><span class="line"></span><br><span class="line">使用cmd 或者 bash 则没有了 可能是xshell限制</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+        <tag>ssh</tag>
+        <tag>密钥登录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo next主题 安装记录</title>
+    <url>/post/install-next-all.html</url>
+    <content><![CDATA[<p>最近无聊有想整点东西，想这写blog，就心血来潮又搞了hexo，想着这次一定要静下心来。</p>
+<a id="more"></a>
+
+<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g --registry=https://registry.npm.taobao.org</span><br><span class="line">hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="根据配置-修改自己的信息"><a href="#根据配置-修改自己的信息" class="headerlink" title="根据配置 修改自己的信息"></a>根据配置 修改自己的信息</h3><p>官网：<a href="https://hexo.io/zh-cn/docs/configuration">https://hexo.io/zh-cn/docs/configuration</a></p>
+<h3 id="安装主题-next"><a href="#安装主题-next" class="headerlink" title="安装主题 next"></a>安装主题 next</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改-主题配置"><a href="#修改-主题配置" class="headerlink" title="修改 主题配置"></a>修改 主题配置</h3><p>官网：<a href="https://theme-next.iissnan.com/getting-started.html">https://theme-next.iissnan.com/getting-started.html</a></p>
+<h3 id="集成第三方插件"><a href="#集成第三方插件" class="headerlink" title="集成第三方插件"></a>集成第三方插件</h3><h4 id="1-搜索"><a href="#1-搜索" class="headerlink" title="1.搜索"></a>1.搜索</h4><h5 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置博客"><a href="#配置博客" class="headerlink" title="配置博客"></a>配置博客</h5><p>安装完成，编辑博客配置文件：<code>_config.yml</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h5><p>Next 主题自带搜索设置，编辑主题配置文件：<code>_config.yml</code></p>
+<p>找到文件中 Local search 的相关配置，设为 <code>true</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line">local_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-评论和阅读次数"><a href="#2-评论和阅读次数" class="headerlink" title="2.评论和阅读次数"></a>2.评论和阅读次数</h4><p>注册 learncloud 进行部署</p>
+<h4 id="3-seo优化"><a href="#3-seo优化" class="headerlink" title="3.seo优化"></a>3.seo优化</h4><p>参考：[<a href="https://hoxis.github.io/Hexo+Next%20SEO%E4%BC%98%E5%8C%96.html]">https://hoxis.github.io/Hexo+Next%20SEO%E4%BC%98%E5%8C%96.html]</a>(<a href="https://hoxis.github.io/Hexo+Next">https://hoxis.github.io/Hexo+Next</a> SEO优化.html)</p>
+<h5 id="安装插件-1"><a href="#安装插件-1" class="headerlink" title="安装插件"></a>安装插件</h5><p>需要安装两个插件来生成 sitemap 文件，前一个是传统的 sitemap，后一个是百度的 sitemap。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改站点配置文件"><a href="#修改站点配置文件" class="headerlink" title="修改站点配置文件"></a>修改站点配置文件</h4><p>将<code>sitemap</code>文件添加到站点配置文件<code>_config.yml</code>中，并修改<code>url</code>字段的值，其值默认为<code>http://yoursite.com</code>。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">sitemap:</span> </span><br><span class="line">  <span class="attr">path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"><span class="attr">baidusitemap:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">baidusitemap.xml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://libaibuaidufu.club</span> <span class="comment"># 这个在最开始的地方有 注意重复</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="rabots-协议"><a href="#rabots-协议" class="headerlink" title="rabots 协议"></a>rabots 协议</h4><p>在站点<code>source</code>文件夹下新建<code>robots.txt</code>文件，文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Allow: &#x2F;</span><br><span class="line">Allow: &#x2F;archives&#x2F;</span><br><span class="line">Allow: &#x2F;categories&#x2F;</span><br><span class="line">Allow: &#x2F;tags&#x2F; </span><br><span class="line">Allow: &#x2F;resources&#x2F; </span><br><span class="line">Disallow: &#x2F;vendors&#x2F;</span><br><span class="line">Disallow: &#x2F;js&#x2F;</span><br><span class="line">Disallow: &#x2F;css&#x2F;</span><br><span class="line">Disallow: &#x2F;fonts&#x2F;</span><br><span class="line">Disallow: &#x2F;vendors&#x2F;</span><br><span class="line">Disallow: &#x2F;fancybox&#x2F;</span><br><span class="line"></span><br><span class="line">Sitemap: https:&#x2F;&#x2F;libaibuaidufu.club&#x2F;sitemap.xml</span><br><span class="line">Sitemap: https:&#x2F;&#x2F;libaibuaidufu.club&#x2F;baidusitemap.xml</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>安装完成后执行<code>hexo g</code>即会在站点<code>public</code>目录下生成<code>sitemap.xml</code>和<code>baidusitemap.xml</code>。</p>
+<p><code>Allow</code>字段的值即为允许搜索引擎爬区的内容，可以对应到主题配置文件中的menu目录配置，如果菜单栏还有其他选项都可以按照格式自行添加。</p>
+<p>需要将<code>https://hoxis.github.io</code>改成自己的域名。</p>
+<h3 id="github部署"><a href="#github部署" class="headerlink" title="github部署"></a>github部署</h3><p>github：<a href="https://hexo.io/zh-cn/docs/github-pages">https://hexo.io/zh-cn/docs/github-pages</a></p>
+<p>一键部署：<a href="https://hexo.io/zh-cn/docs/one-command-deployment">https://hexo.io/zh-cn/docs/one-command-deployment</a></p>
+<p>安装插件：<code>npm install hexo-deployer-git --save --registry=https://registry.npm.taobao.org</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/&lt;username&gt;/&lt;project&gt;</span></span><br><span class="line">  <span class="comment"># example, https://github.com/hexojs/hexojs.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>博客搭建</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>next</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>openwrt 编译k2固件</title>
+    <url>/post/openwrt-%E7%BC%96%E8%AF%91k2%E5%9B%BA%E4%BB%B6.html</url>
+    <content><![CDATA[<h2 id="只记录关键步骤"><a href="#只记录关键步骤" class="headerlink" title="只记录关键步骤"></a>只记录关键步骤</h2><p>最近又想玩玩我的k2，别人的编译的固件老是没有我自己想要的插件，所以想自己编译一下。中间也踩了很多坑。</p>
+<a id="more"></a>
+
+<ol>
+<li>wsl子系统全局外网问题</li>
+</ol>
+<p>windows使用Proxifier直接全局掌控，稳如老狗。</p>
+<p>网上看了一些linux系统代理设置，但是无法全局，因此还是Proxifier永远的神。</p>
+<ol start="2">
+<li>添加其他feeds插件库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 找到 feeds.conf.default ,可以利用everythings搜索</span></span><br><span class="line">src-git kenzo https://github.com/kenzok8/openwrt-packages</span><br><span class="line">src-git small https://github.com/kenzok8/small</span><br><span class="line">src-git lienol https://github.com/Lienol/openwrt-package</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>make menuconfig配置</li>
+</ol>
+<p>参考上面第三个链接</p>
+<ol start="4">
+<li>编译前执行go环境设置 避免错误</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>wsl系统编译</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j1 V=s</span><br><span class="line"><span class="comment"># 以上代码为大雕大佬推荐的单线程模式，-j1表示1线程 </span></span><br><span class="line"><span class="comment"># 直接上最多 自己cpu线程 +1 就可以了 我是6核12线程</span></span><br><span class="line">sudo PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j13 V=s</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果上面编码出现一下错误</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">configure: error: you should not run configure as root (<span class="built_in">set</span> FORCE_UNSAFE_CONFIGURE=1 <span class="keyword">in</span> environment to bypass this check)</span><br><span class="line">See `config.log<span class="string">&#x27; for more details</span></span><br><span class="line"><span class="string">make[3]: *** [/home/linux/myopenwrt/openwrt/build_dir/host/tar-1.28/.configured] Error 1</span></span><br><span class="line"><span class="string">make[3]: Leaving directory `/home/linux/myopenwrt/openwrt/tools/tar&#x27;</span></span><br><span class="line">make[2]: *** [tools/tar/compile] Error 2</span><br><span class="line">make[2]: Leaving directory `/home/linux/myopenwrt/openwrt<span class="string">&#x27;</span></span><br><span class="line"><span class="string">make[1]: *** [/home/linux/myopenwrt/openwrt/staging_dir/target-mips_34kc_musl-1.1.14/stamp/.tools_install_yynyynynynyyyyyyynyyyyyyyyyyyyynyyyyynnyynynyyyynnnyy] Error 2</span></span><br><span class="line"><span class="string">make[1]: Leaving directory `/home/linux/myopenwrt/openwrt&#x27;</span></span><br><span class="line">make: *** [world] Error 2</span><br></pre></td></tr></table></figure>
+
+<p><strong>wsl编译命令 就修改为</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin make FORCE_UNSAFE_CONFIGURE=1 -j13 V=s</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>刚开始编译怎么都没有 openwrt-ramips-mt7620-phicomm_psg1218a-squashfs-sysupgrade.bin 文件</li>
+</ol>
+<p>网上搜索说 固件太大 就没有了，但是我在配置时只做了删除了怎么还更大呢。（未知）</p>
+<p>然后我就什么都没有更改 直接编译一次，就成功了，然后再进行删除增加就可以了。</p>
+<ol start="8">
+<li>copy 配置修改ip时，复制</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">192.168.2.12</span><br><span class="line">24</span><br><span class="line">255.255.255.255</span><br><span class="line">192.168.2.1</span><br><span class="line"></span><br><span class="line">192.168.31.2</span><br><span class="line"></span><br><span class="line">192.168.31.23</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>分享一个 移动wsl子系统的软件 避免wsl系统太占C盘空间</li>
+</ol>
+<p>下载：<a href="https://github.com/DDoSolitary/LxRunOffline/releases">https://github.com/DDoSolitary/LxRunOffline/releases</a></p>
+<p>案例：<a href="https://blog.bccn.net/%E9%9D%99%E5%A4%9C%E6%80%9D/67307">https://blog.bccn.net/%E9%9D%99%E5%A4%9C%E6%80%9D/67307</a></p>
+<p>安装wsl子系统 ubuntu-20.04 和 LxRunOffline 软件</p>
+<ol>
+<li>备份/还原WSL</li>
+</ol>
+<ul>
+<li>查看当前系统中存在的WSL</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">LxRunOffline.exe list or wsl <span class="literal">-l</span></span><br><span class="line">Ubuntu<span class="literal">-20</span>.<span class="number">04</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>开始备份</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">./LxRunOffline.exe export <span class="literal">-n</span> Ubuntu<span class="literal">-20</span>.<span class="number">04</span> <span class="operator">-f</span> E:\wsl_ubuntu_bak.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>还原WSL</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">./LxRunOffline.exe install <span class="literal">-n</span> Ubuntu <span class="literal">-d</span> D:\wsl_ubuntu <span class="operator">-f</span> E:\wsl_ubuntu_bak.tar.gz</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>直接移动(新装推荐用这个)</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新建文件夹作为移动目标，如：D:\wsl_ubuntu</span></span><br><span class="line">LxRunOffline <span class="built_in">move</span> <span class="literal">-n</span> Ubuntu<span class="literal">-20</span>.<span class="number">04</span> <span class="literal">-d</span> D:\wsl_ubuntu</span><br><span class="line"><span class="comment"># 时间比较久，等待移动完成用下面命令查看</span></span><br><span class="line">LxRunOffline <span class="built_in">get-dir</span> <span class="literal">-n</span> Ubuntu<span class="literal">-20</span>.<span class="number">04</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>参考：</p>
+<ol>
+<li><a href="https://github.com/coolsnowwolf/lede">https://github.com/coolsnowwolf/lede</a></li>
+<li><a href="https://www.right.com.cn/forum/thread-5559590-1-1.html">https://www.right.com.cn/forum/thread-5559590-1-1.html</a></li>
+<li><a href="https://www.right.com.cn/forum/thread-344825-1-1.html">https://www.right.com.cn/forum/thread-344825-1-1.html</a></li>
+<li><a href="https://blog.csdn.net/tiwsonchen/article/details/84924909">https://blog.csdn.net/tiwsonchen/article/details/84924909</a></li>
+<li><a href="https://github.com/hanxi/blog/issues/28">https://github.com/hanxi/blog/issues/28</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>路由器</category>
+      </categories>
+  </entry>
+  <entry>
     <title>learn Websocket</title>
     <url>/post/learn-Websocket.html</url>
     <content><![CDATA[<blockquote>
@@ -433,87 +576,6 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo next主题 安装记录</title>
-    <url>/post/install-next-all.html</url>
-    <content><![CDATA[<p>最近无聊有想整点东西，想这写blog，就心血来潮又搞了hexo，想着这次一定要静下心来。</p>
-<a id="more"></a>
-
-<h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g --registry=https://registry.npm.taobao.org</span><br><span class="line">hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<h3 id="根据配置-修改自己的信息"><a href="#根据配置-修改自己的信息" class="headerlink" title="根据配置 修改自己的信息"></a>根据配置 修改自己的信息</h3><p>官网：<a href="https://hexo.io/zh-cn/docs/configuration">https://hexo.io/zh-cn/docs/configuration</a></p>
-<h3 id="安装主题-next"><a href="#安装主题-next" class="headerlink" title="安装主题 next"></a>安装主题 next</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-
-<h3 id="修改-主题配置"><a href="#修改-主题配置" class="headerlink" title="修改 主题配置"></a>修改 主题配置</h3><p>官网：<a href="https://theme-next.iissnan.com/getting-started.html">https://theme-next.iissnan.com/getting-started.html</a></p>
-<h3 id="集成第三方插件"><a href="#集成第三方插件" class="headerlink" title="集成第三方插件"></a>集成第三方插件</h3><h4 id="1-搜索"><a href="#1-搜索" class="headerlink" title="1.搜索"></a>1.搜索</h4><h5 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
-<h5 id="配置博客"><a href="#配置博客" class="headerlink" title="配置博客"></a>配置博客</h5><p>安装完成，编辑博客配置文件：<code>_config.yml</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
-
-<h5 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h5><p>Next 主题自带搜索设置，编辑主题配置文件：<code>_config.yml</code></p>
-<p>找到文件中 Local search 的相关配置，设为 <code>true</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line">local_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-评论和阅读次数"><a href="#2-评论和阅读次数" class="headerlink" title="2.评论和阅读次数"></a>2.评论和阅读次数</h4><p>注册 learncloud 进行部署</p>
-<h4 id="3-seo优化"><a href="#3-seo优化" class="headerlink" title="3.seo优化"></a>3.seo优化</h4><p>参考：[<a href="https://hoxis.github.io/Hexo+Next%20SEO%E4%BC%98%E5%8C%96.html]">https://hoxis.github.io/Hexo+Next%20SEO%E4%BC%98%E5%8C%96.html]</a>(<a href="https://hoxis.github.io/Hexo+Next">https://hoxis.github.io/Hexo+Next</a> SEO优化.html)</p>
-<h5 id="安装插件-1"><a href="#安装插件-1" class="headerlink" title="安装插件"></a>安装插件</h5><p>需要安装两个插件来生成 sitemap 文件，前一个是传统的 sitemap，后一个是百度的 sitemap。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
-
-<h4 id="修改站点配置文件"><a href="#修改站点配置文件" class="headerlink" title="修改站点配置文件"></a>修改站点配置文件</h4><p>将<code>sitemap</code>文件添加到站点配置文件<code>_config.yml</code>中，并修改<code>url</code>字段的值，其值默认为<code>http://yoursite.com</code>。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">sitemap:</span> </span><br><span class="line">  <span class="attr">path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"><span class="attr">baidusitemap:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">baidusitemap.xml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://libaibuaidufu.club</span> <span class="comment"># 这个在最开始的地方有 注意重复</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="rabots-协议"><a href="#rabots-协议" class="headerlink" title="rabots 协议"></a>rabots 协议</h4><p>在站点<code>source</code>文件夹下新建<code>robots.txt</code>文件，文件内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Allow: &#x2F;</span><br><span class="line">Allow: &#x2F;archives&#x2F;</span><br><span class="line">Allow: &#x2F;categories&#x2F;</span><br><span class="line">Allow: &#x2F;tags&#x2F; </span><br><span class="line">Allow: &#x2F;resources&#x2F; </span><br><span class="line">Disallow: &#x2F;vendors&#x2F;</span><br><span class="line">Disallow: &#x2F;js&#x2F;</span><br><span class="line">Disallow: &#x2F;css&#x2F;</span><br><span class="line">Disallow: &#x2F;fonts&#x2F;</span><br><span class="line">Disallow: &#x2F;vendors&#x2F;</span><br><span class="line">Disallow: &#x2F;fancybox&#x2F;</span><br><span class="line"></span><br><span class="line">Sitemap: https:&#x2F;&#x2F;libaibuaidufu.club&#x2F;sitemap.xml</span><br><span class="line">Sitemap: https:&#x2F;&#x2F;libaibuaidufu.club&#x2F;baidusitemap.xml</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>安装完成后执行<code>hexo g</code>即会在站点<code>public</code>目录下生成<code>sitemap.xml</code>和<code>baidusitemap.xml</code>。</p>
-<p><code>Allow</code>字段的值即为允许搜索引擎爬区的内容，可以对应到主题配置文件中的menu目录配置，如果菜单栏还有其他选项都可以按照格式自行添加。</p>
-<p>需要将<code>https://hoxis.github.io</code>改成自己的域名。</p>
-<h3 id="github部署"><a href="#github部署" class="headerlink" title="github部署"></a>github部署</h3><p>github：<a href="https://hexo.io/zh-cn/docs/github-pages">https://hexo.io/zh-cn/docs/github-pages</a></p>
-<p>一键部署：<a href="https://hexo.io/zh-cn/docs/one-command-deployment">https://hexo.io/zh-cn/docs/one-command-deployment</a></p>
-<p>安装插件：<code>npm install hexo-deployer-git --save --registry=https://registry.npm.taobao.org</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/&lt;username&gt;/&lt;project&gt;</span></span><br><span class="line">  <span class="comment"># example, https://github.com/hexojs/hexojs.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>博客搭建</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>next</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>scrapy + scrapyd + scrapydweb + logparser + docker分布式部署</title>
-    <url>/post/scrapy-scrapyd-scrapydweb-logparser-docker%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2.html</url>
-    <content><![CDATA[<p>在工作中使用，特此在这记录一下，并写成docker文件，方便部署使用。</p>
-<a id="more"></a>
-
-<h5 id="1-构建-scrapyd-logparser"><a href="#1-构建-scrapyd-logparser" class="headerlink" title="1.构建 scrapyd_logparser"></a>1.构建 scrapyd_logparser</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd scrapyd_logparser</span><br><span class="line">docker build -t scrapyd_logparser .</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-运行-scrapyd-logparser"><a href="#2-运行-scrapyd-logparser" class="headerlink" title="2.运行 scrapyd_logparser"></a>2.运行 scrapyd_logparser</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d -p 6800:6800 --name scrapyd_1 scrapyd_logparser</span><br><span class="line"># docker run -d -p 6800:6800 -v &#x2F;root&#x2F;scrapyd_logparser:&#x2F;code --name scrapyd_1 scrapyd_logparser</span><br><span class="line"># 可以外联出文件 可以进行配置修改</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-构建-scrapydweb"><a href="#3-构建-scrapydweb" class="headerlink" title="3.构建 scrapydweb"></a>3.构建 scrapydweb</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd scrapydweb</span><br><span class="line">docker build -t scrapydweb .</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-运行-scrapydweb"><a href="#4-运行-scrapydweb" class="headerlink" title="4.运行 scrapydweb"></a>4.运行 scrapydweb</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d -p 5000:5000 -v &#x2F;root&#x2F;scrapydweb:&#x2F;code --name scrapydweb scrapydweb</span><br><span class="line"># 外链出文件 好修改配置 进行更新部署</span><br><span class="line"># 修改配置</span><br><span class="line">vim scrapydweb_settings_v10.py </span><br><span class="line"># 重启</span><br><span class="line">docker restart scrapydweb</span><br></pre></td></tr></table></figure>
-
-<h5 id="5-多机部署"><a href="#5-多机部署" class="headerlink" title="5.多机部署"></a>5.多机部署</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在其他机器中 部署 文件 执行 1，2 步</span><br><span class="line">同时在 scrapydweb 的配置文件 添加在 新主机的ip</span><br><span class="line"></span><br><span class="line"># 以下添加</span><br><span class="line">SCRAPYD_SERVERS &#x3D; [</span><br><span class="line">    &#39;192.168.5.131:6800&#39;,</span><br><span class="line">    &#39;192.168.5.131:6805&#39;,</span><br><span class="line">    # &#39;username:password@localhost:6801#group&#39;,</span><br><span class="line">    # (&#39;username&#39;, &#39;password&#39;, &#39;localhost&#39;, &#39;6801&#39;, &#39;group&#39;),</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><strong>源码</strong>: <a href="https://github.com/libaibuaidufu/scrapyd_web_log">https://github.com/libaibuaidufu/scrapyd_web_log</a><br><strong>注</strong>： 可以自己查看 一下 scrapydweb 配置文件 修改，和 scrapyd 配置文件修改</p>
-<p>参考：</p>
-<ol>
-<li><a href="https://github.com/my8100/scrapydweb">scrapydweb</a></li>
-<li><a href="https://github.com/my8100/logparser">logparser</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>代码来了</category>
-      </categories>
-      <tags>
-        <tag>scrapy</tag>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>python 虚拟环境</title>
     <url>/post/python-%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83.html</url>
     <content><![CDATA[<blockquote>
@@ -562,27 +624,6 @@
       </categories>
       <tags>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>selenium 反爬虫识别特征处理</title>
-    <url>/post/selenium-%E5%8F%8D%E7%88%AC%E8%99%AB%E8%AF%86%E5%88%AB%E7%89%B9%E5%BE%81%E5%A4%84%E7%90%86.html</url>
-    <content><![CDATA[<p><strong>因为业务中发现网站对selenium特征识别为爬虫了，因此在搜索引擎中搜索进行处理</strong></p>
-<a id="more"></a>
-
-<h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实例化一个浏览器对象</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_experimental_option(<span class="string">&#x27;excludeSwitches&#x27;</span>, [<span class="string">&#x27;enable-automation&#x27;</span>])</span><br><span class="line"><span class="keyword">if</span> sys.platform == <span class="string">&quot;win32&quot;</span>:</span><br><span class="line">    browser = webdriver.Chrome(driver_path, options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    browser = webdriver.Chrome(options=options)</span><br><span class="line">browser.implicitly_wait(<span class="number">30</span>)</span><br><span class="line">browser.execute_cdp_cmd(<span class="string">&quot;Page.addScriptToEvaluateOnNewDocument&quot;</span>, &#123;</span><br><span class="line">    <span class="string">&quot;source&quot;</span>: <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Object.defineProperty(navigator, &#x27;webdriver&#x27;, &#123;</span></span><br><span class="line"><span class="string">      get: () =&gt; undefined</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>此方法虽然可以躲避识别，但是在使用过一段时候后，依然出现被屏蔽的问题。</p>
-<p>因此只有继续搜索 然后再stackoverflow 中又找到了新的答案。</p>
-<h3 id="方式二-（推荐）"><a href="#方式二-（推荐）" class="headerlink" title="方式二 （推荐）"></a>方式二 （推荐）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实例化一个浏览器对象</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_argument(<span class="string">&quot;--disable-blink-features=AutomationControlled&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> sys.platform == <span class="string">&quot;win32&quot;</span>:</span><br><span class="line">    browser = webdriver.Chrome(driver_path, options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    browser = webdriver.Chrome(options=options)</span><br></pre></td></tr></table></figure>
-
-<p>这个方法执行的后，目前运行良好也没有出现被识别的问题。</p>
-<h3 id="关闭当前标签-在切换标签前关闭"><a href="#关闭当前标签-在切换标签前关闭" class="headerlink" title="关闭当前标签 在切换标签前关闭"></a>关闭当前标签 在切换标签前关闭</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.close()</span><br><span class="line">windows = driver.window_handles</span><br><span class="line">driver.switch_to.window(windows[<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>代码来了</category>
-      </categories>
-      <tags>
-        <tag>selenium</tag>
       </tags>
   </entry>
   <entry>
@@ -749,6 +790,36 @@
       </tags>
   </entry>
   <entry>
+    <title>scrapy + scrapyd + scrapydweb + logparser + docker分布式部署</title>
+    <url>/post/scrapy-scrapyd-scrapydweb-logparser-docker%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2.html</url>
+    <content><![CDATA[<p>在工作中使用，特此在这记录一下，并写成docker文件，方便部署使用。</p>
+<a id="more"></a>
+
+<h5 id="1-构建-scrapyd-logparser"><a href="#1-构建-scrapyd-logparser" class="headerlink" title="1.构建 scrapyd_logparser"></a>1.构建 scrapyd_logparser</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd scrapyd_logparser</span><br><span class="line">docker build -t scrapyd_logparser .</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-运行-scrapyd-logparser"><a href="#2-运行-scrapyd-logparser" class="headerlink" title="2.运行 scrapyd_logparser"></a>2.运行 scrapyd_logparser</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d -p 6800:6800 --name scrapyd_1 scrapyd_logparser</span><br><span class="line"># docker run -d -p 6800:6800 -v &#x2F;root&#x2F;scrapyd_logparser:&#x2F;code --name scrapyd_1 scrapyd_logparser</span><br><span class="line"># 可以外联出文件 可以进行配置修改</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-构建-scrapydweb"><a href="#3-构建-scrapydweb" class="headerlink" title="3.构建 scrapydweb"></a>3.构建 scrapydweb</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd scrapydweb</span><br><span class="line">docker build -t scrapydweb .</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-运行-scrapydweb"><a href="#4-运行-scrapydweb" class="headerlink" title="4.运行 scrapydweb"></a>4.运行 scrapydweb</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d -p 5000:5000 -v &#x2F;root&#x2F;scrapydweb:&#x2F;code --name scrapydweb scrapydweb</span><br><span class="line"># 外链出文件 好修改配置 进行更新部署</span><br><span class="line"># 修改配置</span><br><span class="line">vim scrapydweb_settings_v10.py </span><br><span class="line"># 重启</span><br><span class="line">docker restart scrapydweb</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-多机部署"><a href="#5-多机部署" class="headerlink" title="5.多机部署"></a>5.多机部署</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在其他机器中 部署 文件 执行 1，2 步</span><br><span class="line">同时在 scrapydweb 的配置文件 添加在 新主机的ip</span><br><span class="line"></span><br><span class="line"># 以下添加</span><br><span class="line">SCRAPYD_SERVERS &#x3D; [</span><br><span class="line">    &#39;192.168.5.131:6800&#39;,</span><br><span class="line">    &#39;192.168.5.131:6805&#39;,</span><br><span class="line">    # &#39;username:password@localhost:6801#group&#39;,</span><br><span class="line">    # (&#39;username&#39;, &#39;password&#39;, &#39;localhost&#39;, &#39;6801&#39;, &#39;group&#39;),</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>源码</strong>: <a href="https://github.com/libaibuaidufu/scrapyd_web_log">https://github.com/libaibuaidufu/scrapyd_web_log</a><br><strong>注</strong>： 可以自己查看 一下 scrapydweb 配置文件 修改，和 scrapyd 配置文件修改</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://github.com/my8100/scrapydweb">scrapydweb</a></li>
+<li><a href="https://github.com/my8100/logparser">logparser</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>代码来了</category>
+      </categories>
+      <tags>
+        <tag>scrapy</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>wsl 定时任务 crontab权限</title>
     <url>/post/wsl-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1-crontab%E6%9D%83%E9%99%90.html</url>
     <content><![CDATA[<p>可能有一些乱,但是不影响整体思路。</p>
@@ -809,6 +880,27 @@
       <tags>
         <tag>wsl</tag>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>selenium 反爬虫识别特征处理</title>
+    <url>/post/selenium-%E5%8F%8D%E7%88%AC%E8%99%AB%E8%AF%86%E5%88%AB%E7%89%B9%E5%BE%81%E5%A4%84%E7%90%86.html</url>
+    <content><![CDATA[<p><strong>因为业务中发现网站对selenium特征识别为爬虫了，因此在搜索引擎中搜索进行处理</strong></p>
+<a id="more"></a>
+
+<h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实例化一个浏览器对象</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_experimental_option(<span class="string">&#x27;excludeSwitches&#x27;</span>, [<span class="string">&#x27;enable-automation&#x27;</span>])</span><br><span class="line"><span class="keyword">if</span> sys.platform == <span class="string">&quot;win32&quot;</span>:</span><br><span class="line">    browser = webdriver.Chrome(driver_path, options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    browser = webdriver.Chrome(options=options)</span><br><span class="line">browser.implicitly_wait(<span class="number">30</span>)</span><br><span class="line">browser.execute_cdp_cmd(<span class="string">&quot;Page.addScriptToEvaluateOnNewDocument&quot;</span>, &#123;</span><br><span class="line">    <span class="string">&quot;source&quot;</span>: <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Object.defineProperty(navigator, &#x27;webdriver&#x27;, &#123;</span></span><br><span class="line"><span class="string">      get: () =&gt; undefined</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>此方法虽然可以躲避识别，但是在使用过一段时候后，依然出现被屏蔽的问题。</p>
+<p>因此只有继续搜索 然后再stackoverflow 中又找到了新的答案。</p>
+<h3 id="方式二-（推荐）"><a href="#方式二-（推荐）" class="headerlink" title="方式二 （推荐）"></a>方式二 （推荐）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实例化一个浏览器对象</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_argument(<span class="string">&quot;--disable-blink-features=AutomationControlled&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> sys.platform == <span class="string">&quot;win32&quot;</span>:</span><br><span class="line">    browser = webdriver.Chrome(driver_path, options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    browser = webdriver.Chrome(options=options)</span><br></pre></td></tr></table></figure>
+
+<p>这个方法执行的后，目前运行良好也没有出现被识别的问题。</p>
+<h3 id="关闭当前标签-在切换标签前关闭"><a href="#关闭当前标签-在切换标签前关闭" class="headerlink" title="关闭当前标签 在切换标签前关闭"></a>关闭当前标签 在切换标签前关闭</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.close()</span><br><span class="line">windows = driver.window_handles</span><br><span class="line">driver.switch_to.window(windows[<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>代码来了</category>
+      </categories>
+      <tags>
+        <tag>selenium</tag>
       </tags>
   </entry>
   <entry>
