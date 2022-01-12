@@ -437,10 +437,10 @@
 <p><strong>jadx</strong></p>
 <p>jadx更加方便快捷，打开bin文件中的jadx-gui.bat然后直接选择APK即可,虽然jadx也可反编译资源文件，但有时候并不准确</p>
 <h4 id="jd-gui-查看jar包"><a href="#jd-gui-查看jar包" class="headerlink" title="jd-gui 查看jar包"></a>jd-gui 查看jar包</h4><p><strong>启动 jd-gui</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jd-gui.jar</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">java </span>-<span class="keyword">jar </span><span class="keyword">jd-gui.jar</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>把生成的classes-dex2jar.jar 拖进去，就可以查看源码了，但是不能修改，可以帮助理解</strong></p>
-<h4 id="重新打包签名"><a href="#重新打包签名" class="headerlink" title="重新打包签名"></a>重新打包签名</h4><h5 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar apktool_2.3.1.jar b KeyValueTest</span><br></pre></td></tr></table></figure>
+<h4 id="重新打包签名"><a href="#重新打包签名" class="headerlink" title="重新打包签名"></a>重新打包签名</h4><h5 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h5><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">java </span>-<span class="keyword">jar </span>apktool_2.<span class="number">3</span>.<span class="number">1</span>.<span class="keyword">jar </span><span class="keyword">b </span>KeyValueTest</span><br></pre></td></tr></table></figure>
 
 <p>目录下会生成build和dist目录,dist 就有新的apk</p>
 <h5 id="生成keystore证书"><a href="#生成keystore证书" class="headerlink" title="生成keystore证书"></a>生成keystore证书</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -genkey -v -keystore myApp.keystore -<span class="built_in">alias</span> myApp.keystore -keyalg RSA -validity 30000</span><br></pre></td></tr></table></figure>
@@ -643,12 +643,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">87k</span>
+    <span title="站点总字数">86k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:19</span>
+    <span title="站点阅读时长">1:18</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
