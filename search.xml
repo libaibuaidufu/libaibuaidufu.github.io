@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>next主题文章列表 显示摘要</title>
+    <url>/post/My-New-Post.html</url>
+    <content><![CDATA[<p>本文针对Next主题，不确保对于其它主题有效（但从修改模式来看，是有效的）</p>
+<p>Next默认是会显示全文的，这样显然很不方便，因此需要一些方法去只显示前面一部分。</p>
+<h1 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h1><p>首先需要在Next主题的_config.yml中把设置打开：(默认安装时就打开了)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Automatically excerpt description in homepage as preamble text.</span></span><br><span class="line"><span class="attr">excerpt_description:</span> <span class="literal">true</span></span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
+
+<p>之后有两种方法</p>
+<h2 id="方法一：写概述"><a href="#方法一：写概述" class="headerlink" title="方法一：写概述"></a>方法一：写概述</h2><p>在文章的<code>front-matter</code>中添加<code>description</code>，其中description中的内容就会被显示在首页上，其余一律不显示。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">让首页显示部分内容</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2020-02-23 22:55:10</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">这是显示在首页的概述，正文内容均会被隐藏。</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p>比较不方便的是还得写一下概述，很多时候会懒得写概述，于是就需要第二种方法了。</p>
+<h2 id="方法二：文章截断"><a href="#方法二：文章截断" class="headerlink" title="方法二：文章截断"></a>方法二：文章截断</h2><p>在需要截断的地方加入：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="comment">&lt;!--more--&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>首页就会显示这条以上的所有内容，隐藏接下来的所有内容。<br>例如本文会显示到<code>修改配置</code>上面。</p>
+<p>这个明显就方便很多，但当然有利有弊，比如开头都是废话首页看着就不是很好看，因此我一般会先选择方法二，如果感觉文章前面的写的不太好再用方法一。</p>
+]]></content>
+      <categories>
+        <category>博客搭建</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>next</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Elasticsearch、Kibana 使用</title>
     <url>/post/Elasticsearch%E3%80%81Kibana-%E4%BD%BF%E7%94%A8.html</url>
     <content><![CDATA[<pre><code>通过最近一段时间对`ES`的基础使用，也算有了一定的了解，特在此记录一下，避免以后忘记。</code></pre>
@@ -33,33 +60,6 @@
       <categories>
         <category>Elasticsearch</category>
       </categories>
-  </entry>
-  <entry>
-    <title>next主题文章列表 显示摘要</title>
-    <url>/post/My-New-Post.html</url>
-    <content><![CDATA[<p>本文针对Next主题，不确保对于其它主题有效（但从修改模式来看，是有效的）</p>
-<p>Next默认是会显示全文的，这样显然很不方便，因此需要一些方法去只显示前面一部分。</p>
-<h1 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h1><p>首先需要在Next主题的_config.yml中把设置打开：(默认安装时就打开了)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Automatically excerpt description in homepage as preamble text.</span></span><br><span class="line"><span class="attr">excerpt_description:</span> <span class="literal">true</span></span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
-
-<p>之后有两种方法</p>
-<h2 id="方法一：写概述"><a href="#方法一：写概述" class="headerlink" title="方法一：写概述"></a>方法一：写概述</h2><p>在文章的<code>front-matter</code>中添加<code>description</code>，其中description中的内容就会被显示在首页上，其余一律不显示。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">让首页显示部分内容</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2020-02-23 22:55:10</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">这是显示在首页的概述，正文内容均会被隐藏。</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<p>比较不方便的是还得写一下概述，很多时候会懒得写概述，于是就需要第二种方法了。</p>
-<h2 id="方法二：文章截断"><a href="#方法二：文章截断" class="headerlink" title="方法二：文章截断"></a>方法二：文章截断</h2><p>在需要截断的地方加入：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="comment">&lt;!--more--&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<p>首页就会显示这条以上的所有内容，隐藏接下来的所有内容。<br>例如本文会显示到<code>修改配置</code>上面。</p>
-<p>这个明显就方便很多，但当然有利有弊，比如开头都是废话首页看着就不是很好看，因此我一般会先选择方法二，如果感觉文章前面的写的不太好再用方法一。</p>
-]]></content>
-      <categories>
-        <category>博客搭建</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>next</tag>
-      </tags>
   </entry>
   <entry>
     <title>cloudflare 动态修改 dns</title>
@@ -167,36 +167,6 @@
       </tags>
   </entry>
   <entry>
-    <title>github actions 自动部署 hexo</title>
-    <url>/post/github-actions-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2-hexo.html</url>
-    <content><![CDATA[<p>github actions 自动部署 hexo,感觉还是有点问题。有很多方法可以解决，但是我这里就不折腾了。</p>
-<a id="more"></a>
-
-<p>我自己的提问：<a href="https://github.com/JamesIves/github-pages-deploy-action/issues/389">https://github.com/JamesIves/github-pages-deploy-action/issues/389</a></p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>hexo 安装 需要全局，但是没有权限无法安装。可以利用docker安装 ，解决权限问题。</p>
-<p>但是新版本的 action，作者去掉了docker，鼓励本地直接构建，然后直接同步。</p>
-<p><strong>而且同步到其他仓库的功能在新的版本里才可以使用</strong></p>
-<p>最后我已使用了本地构建这个方案。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">buildAndDeploy</span></span><br><span class="line"><span class="attr">on:</span> [<span class="string">push</span>]</span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">          <span class="attr">persist-credentials:</span> <span class="literal">false</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">JamesIves/github-pages-deploy-action@3.5.9</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">ACCESS_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.ACCESS_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">REPOSITORY_NAME:</span> <span class="string">libaibuaidufu/libaibuaidufu.github.io</span></span><br><span class="line">        <span class="attr">BRANCH:</span> <span class="string">master</span> </span><br><span class="line">        <span class="attr">BASE_BRANCH:</span> <span class="string">master</span> </span><br><span class="line">        <span class="attr">FOLDER:</span> <span class="string">public</span> </span><br></pre></td></tr></table></figure>
-
-<h3 id="骚操作"><a href="#骚操作" class="headerlink" title="骚操作"></a>骚操作</h3><p>中途我也想了骚操作，例如用以前的版本，来构建，再用新的版本来部署。最后出现了权限问题。就没有继续了。</p>
-<p><strong>因为同步到其他仓库的功能在新的版本里才可以使用</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">buildAndDeploy</span></span><br><span class="line"><span class="attr">on:</span> [<span class="string">push</span>]</span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">          <span class="attr">persist-credentials:</span> <span class="literal">false</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">build</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">JamesIves/github-pages-deploy-action@releases/v2</span></span><br><span class="line">      <span class="attr">env:</span></span><br><span class="line">        <span class="attr">ACCESS_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.ACCESS_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">REPOSITORY_NAME:</span> <span class="string">libaibuaidufu/libaibuaidufu/private-blog-deploy-actions</span></span><br><span class="line">        <span class="attr">BASE_BRANCH:</span> <span class="string">master</span></span><br><span class="line">        <span class="attr">BRANCH:</span> <span class="string">gh-pages</span></span><br><span class="line">        <span class="attr">FOLDER:</span> <span class="string">public</span></span><br><span class="line">        <span class="attr">BUILD_SCRIPT:</span>  <span class="string">npm</span> <span class="string">install</span> <span class="string">hexo-cli</span> <span class="string">-g</span> <span class="string">&amp;&amp;</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">&amp;&amp;</span> <span class="string">hexo</span> <span class="string">clean</span> <span class="string">&amp;&amp;</span> <span class="string">hexo</span> <span class="string">g</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">JamesIves/github-pages-deploy-action@3.5.9</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">ACCESS_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.ACCESS_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">REPOSITORY_NAME:</span> <span class="string">libaibuaidufu/libaibuaidufu.github.io</span></span><br><span class="line">        <span class="attr">BRANCH:</span> <span class="string">master</span> </span><br><span class="line">        <span class="attr">BASE_BRANCH:</span> <span class="string">master</span> </span><br><span class="line">        <span class="attr">FOLDER:</span> <span class="string">public</span> </span><br></pre></td></tr></table></figure>
-
-<h3 id="windows-bat-命令"><a href="#windows-bat-命令" class="headerlink" title="windows bat 命令"></a>windows bat 命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cls</span><br><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">echo</span> 清理中。。。</span><br><span class="line">call hexo clean </span><br><span class="line"><span class="built_in">echo</span> 重新构建。。。</span><br><span class="line">call hexo g </span><br><span class="line"><span class="built_in">echo</span> 添加新的修改。。。</span><br><span class="line">call git add . </span><br><span class="line"><span class="built_in">set</span> /p commit_message=提交内容：</span><br><span class="line"><span class="built_in">echo</span> 提交新的修改</span><br><span class="line">call git commit -m %commit_message%</span><br><span class="line"><span class="built_in">echo</span> 推送新的修改</span><br><span class="line">call git push -u origin master</span><br><span class="line"><span class="built_in">echo</span> 已完成</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>博客搭建</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>github-action</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>github、gitlab、ssh密钥登录</title>
     <url>/post/github%E3%80%81gitlab%E3%80%81ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95.html</url>
     <content><![CDATA[<p>一直对ssh密钥登录半知半解，以前都是跟着教程自己走一遍，每次都去查看，这次就认真记录一下，可能遇到的情况。github多账号登录问题，github、gitlab多网站账户密钥问题以及ssh密钥登录问题。</p>
@@ -269,6 +239,36 @@
       </tags>
   </entry>
   <entry>
+    <title>github actions 自动部署 hexo</title>
+    <url>/post/github-actions-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2-hexo.html</url>
+    <content><![CDATA[<p>github actions 自动部署 hexo,感觉还是有点问题。有很多方法可以解决，但是我这里就不折腾了。</p>
+<a id="more"></a>
+
+<p>我自己的提问：<a href="https://github.com/JamesIves/github-pages-deploy-action/issues/389">https://github.com/JamesIves/github-pages-deploy-action/issues/389</a></p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>hexo 安装 需要全局，但是没有权限无法安装。可以利用docker安装 ，解决权限问题。</p>
+<p>但是新版本的 action，作者去掉了docker，鼓励本地直接构建，然后直接同步。</p>
+<p><strong>而且同步到其他仓库的功能在新的版本里才可以使用</strong></p>
+<p>最后我已使用了本地构建这个方案。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">buildAndDeploy</span></span><br><span class="line"><span class="attr">on:</span> [<span class="string">push</span>]</span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">          <span class="attr">persist-credentials:</span> <span class="literal">false</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">JamesIves/github-pages-deploy-action@3.5.9</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">ACCESS_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.ACCESS_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">REPOSITORY_NAME:</span> <span class="string">libaibuaidufu/libaibuaidufu.github.io</span></span><br><span class="line">        <span class="attr">BRANCH:</span> <span class="string">master</span> </span><br><span class="line">        <span class="attr">BASE_BRANCH:</span> <span class="string">master</span> </span><br><span class="line">        <span class="attr">FOLDER:</span> <span class="string">public</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="骚操作"><a href="#骚操作" class="headerlink" title="骚操作"></a>骚操作</h3><p>中途我也想了骚操作，例如用以前的版本，来构建，再用新的版本来部署。最后出现了权限问题。就没有继续了。</p>
+<p><strong>因为同步到其他仓库的功能在新的版本里才可以使用</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">buildAndDeploy</span></span><br><span class="line"><span class="attr">on:</span> [<span class="string">push</span>]</span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">checkout</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">          <span class="attr">persist-credentials:</span> <span class="literal">false</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">build</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">JamesIves/github-pages-deploy-action@releases/v2</span></span><br><span class="line">      <span class="attr">env:</span></span><br><span class="line">        <span class="attr">ACCESS_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.ACCESS_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">REPOSITORY_NAME:</span> <span class="string">libaibuaidufu/libaibuaidufu/private-blog-deploy-actions</span></span><br><span class="line">        <span class="attr">BASE_BRANCH:</span> <span class="string">master</span></span><br><span class="line">        <span class="attr">BRANCH:</span> <span class="string">gh-pages</span></span><br><span class="line">        <span class="attr">FOLDER:</span> <span class="string">public</span></span><br><span class="line">        <span class="attr">BUILD_SCRIPT:</span>  <span class="string">npm</span> <span class="string">install</span> <span class="string">hexo-cli</span> <span class="string">-g</span> <span class="string">&amp;&amp;</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">&amp;&amp;</span> <span class="string">hexo</span> <span class="string">clean</span> <span class="string">&amp;&amp;</span> <span class="string">hexo</span> <span class="string">g</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">      <span class="attr">uses:</span> <span class="string">JamesIves/github-pages-deploy-action@3.5.9</span></span><br><span class="line">      <span class="attr">with:</span></span><br><span class="line">        <span class="attr">ACCESS_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.ACCESS_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">REPOSITORY_NAME:</span> <span class="string">libaibuaidufu/libaibuaidufu.github.io</span></span><br><span class="line">        <span class="attr">BRANCH:</span> <span class="string">master</span> </span><br><span class="line">        <span class="attr">BASE_BRANCH:</span> <span class="string">master</span> </span><br><span class="line">        <span class="attr">FOLDER:</span> <span class="string">public</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="windows-bat-命令"><a href="#windows-bat-命令" class="headerlink" title="windows bat 命令"></a>windows bat 命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cls</span><br><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">echo</span> 清理中。。。</span><br><span class="line">call hexo clean </span><br><span class="line"><span class="built_in">echo</span> 重新构建。。。</span><br><span class="line">call hexo g </span><br><span class="line"><span class="built_in">echo</span> 添加新的修改。。。</span><br><span class="line">call git add . </span><br><span class="line"><span class="built_in">set</span> /p commit_message=提交内容：</span><br><span class="line"><span class="built_in">echo</span> 提交新的修改</span><br><span class="line">call git commit -m %commit_message%</span><br><span class="line"><span class="built_in">echo</span> 推送新的修改</span><br><span class="line">call git push -u origin master</span><br><span class="line"><span class="built_in">echo</span> 已完成</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>博客搭建</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>github-action</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>gitlab 生产安全事故记录</title>
     <url>/post/gitlab-%E7%94%9F%E4%BA%A7%E5%AE%89%E5%85%A8%E4%BA%8B%E6%95%85%E8%AE%B0%E5%BD%95.html</url>
     <content><![CDATA[<p>问题：公司自建gitlab突然卡死 ，无法启动，启动后直接卡死虚拟机。</p>
@@ -336,6 +336,29 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo 的基础使用</title>
+    <url>/post/hello-world.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>博客搭建</category>
+      </categories>
+  </entry>
+  <entry>
     <title>grpc 之 word2pdf使用</title>
     <url>/post/grpc-%E4%B9%8B-word2pdf%E4%BD%BF%E7%94%A8.html</url>
     <content><![CDATA[<blockquote>
@@ -382,6 +405,65 @@
       </categories>
       <tags>
         <tag>grpc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>learn Websocket</title>
+    <url>/post/learn-Websocket.html</url>
+    <content><![CDATA[<blockquote>
+<p>参考：</p>
+<ol>
+<li><a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html">http://www.ruanyifeng.com/blog/2017/05/websocket.html</a></li>
+<li><a href="https://socket.io/docs/client-api/#IO">https://socket.io/docs/client-api/#IO</a></li>
+<li><a href="https://flask-socketio.readthedocs.io/en/latest/">https://flask-socketio.readthedocs.io/en/latest/</a></li>
+</ol>
+</blockquote>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>客服端发起连接 —–&gt;  服务端 connect事件 连接 —–&gt; 客户端 connect事件 反应。</p>
+<p> send 和 emit区别，send只能在 message事件上接受，emit可以发给任何事件接收。</p>
+<p>因此emit是首选。</p>
+<a id="more"></a>
+
+<h3 id="客户端-socket"><a href="#客户端-socket" class="headerlink" title="客户端  socket"></a>客户端  socket</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/socket.io/2.3.0/socket.io.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> socket = io(<span class="string">&quot;ws://127.0.0.1:5000&quot;</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(socket.id); <span class="comment">//undefined</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(socket.connected); <span class="comment">// false</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&#x27;connect&#x27;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(socket.id); <span class="comment">//唯一id</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;connect&quot;</span>, evt);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(socket.connected); <span class="comment">// true</span></span></span><br><span class="line"><span class="javascript">        socket.emit(<span class="string">&quot;onmessage&quot;</span>, <span class="string">&quot;hello,world&quot;</span>)</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&#x27;disconnect&#x27;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;disconnect&quot;</span>, evt);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(socket.connected); <span class="comment">// false</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(socket.disconnected); <span class="comment">// false</span></span></span><br><span class="line">    &#125;);</span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&quot;onmessage&quot;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;onmessage&quot;</span>, evt);</span></span><br><span class="line"><span class="javascript">        socket.send(<span class="string">&quot;gjjgjg&quot;</span>);</span></span><br><span class="line">        socket.disconnect()</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&quot;message&quot;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// send 只能用在 message事件上</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;message&quot;</span>, evt);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="comment">// 监听窗口事件，当窗口关闭时，主动断开websocket连接，防止连接没断开就关闭窗口，server端报错</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.onbeforeunload = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line">        socket.close()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-id"><a href="#socket-id" class="headerlink" title="socket.id"></a>socket.id</h4><p><em>字符串</em></p>
+<p>套接字会话的唯一标识符。在<code>connect</code>事件触发后设置，并在<code>reconnect</code>事件后更新。</p>
+<h4 id="socket-connected"><a href="#socket-connected" class="headerlink" title="socket.connected"></a>socket.connected</h4><p><em>布尔值</em></p>
+<p>套接字是否已连接到服务器。</p>
+<h4 id="socket-disconnected"><a href="#socket-disconnected" class="headerlink" title="socket.disconnected"></a>socket.disconnected</h4><p><em>布尔值</em></p>
+<p>套接字是否与服务器断开连接。</p>
+<h4 id="socket-open"><a href="#socket-open" class="headerlink" title="socket.open()"></a>socket.open()</h4><p>手动重连</p>
+<h4 id="socket-connect"><a href="#socket-connect" class="headerlink" title="socket.connect()"></a>socket.connect()</h4><p>同 ocket.open()</p>
+<h4 id="socket-on"><a href="#socket-on" class="headerlink" title="socket.on"></a>socket.on</h4><figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line">socket.<span class="literal">on</span>(<span class="string">&#x27;news&#x27;</span>, <span class="function"><span class="params">(data)</span> =&gt;</span> &#123;  <span class="built_in">console</span>.log(data);&#125;);<span class="regexp">//</span> wit</span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-emit"><a href="#socket-emit" class="headerlink" title="socket.emit"></a>socket.emit</h4><figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">socket</span><span class="selector-class">.emit</span>(<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-send"><a href="#socket-send" class="headerlink" title="socket.send"></a>socket.send</h4><figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">socket.<span class="built_in">send</span>(<span class="string">&#x27;world&#x27;</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-close"><a href="#socket-close" class="headerlink" title="socket.close()"></a>socket.close()</h4><p>手动关闭</p>
+<h4 id="socket-disconnect"><a href="#socket-disconnect" class="headerlink" title="socket.disconnect()"></a>socket.disconnect()</h4><p>同 socket.close()</p>
+<h4 id="socket-compress-value"><a href="#socket-compress-value" class="headerlink" title="socket.compress(value)"></a>socket.compress(value)</h4><p>压缩传输</p>
+<ul>
+<li><code>value</code> <em>（布尔值）</em></li>
+<li><strong>退货</strong> <code>Socket</code></li>
+</ul>
+<p>设置用于后续事件发射的修饰符，以使事件数据仅在值为时才被<em>压缩</em><code>true</code>。默认为<code>true</code>不调用该方法的时间。</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">socket.compress(<span class="literal">false</span>).emit(<span class="symbol">&#x27;an</span> event&#x27;, &#123; <span class="keyword">some</span>: <span class="symbol">&#x27;data</span>&#x27; &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-binary-value"><a href="#socket-binary-value" class="headerlink" title="socket.binary(value)"></a>socket.binary(value)</h4><p>指定发出的数据是否包含二进制。指定时提高性能。可以是<code>true</code>或<code>false</code>。</p>
+<figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">socket.<span class="built_in">binary</span>（<span class="literal">false</span>）.emit（<span class="string">&#x27;一个事件&#x27;</span>，&#123; 一些：<span class="string">&#x27;数据&#x27;</span> &#125;）<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p><em>用很多没有介绍到的，可以查看文档进行学习。</em></p>
+<h4 id="普通socket"><a href="#普通socket" class="headerlink" title="普通socket"></a>普通socket</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">@Time    : 2020/9/27 10:13</span></span><br><span class="line"><span class="string">@File    : main.py</span></span><br><span class="line"><span class="string">@author  : dfkai</span></span><br><span class="line"><span class="string">@Software: PyCharm</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_socketio <span class="keyword">import</span> SocketIO, emit, send</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">socketio = SocketIO(app, cors_allowed_origins=<span class="string">&quot;*&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;connect&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connect</span>(<span class="params">msg=None</span>):</span></span><br><span class="line">    print(<span class="string">&quot;connect&quot;</span>)</span><br><span class="line">    print(msg)</span><br><span class="line">    <span class="comment"># emit(&quot;onmessage&quot;, &#123;&quot;data&quot;: &quot;hell world&quot;&#125;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;disconnect&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">disconnect</span>(<span class="params">msg=None</span>):</span></span><br><span class="line">    print(<span class="string">&quot;disconnect&quot;</span>)</span><br><span class="line">    print(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;onmessage&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">onmessage</span>(<span class="params">msg=None</span>):</span></span><br><span class="line">    print(<span class="string">&quot;onmessage&quot;</span>)</span><br><span class="line">    print(msg)</span><br><span class="line">    send(&#123;<span class="string">&quot;data&quot;</span>: <span class="string">&quot;hell world&quot;</span>&#125;)</span><br><span class="line">    emit(<span class="string">&quot;onmessage&quot;</span>, &#123;<span class="string">&quot;data&quot;</span>: <span class="string">&quot;hell world&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;message&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">message</span>(<span class="params">msg=None</span>):</span></span><br><span class="line">    print(<span class="string">&quot;message&quot;</span>)</span><br><span class="line">    print(msg)</span><br><span class="line">    send(<span class="string">&quot;googogogo&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    socketio.run(app, debug=<span class="literal">True</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="后台轮询任务"><a href="#后台轮询任务" class="headerlink" title="后台轮询任务"></a>后台轮询任务</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">@Time    : 2020/9/14 11:42</span></span><br><span class="line"><span class="string">@File    : back_socket.py</span></span><br><span class="line"><span class="string">@author  : dfkai</span></span><br><span class="line"><span class="string">@Software: PyCharm</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_socketio <span class="keyword">import</span> SocketIO, emit</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">socketio = SocketIO(app)</span><br><span class="line"></span><br><span class="line">thread_inspect = <span class="literal">None</span></span><br><span class="line">thread_json = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;connect&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_connect</span>():</span></span><br><span class="line">    <span class="keyword">global</span> thread_json, thread_inspect</span><br><span class="line">    <span class="keyword">if</span> thread_json <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        print(<span class="string">&quot;ine&quot;</span>)</span><br><span class="line">        thread_json = socketio.start_background_task(target=background_thread_for_json)</span><br><span class="line">    <span class="keyword">if</span> thread_inspect <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        thread_json = socketio.start_background_task(target=background_thread_for_inspect)</span><br><span class="line">    emit(<span class="string">&quot;message&quot;</span>, <span class="string">&quot;hhhe&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">background_thread_for_json</span>():</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        socketio.sleep(<span class="number">10</span>)</span><br><span class="line">        now = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        login_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_login_for_socket()&quot;</span></span><br><span class="line">        arra_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_arra_for_socket()&quot;</span></span><br><span class="line">        gather_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_gather_for_socket()&quot;</span></span><br><span class="line">        re_msg_dict = &#123;</span><br><span class="line">            <span class="string">&quot;login_json&quot;</span>: login_json,</span><br><span class="line">            <span class="string">&quot;arra_json&quot;</span>: arra_json,</span><br><span class="line">            <span class="string">&quot;gather_json&quot;</span>: gather_json</span><br><span class="line">        &#125;</span><br><span class="line">        socketio.emit(<span class="string">&quot;message&quot;</span>, re_msg_dict, namespace=<span class="string">&quot;/abc&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">background_thread_for_inspect</span>():</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        socketio.sleep(<span class="number">10</span>)</span><br><span class="line">        now = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        inspect_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_inspect_for_socket()&quot;</span></span><br><span class="line">        re_msg_dict = &#123;</span><br><span class="line">            <span class="string">&quot;inspect_json&quot;</span>: inspect_json</span><br><span class="line">        &#125;</span><br><span class="line">        socketio.emit(<span class="string">&quot;inspect&quot;</span>, re_msg_dict, namespace=<span class="string">&quot;/abc&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    socketio.run(app)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/09/27/gSl8aYbT251swOU.png"></p>
+]]></content>
+      <categories>
+        <category>websocket</category>
+      </categories>
+      <tags>
+        <tag>websocket</tag>
       </tags>
   </entry>
   <entry>
@@ -434,29 +516,6 @@
         <tag>hexo</tag>
         <tag>next</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>hexo 的基础使用</title>
-    <url>/post/hello-world.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<a id="more"></a>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>博客搭建</category>
-      </categories>
   </entry>
   <entry>
     <title>openwrt 编译k2固件</title>
@@ -551,62 +610,33 @@
       </categories>
   </entry>
   <entry>
-    <title>learn Websocket</title>
-    <url>/post/learn-Websocket.html</url>
-    <content><![CDATA[<blockquote>
-<p>参考：</p>
-<ol>
-<li><a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html">http://www.ruanyifeng.com/blog/2017/05/websocket.html</a></li>
-<li><a href="https://socket.io/docs/client-api/#IO">https://socket.io/docs/client-api/#IO</a></li>
-<li><a href="https://flask-socketio.readthedocs.io/en/latest/">https://flask-socketio.readthedocs.io/en/latest/</a></li>
-</ol>
-</blockquote>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>客服端发起连接 —–&gt;  服务端 connect事件 连接 —–&gt; 客户端 connect事件 反应。</p>
-<p> send 和 emit区别，send只能在 message事件上接受，emit可以发给任何事件接收。</p>
-<p>因此emit是首选。</p>
+    <title>scrapy + scrapyd + scrapydweb + logparser + docker分布式部署</title>
+    <url>/post/scrapy-scrapyd-scrapydweb-logparser-docker%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2.html</url>
+    <content><![CDATA[<p>在工作中使用，特此在这记录一下，并写成docker文件，方便部署使用。</p>
 <a id="more"></a>
 
-<h3 id="客户端-socket"><a href="#客户端-socket" class="headerlink" title="客户端  socket"></a>客户端  socket</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/socket.io/2.3.0/socket.io.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> socket = io(<span class="string">&quot;ws://127.0.0.1:5000&quot;</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(socket.id); <span class="comment">//undefined</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(socket.connected); <span class="comment">// false</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&#x27;connect&#x27;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(socket.id); <span class="comment">//唯一id</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;connect&quot;</span>, evt);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(socket.connected); <span class="comment">// true</span></span></span><br><span class="line"><span class="javascript">        socket.emit(<span class="string">&quot;onmessage&quot;</span>, <span class="string">&quot;hello,world&quot;</span>)</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&#x27;disconnect&#x27;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;disconnect&quot;</span>, evt);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(socket.connected); <span class="comment">// false</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(socket.disconnected); <span class="comment">// false</span></span></span><br><span class="line">    &#125;);</span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&quot;onmessage&quot;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;onmessage&quot;</span>, evt);</span></span><br><span class="line"><span class="javascript">        socket.send(<span class="string">&quot;gjjgjg&quot;</span>);</span></span><br><span class="line">        socket.disconnect()</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="javascript">    socket.on(<span class="string">&quot;message&quot;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// send 只能用在 message事件上</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">&quot;message&quot;</span>, evt);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="comment">// 监听窗口事件，当窗口关闭时，主动断开websocket连接，防止连接没断开就关闭窗口，server端报错</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.onbeforeunload = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line">        socket.close()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="1-构建-scrapyd-logparser"><a href="#1-构建-scrapyd-logparser" class="headerlink" title="1.构建 scrapyd_logparser"></a>1.构建 scrapyd_logparser</h5><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">cd <span class="keyword">scrapyd_logparser</span></span><br><span class="line"><span class="keyword">docker </span><span class="keyword">build </span>-t <span class="keyword">scrapyd_logparser </span>.</span><br></pre></td></tr></table></figure>
 
-<h4 id="socket-id"><a href="#socket-id" class="headerlink" title="socket.id"></a>socket.id</h4><p><em>字符串</em></p>
-<p>套接字会话的唯一标识符。在<code>connect</code>事件触发后设置，并在<code>reconnect</code>事件后更新。</p>
-<h4 id="socket-connected"><a href="#socket-connected" class="headerlink" title="socket.connected"></a>socket.connected</h4><p><em>布尔值</em></p>
-<p>套接字是否已连接到服务器。</p>
-<h4 id="socket-disconnected"><a href="#socket-disconnected" class="headerlink" title="socket.disconnected"></a>socket.disconnected</h4><p><em>布尔值</em></p>
-<p>套接字是否与服务器断开连接。</p>
-<h4 id="socket-open"><a href="#socket-open" class="headerlink" title="socket.open()"></a>socket.open()</h4><p>手动重连</p>
-<h4 id="socket-connect"><a href="#socket-connect" class="headerlink" title="socket.connect()"></a>socket.connect()</h4><p>同 ocket.open()</p>
-<h4 id="socket-on"><a href="#socket-on" class="headerlink" title="socket.on"></a>socket.on</h4><figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line">socket.<span class="literal">on</span>(<span class="string">&#x27;news&#x27;</span>, <span class="function"><span class="params">(data)</span> =&gt;</span> &#123;  <span class="built_in">console</span>.log(data);&#125;);<span class="regexp">//</span> wit</span><br></pre></td></tr></table></figure>
+<h5 id="2-运行-scrapyd-logparser"><a href="#2-运行-scrapyd-logparser" class="headerlink" title="2.运行 scrapyd_logparser"></a>2.运行 scrapyd_logparser</h5><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">docker</span> run -d -p <span class="number">6800</span>:<span class="number">6800</span> --name scrapyd_<span class="number">1</span> scrapyd_logparser</span><br><span class="line"><span class="comment"># docker run -d -p 6800:6800 -v /root/scrapyd_logparser:/code --name scrapyd_1 scrapyd_logparser</span></span><br><span class="line"><span class="comment"># 可以外联出文件 可以进行配置修改</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="socket-emit"><a href="#socket-emit" class="headerlink" title="socket.emit"></a>socket.emit</h4><figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">socket</span><span class="selector-class">.emit</span>(<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="3-构建-scrapydweb"><a href="#3-构建-scrapydweb" class="headerlink" title="3.构建 scrapydweb"></a>3.构建 scrapydweb</h5><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">cd <span class="keyword">scrapydweb</span></span><br><span class="line"><span class="keyword">docker </span><span class="keyword">build </span>-t <span class="keyword">scrapydweb </span>.</span><br></pre></td></tr></table></figure>
 
-<h4 id="socket-send"><a href="#socket-send" class="headerlink" title="socket.send"></a>socket.send</h4><figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">socket.<span class="built_in">send</span>(<span class="string">&#x27;world&#x27;</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h5 id="4-运行-scrapydweb"><a href="#4-运行-scrapydweb" class="headerlink" title="4.运行 scrapydweb"></a>4.运行 scrapydweb</h5><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">docker</span> run -d -p <span class="number">5000</span>:<span class="number">5000</span> -v /root/scrapydweb:/code --name scrapydweb scrapydweb</span><br><span class="line"><span class="comment"># 外链出文件 好修改配置 进行更新部署</span></span><br><span class="line"><span class="comment"># 修改配置</span></span><br><span class="line"><span class="attribute">vim</span> scrapydweb_settings_v<span class="number">10</span>.py </span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line"><span class="attribute">docker</span> restart scrapydweb</span><br></pre></td></tr></table></figure>
 
-<h4 id="socket-close"><a href="#socket-close" class="headerlink" title="socket.close()"></a>socket.close()</h4><p>手动关闭</p>
-<h4 id="socket-disconnect"><a href="#socket-disconnect" class="headerlink" title="socket.disconnect()"></a>socket.disconnect()</h4><p>同 socket.close()</p>
-<h4 id="socket-compress-value"><a href="#socket-compress-value" class="headerlink" title="socket.compress(value)"></a>socket.compress(value)</h4><p>压缩传输</p>
-<ul>
-<li><code>value</code> <em>（布尔值）</em></li>
-<li><strong>退货</strong> <code>Socket</code></li>
-</ul>
-<p>设置用于后续事件发射的修饰符，以使事件数据仅在值为时才被<em>压缩</em><code>true</code>。默认为<code>true</code>不调用该方法的时间。</p>
-<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">socket.compress(<span class="literal">false</span>).emit(<span class="symbol">&#x27;an</span> event&#x27;, &#123; <span class="keyword">some</span>: <span class="symbol">&#x27;data</span>&#x27; &#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="socket-binary-value"><a href="#socket-binary-value" class="headerlink" title="socket.binary(value)"></a>socket.binary(value)</h4><p>指定发出的数据是否包含二进制。指定时提高性能。可以是<code>true</code>或<code>false</code>。</p>
-<figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">socket.<span class="built_in">binary</span>（<span class="literal">false</span>）.emit（<span class="string">&#x27;一个事件&#x27;</span>，&#123; 一些：<span class="string">&#x27;数据&#x27;</span> &#125;）<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p><em>用很多没有介绍到的，可以查看文档进行学习。</em></p>
-<h4 id="普通socket"><a href="#普通socket" class="headerlink" title="普通socket"></a>普通socket</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">@Time    : 2020/9/27 10:13</span></span><br><span class="line"><span class="string">@File    : main.py</span></span><br><span class="line"><span class="string">@author  : dfkai</span></span><br><span class="line"><span class="string">@Software: PyCharm</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_socketio <span class="keyword">import</span> SocketIO, emit, send</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">socketio = SocketIO(app, cors_allowed_origins=<span class="string">&quot;*&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;connect&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connect</span>(<span class="params">msg=None</span>):</span></span><br><span class="line">    print(<span class="string">&quot;connect&quot;</span>)</span><br><span class="line">    print(msg)</span><br><span class="line">    <span class="comment"># emit(&quot;onmessage&quot;, &#123;&quot;data&quot;: &quot;hell world&quot;&#125;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;disconnect&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">disconnect</span>(<span class="params">msg=None</span>):</span></span><br><span class="line">    print(<span class="string">&quot;disconnect&quot;</span>)</span><br><span class="line">    print(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;onmessage&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">onmessage</span>(<span class="params">msg=None</span>):</span></span><br><span class="line">    print(<span class="string">&quot;onmessage&quot;</span>)</span><br><span class="line">    print(msg)</span><br><span class="line">    send(&#123;<span class="string">&quot;data&quot;</span>: <span class="string">&quot;hell world&quot;</span>&#125;)</span><br><span class="line">    emit(<span class="string">&quot;onmessage&quot;</span>, &#123;<span class="string">&quot;data&quot;</span>: <span class="string">&quot;hell world&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;message&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">message</span>(<span class="params">msg=None</span>):</span></span><br><span class="line">    print(<span class="string">&quot;message&quot;</span>)</span><br><span class="line">    print(msg)</span><br><span class="line">    send(<span class="string">&quot;googogogo&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    socketio.run(app, debug=<span class="literal">True</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="后台轮询任务"><a href="#后台轮询任务" class="headerlink" title="后台轮询任务"></a>后台轮询任务</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">@Time    : 2020/9/14 11:42</span></span><br><span class="line"><span class="string">@File    : back_socket.py</span></span><br><span class="line"><span class="string">@author  : dfkai</span></span><br><span class="line"><span class="string">@Software: PyCharm</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_socketio <span class="keyword">import</span> SocketIO, emit</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">socketio = SocketIO(app)</span><br><span class="line"></span><br><span class="line">thread_inspect = <span class="literal">None</span></span><br><span class="line">thread_json = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(&quot;connect&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_connect</span>():</span></span><br><span class="line">    <span class="keyword">global</span> thread_json, thread_inspect</span><br><span class="line">    <span class="keyword">if</span> thread_json <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        print(<span class="string">&quot;ine&quot;</span>)</span><br><span class="line">        thread_json = socketio.start_background_task(target=background_thread_for_json)</span><br><span class="line">    <span class="keyword">if</span> thread_inspect <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        thread_json = socketio.start_background_task(target=background_thread_for_inspect)</span><br><span class="line">    emit(<span class="string">&quot;message&quot;</span>, <span class="string">&quot;hhhe&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">background_thread_for_json</span>():</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        socketio.sleep(<span class="number">10</span>)</span><br><span class="line">        now = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        login_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_login_for_socket()&quot;</span></span><br><span class="line">        arra_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_arra_for_socket()&quot;</span></span><br><span class="line">        gather_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_gather_for_socket()&quot;</span></span><br><span class="line">        re_msg_dict = &#123;</span><br><span class="line">            <span class="string">&quot;login_json&quot;</span>: login_json,</span><br><span class="line">            <span class="string">&quot;arra_json&quot;</span>: arra_json,</span><br><span class="line">            <span class="string">&quot;gather_json&quot;</span>: gather_json</span><br><span class="line">        &#125;</span><br><span class="line">        socketio.emit(<span class="string">&quot;message&quot;</span>, re_msg_dict, namespace=<span class="string">&quot;/abc&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">background_thread_for_inspect</span>():</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        socketio.sleep(<span class="number">10</span>)</span><br><span class="line">        now = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        inspect_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_inspect_for_socket()&quot;</span></span><br><span class="line">        re_msg_dict = &#123;</span><br><span class="line">            <span class="string">&quot;inspect_json&quot;</span>: inspect_json</span><br><span class="line">        &#125;</span><br><span class="line">        socketio.emit(<span class="string">&quot;inspect&quot;</span>, re_msg_dict, namespace=<span class="string">&quot;/abc&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    socketio.run(app)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2020/09/27/gSl8aYbT251swOU.png"></p>
+<h5 id="5-多机部署"><a href="#5-多机部署" class="headerlink" title="5.多机部署"></a>5.多机部署</h5><figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">在其他机器中 部署 文件 执行 <span class="number">1</span>，<span class="number">2</span> 步</span><br><span class="line">同时在 scrapydweb 的配置文件 添加在 新主机的ip</span><br><span class="line"></span><br><span class="line"><span class="meta"># 以下添加</span></span><br><span class="line">SCRAPYD_SERVERS = [</span><br><span class="line">    <span class="string">&#x27;192.168.5.131:6800&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;192.168.5.131:6805&#x27;</span>,</span><br><span class="line">    <span class="meta"># <span class="string">&#x27;username:password@localhost:6801#group&#x27;</span>,</span></span><br><span class="line">    <span class="meta"># (<span class="string">&#x27;username&#x27;</span>, <span class="string">&#x27;password&#x27;</span>, <span class="string">&#x27;localhost&#x27;</span>, <span class="string">&#x27;6801&#x27;</span>, <span class="string">&#x27;group&#x27;</span>),</span></span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>源码</strong>: <a href="https://github.com/libaibuaidufu/scrapyd_web_log">https://github.com/libaibuaidufu/scrapyd_web_log</a><br><strong>注</strong>： 可以自己查看 一下 scrapydweb 配置文件 修改，和 scrapyd 配置文件修改</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://github.com/my8100/scrapydweb">scrapydweb</a></li>
+<li><a href="https://github.com/my8100/logparser">logparser</a></li>
+</ol>
 ]]></content>
       <categories>
-        <category>websocket</category>
+        <category>代码来了</category>
       </categories>
       <tags>
-        <tag>websocket</tag>
+        <tag>scrapy</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
@@ -661,57 +691,6 @@
       </tags>
   </entry>
   <entry>
-    <title>scrapy + scrapyd + scrapydweb + logparser + docker分布式部署</title>
-    <url>/post/scrapy-scrapyd-scrapydweb-logparser-docker%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2.html</url>
-    <content><![CDATA[<p>在工作中使用，特此在这记录一下，并写成docker文件，方便部署使用。</p>
-<a id="more"></a>
-
-<h5 id="1-构建-scrapyd-logparser"><a href="#1-构建-scrapyd-logparser" class="headerlink" title="1.构建 scrapyd_logparser"></a>1.构建 scrapyd_logparser</h5><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">cd <span class="keyword">scrapyd_logparser</span></span><br><span class="line"><span class="keyword">docker </span><span class="keyword">build </span>-t <span class="keyword">scrapyd_logparser </span>.</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-运行-scrapyd-logparser"><a href="#2-运行-scrapyd-logparser" class="headerlink" title="2.运行 scrapyd_logparser"></a>2.运行 scrapyd_logparser</h5><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">docker</span> run -d -p <span class="number">6800</span>:<span class="number">6800</span> --name scrapyd_<span class="number">1</span> scrapyd_logparser</span><br><span class="line"><span class="comment"># docker run -d -p 6800:6800 -v /root/scrapyd_logparser:/code --name scrapyd_1 scrapyd_logparser</span></span><br><span class="line"><span class="comment"># 可以外联出文件 可以进行配置修改</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="3-构建-scrapydweb"><a href="#3-构建-scrapydweb" class="headerlink" title="3.构建 scrapydweb"></a>3.构建 scrapydweb</h5><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">cd <span class="keyword">scrapydweb</span></span><br><span class="line"><span class="keyword">docker </span><span class="keyword">build </span>-t <span class="keyword">scrapydweb </span>.</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-运行-scrapydweb"><a href="#4-运行-scrapydweb" class="headerlink" title="4.运行 scrapydweb"></a>4.运行 scrapydweb</h5><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">docker</span> run -d -p <span class="number">5000</span>:<span class="number">5000</span> -v /root/scrapydweb:/code --name scrapydweb scrapydweb</span><br><span class="line"><span class="comment"># 外链出文件 好修改配置 进行更新部署</span></span><br><span class="line"><span class="comment"># 修改配置</span></span><br><span class="line"><span class="attribute">vim</span> scrapydweb_settings_v<span class="number">10</span>.py </span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line"><span class="attribute">docker</span> restart scrapydweb</span><br></pre></td></tr></table></figure>
-
-<h5 id="5-多机部署"><a href="#5-多机部署" class="headerlink" title="5.多机部署"></a>5.多机部署</h5><figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">在其他机器中 部署 文件 执行 <span class="number">1</span>，<span class="number">2</span> 步</span><br><span class="line">同时在 scrapydweb 的配置文件 添加在 新主机的ip</span><br><span class="line"></span><br><span class="line"><span class="meta"># 以下添加</span></span><br><span class="line">SCRAPYD_SERVERS = [</span><br><span class="line">    <span class="string">&#x27;192.168.5.131:6800&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;192.168.5.131:6805&#x27;</span>,</span><br><span class="line">    <span class="meta"># <span class="string">&#x27;username:password@localhost:6801#group&#x27;</span>,</span></span><br><span class="line">    <span class="meta"># (<span class="string">&#x27;username&#x27;</span>, <span class="string">&#x27;password&#x27;</span>, <span class="string">&#x27;localhost&#x27;</span>, <span class="string">&#x27;6801&#x27;</span>, <span class="string">&#x27;group&#x27;</span>),</span></span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><strong>源码</strong>: <a href="https://github.com/libaibuaidufu/scrapyd_web_log">https://github.com/libaibuaidufu/scrapyd_web_log</a><br><strong>注</strong>： 可以自己查看 一下 scrapydweb 配置文件 修改，和 scrapyd 配置文件修改</p>
-<p>参考：</p>
-<ol>
-<li><a href="https://github.com/my8100/scrapydweb">scrapydweb</a></li>
-<li><a href="https://github.com/my8100/logparser">logparser</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>代码来了</category>
-      </categories>
-      <tags>
-        <tag>scrapy</tag>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>selenium 反爬虫识别特征处理</title>
-    <url>/post/selenium-%E5%8F%8D%E7%88%AC%E8%99%AB%E8%AF%86%E5%88%AB%E7%89%B9%E5%BE%81%E5%A4%84%E7%90%86.html</url>
-    <content><![CDATA[<p><strong>因为业务中发现网站对selenium特征识别为爬虫了，因此在搜索引擎中搜索进行处理</strong></p>
-<a id="more"></a>
-
-<h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实例化一个浏览器对象</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_experimental_option(<span class="string">&#x27;excludeSwitches&#x27;</span>, [<span class="string">&#x27;enable-automation&#x27;</span>])</span><br><span class="line"><span class="keyword">if</span> sys.platform == <span class="string">&quot;win32&quot;</span>:</span><br><span class="line">    browser = webdriver.Chrome(driver_path, options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    browser = webdriver.Chrome(options=options)</span><br><span class="line">browser.implicitly_wait(<span class="number">30</span>)</span><br><span class="line">browser.execute_cdp_cmd(<span class="string">&quot;Page.addScriptToEvaluateOnNewDocument&quot;</span>, &#123;</span><br><span class="line">    <span class="string">&quot;source&quot;</span>: <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Object.defineProperty(navigator, &#x27;webdriver&#x27;, &#123;</span></span><br><span class="line"><span class="string">      get: () =&gt; undefined</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>此方法虽然可以躲避识别，但是在使用过一段时候后，依然出现被屏蔽的问题。</p>
-<p>因此只有继续搜索 然后再stackoverflow 中又找到了新的答案。</p>
-<h3 id="方式二-（推荐）"><a href="#方式二-（推荐）" class="headerlink" title="方式二 （推荐）"></a>方式二 （推荐）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实例化一个浏览器对象</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_argument(<span class="string">&quot;--disable-blink-features=AutomationControlled&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> sys.platform == <span class="string">&quot;win32&quot;</span>:</span><br><span class="line">    browser = webdriver.Chrome(driver_path, options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    browser = webdriver.Chrome(options=options)</span><br></pre></td></tr></table></figure>
-
-<p>这个方法执行的后，目前运行良好也没有出现被识别的问题。</p>
-<h3 id="关闭当前标签-在切换标签前关闭"><a href="#关闭当前标签-在切换标签前关闭" class="headerlink" title="关闭当前标签 在切换标签前关闭"></a>关闭当前标签 在切换标签前关闭</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.close()</span><br><span class="line">windows = driver.window_handles</span><br><span class="line">driver.switch_to.window(windows[<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>代码来了</category>
-      </categories>
-      <tags>
-        <tag>selenium</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>scrapy+scrapyd 部署使用</title>
     <url>/post/scrapy-scrapyd-%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.html</url>
     <content><![CDATA[<h3 id="scrapyd-部署"><a href="#scrapyd-部署" class="headerlink" title="scrapyd 部署"></a>scrapyd 部署</h3><p><strong>注</strong>：example 为项目名称</p>
@@ -744,66 +723,24 @@
       </tags>
   </entry>
   <entry>
-    <title>wsl 定时任务 crontab权限</title>
-    <url>/post/wsl-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1-crontab%E6%9D%83%E9%99%90.html</url>
-    <content><![CDATA[<p>可能有一些乱,但是不影响整体思路。</p>
-<h3 id="安装-wsl"><a href="#安装-wsl" class="headerlink" title="安装 wsl"></a>安装 wsl</h3><p>首先在windows上 打开 <strong>启动或关闭windows功能</strong>  选择 <strong>适用于 Linux 的 windows 子系统</strong> 打勾</p>
-<p>然后取 windows应用市场 搜索 wsl ，下载你喜欢的一个 linux子系统</p>
-<p>我这边安装了一个 debian，一个ubuntu。</p>
-<p>如果你没有开启<strong>适用于 Linux 的 windows 子系统</strong> 是无法安装的。</p>
-<p><strong>记得一定要安装windows terminal 这个太提升体验了</strong></p>
+    <title>selenium 反爬虫识别特征处理</title>
+    <url>/post/selenium-%E5%8F%8D%E7%88%AC%E8%99%AB%E8%AF%86%E5%88%AB%E7%89%B9%E5%BE%81%E5%A4%84%E7%90%86.html</url>
+    <content><![CDATA[<p><strong>因为业务中发现网站对selenium特征识别为爬虫了，因此在搜索引擎中搜索进行处理</strong></p>
 <a id="more"></a>
 
-<h3 id="配置linux子系统"><a href="#配置linux子系统" class="headerlink" title="配置linux子系统"></a>配置linux子系统</h3><p>进入 debian系统</p>
-<h4 id="挂载windows和linux的共享盘"><a href="#挂载windows和linux的共享盘" class="headerlink" title="挂载windows和linux的共享盘"></a>挂载windows和linux的共享盘</h4><p>可以先在linux子系统和windows之间建立一个共享盘</p>
-<p>挂载 windows D盘的wsl_linux 到 debian到 win10目录</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ln -s /mnt/d/wsl_linux ~/win10 </span><br></pre></td></tr></table></figure>
+<h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实例化一个浏览器对象</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_experimental_option(<span class="string">&#x27;excludeSwitches&#x27;</span>, [<span class="string">&#x27;enable-automation&#x27;</span>])</span><br><span class="line"><span class="keyword">if</span> sys.platform == <span class="string">&quot;win32&quot;</span>:</span><br><span class="line">    browser = webdriver.Chrome(driver_path, options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    browser = webdriver.Chrome(options=options)</span><br><span class="line">browser.implicitly_wait(<span class="number">30</span>)</span><br><span class="line">browser.execute_cdp_cmd(<span class="string">&quot;Page.addScriptToEvaluateOnNewDocument&quot;</span>, &#123;</span><br><span class="line">    <span class="string">&quot;source&quot;</span>: <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Object.defineProperty(navigator, &#x27;webdriver&#x27;, &#123;</span></span><br><span class="line"><span class="string">      get: () =&gt; undefined</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<h4 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h4><p>清华源地址:<a href="https://mirrors.tuna.tsinghua.edu.cn/help/debian/">https://mirrors.tuna.tsinghua.edu.cn/help/debian/</a></p>
-<p><strong>这是debian10</strong></p>
-<p>在windows中 创建一个 sources.list ,同样也可以在linux下创建，看你喜欢</p>
-<p>把内容直接复制到sources.list 里面，因为无法拉去 https ，所以可以吧所有的https改为http</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/debian/</span> buster main contrib non-free</span><br><span class="line">deb http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/debian/</span> buster-updates main contrib non-free</span><br><span class="line">deb http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/debian/</span> buster-backports main contrib non-free</span><br><span class="line">deb http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/debian-security buster/u</span>pdates main contrib non-free</span><br></pre></td></tr></table></figure>
+<p>此方法虽然可以躲避识别，但是在使用过一段时候后，依然出现被屏蔽的问题。</p>
+<p>因此只有继续搜索 然后再stackoverflow 中又找到了新的答案。</p>
+<h3 id="方式二-（推荐）"><a href="#方式二-（推荐）" class="headerlink" title="方式二 （推荐）"></a>方式二 （推荐）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实例化一个浏览器对象</span></span><br><span class="line">options = webdriver.ChromeOptions()</span><br><span class="line">options.add_argument(<span class="string">&quot;--disable-blink-features=AutomationControlled&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> sys.platform == <span class="string">&quot;win32&quot;</span>:</span><br><span class="line">    browser = webdriver.Chrome(driver_path, options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    browser = webdriver.Chrome(options=options)</span><br></pre></td></tr></table></figure>
 
-<p>然后把 文件复制到 /etc/apt中</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line">sudo cp ~/win10/sources.list /etc/apt/sources.list</span><br><span class="line">sudo apt update</span><br><span class="line"><span class="comment">#安装 ca证书 就可以拉去 https</span></span><br><span class="line">sudo apt install apt-transport-https ca-certificates</span><br><span class="line"><span class="comment">#此时就可以修改所有http为 https了</span></span><br><span class="line"><span class="comment"># 然后在执行一次</span></span><br><span class="line">sudo apt update</span><br><span class="line"><span class="comment"># 安装一些我需要的软件</span></span><br><span class="line">sudo apt install crul wget vim -y</span><br></pre></td></tr></table></figure>
-
-<p>此时debian的系统就调试的差不多了。</p>
-<h3 id="设置定时任务-crontab-及其权限"><a href="#设置定时任务-crontab-及其权限" class="headerlink" title="设置定时任务 crontab 及其权限"></a>设置定时任务 crontab 及其权限</h3><p>设置定时任务 crontab  ，因为crontab定时任务的命令网上太多了一搜一大堆，我这里就不复制，粘贴了。</p>
-<h4 id="编辑定时任务"><a href="#编辑定时任务" class="headerlink" title="编辑定时任务"></a>编辑定时任务</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 第一次 他需要让你选择打开使用的编辑器 选择 vim就好了 或者 选择自己熟悉的</span></span><br><span class="line">crontab -e</span><br><span class="line">0 21 * * * <span class="built_in">cd</span> /home/libai/fping-4.2/src/ &amp;&amp; sudo /bin/bash /home/libai/fping-4.2/src/cf.sh &gt;&gt; /var/<span class="built_in">log</span>/cf_log.log</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">crontab -l</span><br><span class="line"><span class="comment"># 重启 这样才会设置任务 ### 认识错误 不用重启  他会自己去读取</span></span><br><span class="line">sudo service cron restart <span class="comment"># debian</span></span><br><span class="line">sudo systemctl restart crond.service <span class="comment"># centos</span></span><br></pre></td></tr></table></figure>
-
-<p>我的这个任务是每天晚上九点 执行一次。</p>
-<p>因为执行命令需要root权限。我们需要设置执行我们这个命令时候，不需要输入密码。</p>
-<h4 id="设置-visudo-，定时任务权限"><a href="#设置-visudo-，定时任务权限" class="headerlink" title="设置 visudo ，定时任务权限"></a>设置 visudo ，定时任务权限</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打开 visudo</span></span><br><span class="line">sudo visudo</span><br><span class="line"><span class="comment"># 在末尾添加 这个用的是nano编辑器</span></span><br><span class="line">%sudo ALL=NOPASSWD: /etc/init.d/cron start</span><br><span class="line">%sudo ALL=NOPASSWD: /bin/bash /home/libai/fping-4.2/src/cf.sh</span><br><span class="line"><span class="comment"># 这里的命令要和上面crontab -e 命令保持一致 路径也一样 不然还是要输入密码的</span></span><br><span class="line"><span class="comment"># 路径 和 目录写清楚 可从下面参考里面看详细的visudo命令解释</span></span><br><span class="line"><span class="comment"># who     where=(whom)    commands</span></span><br><span class="line"><span class="comment"># 用户    主机=（以谁的身份） commands</span></span><br><span class="line"><span class="comment"># nano 命令</span></span><br><span class="line"><span class="comment"># 保存</span></span><br><span class="line">Ctrl+O 然后回车一下就可以了</span><br><span class="line"><span class="comment"># 推出</span></span><br><span class="line">Ctrl+X</span><br></pre></td></tr></table></figure>
-
-<p>此时定时任务就可以起飞了，同时把任务日志保存一下，看看是不是真的运行了。同时运行有什么问题，也可以处理。** &gt;&gt; /var/log/cf_log.log** 注意创建此文件同时注意权限 <strong>chmod 777 cf_log.log</strong></p>
-<h3 id="关闭linux子系统，windows开机启动"><a href="#关闭linux子系统，windows开机启动" class="headerlink" title="关闭linux子系统，windows开机启动"></a>关闭linux子系统，windows开机启动</h3><p>但是这样当我们关闭windows子系统的时候，整个就关闭了，就没有什么定时任务了，因此我们要创建一个windows的开启任务。</p>
-<p>在windows下：</p>
-<p>win+R 输入 shell:startup 打开目录</p>
-<p>新建一个 快捷方式</p>
-<p>输入 <strong>C:\Windows\System32\wsl.exe sudo /etc/init.d/cron start</strong> </p>
-<p>你发现这个命令和我们上面visudo的添加第一个命令一致，但是我开机启动时，还是要让我输入密码。。。</p>
-<p><strong>需要输入密码是因为wsl默认启动我的ubuntu，修改默认启动顺序，如果你只有一个系统就不会出现这个情况或者你用的系统是你第一个安装应该也是没有问题的</strong></p>
-<h4 id="查看、修改默认系统"><a href="#查看、修改默认系统" class="headerlink" title="查看、修改默认系统"></a>查看、修改默认系统</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wslconfig /list</span><br><span class="line">适用于 Linux 的 Windows 子系统:</span><br><span class="line">Ubuntu<span class="literal">-20</span>.<span class="number">04</span> (默认)</span><br><span class="line">Debian</span><br><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wslconfig /s Debian <span class="comment"># 修改默认</span></span><br><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wsl <span class="comment"># 进入系统</span></span><br><span class="line">libai@DESKTOP<span class="literal">-3SJEOBV</span>:/mnt/c/Users/dfk<span class="variable">$</span> uname <span class="literal">-a</span> <span class="comment"># 查看是否是 debian</span></span><br><span class="line">Linux DESKTOP<span class="literal">-3SJEOBV</span> <span class="number">4.4</span>.<span class="number">0</span><span class="literal">-18362</span><span class="literal">-Microsoft</span> <span class="comment">#836-Microsoft Mon May 05 16:04:00 PST 2020 x86_64 GNU/Linux</span></span><br><span class="line">libai@DESKTOP<span class="literal">-3SJEOBV</span>:/mnt/c/Users/dfk<span class="variable">$</span> <span class="built_in">cat</span> /etc/issue</span><br><span class="line">Debian GNU/Linux <span class="number">10</span> \n \l</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>命令帮助：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">对 Windows 上的 Linux 子系统进行操作管理</span><br><span class="line"></span><br><span class="line">用途：</span><br><span class="line">    /l, /list [/all]</span><br><span class="line">        列出已注册的分发版。</span><br><span class="line">        /all - 有选择地列出所有分发版，包括</span><br><span class="line">               当前正在安装或卸载的分发版。</span><br><span class="line"></span><br><span class="line">    /s, /setdefault &lt;DistributionName&gt;</span><br><span class="line">        将该分发版设为默认。</span><br><span class="line"></span><br><span class="line">    /t, /terminate &lt;DistributionName&gt;</span><br><span class="line">        终止分发。</span><br><span class="line"></span><br><span class="line">    /u, /unregister &lt;DistributionName&gt;</span><br><span class="line">        取消分发版注册。</span><br><span class="line"></span><br><span class="line">    /upgrade &lt;DistributionName&gt;</span><br><span class="line">        将分发版升级至 WslFs 文件系统格式。</span><br></pre></td></tr></table></figure>
-
-<h4 id="最后再次执行-快捷方式-看看-要不要密码"><a href="#最后再次执行-快捷方式-看看-要不要密码" class="headerlink" title="最后再次执行 快捷方式 看看 要不要密码"></a>最后再次执行 快捷方式 看看 要不要密码</h4><p>不要了 完美了。。。。。。</p>
-<h4 id="查看windows是否开启"><a href="#查看windows是否开启" class="headerlink" title="查看windows是否开启"></a>查看windows是否开启</h4><p>查看 任务管理系统，里面有没有一个cron的进程，有就是成功了的。</p>
-<p>参考：</p>
-<ol>
-<li><a href="https://www.jianshu.com/p/fff3ccc3e04e">sudo和它的编辑工具visudo</a></li>
-<li><a href="%5Bhttps://naizi.moe/2020/01/24/wsl-crontab/#%E5%AE%89%E8%A3%85WSL%5D(https://naizi.moe/2020/01/24/wsl-crontab/#%E5%AE%89%E8%A3%85WSL)">Windows使用WSL配置crontab定时任务</a></li>
-<li><a href="https://sxi.io/how-to-start-stop-restart-cron-service-in-linux-centos-7/">How To Start/Stop/Restart Cron Service In Linux Centos 7</a></li>
-</ol>
-]]></content>
+<p>这个方法执行的后，目前运行良好也没有出现被识别的问题。</p>
+<h3 id="关闭当前标签-在切换标签前关闭"><a href="#关闭当前标签-在切换标签前关闭" class="headerlink" title="关闭当前标签 在切换标签前关闭"></a>关闭当前标签 在切换标签前关闭</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.close()</span><br><span class="line">windows = driver.window_handles</span><br><span class="line">driver.switch_to.window(windows[<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>wsl</category>
+        <category>代码来了</category>
       </categories>
       <tags>
-        <tag>wsl</tag>
-        <tag>linux</tag>
+        <tag>selenium</tag>
       </tags>
   </entry>
   <entry>
@@ -935,6 +872,69 @@
       </categories>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wsl 定时任务 crontab权限</title>
+    <url>/post/wsl-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1-crontab%E6%9D%83%E9%99%90.html</url>
+    <content><![CDATA[<p>可能有一些乱,但是不影响整体思路。</p>
+<h3 id="安装-wsl"><a href="#安装-wsl" class="headerlink" title="安装 wsl"></a>安装 wsl</h3><p>首先在windows上 打开 <strong>启动或关闭windows功能</strong>  选择 <strong>适用于 Linux 的 windows 子系统</strong> 打勾</p>
+<p>然后取 windows应用市场 搜索 wsl ，下载你喜欢的一个 linux子系统</p>
+<p>我这边安装了一个 debian，一个ubuntu。</p>
+<p>如果你没有开启<strong>适用于 Linux 的 windows 子系统</strong> 是无法安装的。</p>
+<p><strong>记得一定要安装windows terminal 这个太提升体验了</strong></p>
+<a id="more"></a>
+
+<h3 id="配置linux子系统"><a href="#配置linux子系统" class="headerlink" title="配置linux子系统"></a>配置linux子系统</h3><p>进入 debian系统</p>
+<h4 id="挂载windows和linux的共享盘"><a href="#挂载windows和linux的共享盘" class="headerlink" title="挂载windows和linux的共享盘"></a>挂载windows和linux的共享盘</h4><p>可以先在linux子系统和windows之间建立一个共享盘</p>
+<p>挂载 windows D盘的wsl_linux 到 debian到 win10目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ln -s /mnt/d/wsl_linux ~/win10 </span><br></pre></td></tr></table></figure>
+
+<h4 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h4><p>清华源地址:<a href="https://mirrors.tuna.tsinghua.edu.cn/help/debian/">https://mirrors.tuna.tsinghua.edu.cn/help/debian/</a></p>
+<p><strong>这是debian10</strong></p>
+<p>在windows中 创建一个 sources.list ,同样也可以在linux下创建，看你喜欢</p>
+<p>把内容直接复制到sources.list 里面，因为无法拉去 https ，所以可以吧所有的https改为http</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/debian/</span> buster main contrib non-free</span><br><span class="line">deb http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/debian/</span> buster-updates main contrib non-free</span><br><span class="line">deb http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/debian/</span> buster-backports main contrib non-free</span><br><span class="line">deb http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/debian-security buster/u</span>pdates main contrib non-free</span><br></pre></td></tr></table></figure>
+
+<p>然后把 文件复制到 /etc/apt中</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line">sudo cp ~/win10/sources.list /etc/apt/sources.list</span><br><span class="line">sudo apt update</span><br><span class="line"><span class="comment">#安装 ca证书 就可以拉去 https</span></span><br><span class="line">sudo apt install apt-transport-https ca-certificates</span><br><span class="line"><span class="comment">#此时就可以修改所有http为 https了</span></span><br><span class="line"><span class="comment"># 然后在执行一次</span></span><br><span class="line">sudo apt update</span><br><span class="line"><span class="comment"># 安装一些我需要的软件</span></span><br><span class="line">sudo apt install crul wget vim -y</span><br></pre></td></tr></table></figure>
+
+<p>此时debian的系统就调试的差不多了。</p>
+<h3 id="设置定时任务-crontab-及其权限"><a href="#设置定时任务-crontab-及其权限" class="headerlink" title="设置定时任务 crontab 及其权限"></a>设置定时任务 crontab 及其权限</h3><p>设置定时任务 crontab  ，因为crontab定时任务的命令网上太多了一搜一大堆，我这里就不复制，粘贴了。</p>
+<h4 id="编辑定时任务"><a href="#编辑定时任务" class="headerlink" title="编辑定时任务"></a>编辑定时任务</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 第一次 他需要让你选择打开使用的编辑器 选择 vim就好了 或者 选择自己熟悉的</span></span><br><span class="line">crontab -e</span><br><span class="line">0 21 * * * <span class="built_in">cd</span> /home/libai/fping-4.2/src/ &amp;&amp; sudo /bin/bash /home/libai/fping-4.2/src/cf.sh &gt;&gt; /var/<span class="built_in">log</span>/cf_log.log</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">crontab -l</span><br><span class="line"><span class="comment"># 重启 这样才会设置任务 ### 认识错误 不用重启  他会自己去读取</span></span><br><span class="line">sudo service cron restart <span class="comment"># debian</span></span><br><span class="line">sudo systemctl restart crond.service <span class="comment"># centos</span></span><br></pre></td></tr></table></figure>
+
+<p>我的这个任务是每天晚上九点 执行一次。</p>
+<p>因为执行命令需要root权限。我们需要设置执行我们这个命令时候，不需要输入密码。</p>
+<h4 id="设置-visudo-，定时任务权限"><a href="#设置-visudo-，定时任务权限" class="headerlink" title="设置 visudo ，定时任务权限"></a>设置 visudo ，定时任务权限</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打开 visudo</span></span><br><span class="line">sudo visudo</span><br><span class="line"><span class="comment"># 在末尾添加 这个用的是nano编辑器</span></span><br><span class="line">%sudo ALL=NOPASSWD: /etc/init.d/cron start</span><br><span class="line">%sudo ALL=NOPASSWD: /bin/bash /home/libai/fping-4.2/src/cf.sh</span><br><span class="line"><span class="comment"># 这里的命令要和上面crontab -e 命令保持一致 路径也一样 不然还是要输入密码的</span></span><br><span class="line"><span class="comment"># 路径 和 目录写清楚 可从下面参考里面看详细的visudo命令解释</span></span><br><span class="line"><span class="comment"># who     where=(whom)    commands</span></span><br><span class="line"><span class="comment"># 用户    主机=（以谁的身份） commands</span></span><br><span class="line"><span class="comment"># nano 命令</span></span><br><span class="line"><span class="comment"># 保存</span></span><br><span class="line">Ctrl+O 然后回车一下就可以了</span><br><span class="line"><span class="comment"># 推出</span></span><br><span class="line">Ctrl+X</span><br></pre></td></tr></table></figure>
+
+<p>此时定时任务就可以起飞了，同时把任务日志保存一下，看看是不是真的运行了。同时运行有什么问题，也可以处理。** &gt;&gt; /var/log/cf_log.log** 注意创建此文件同时注意权限 <strong>chmod 777 cf_log.log</strong></p>
+<h3 id="关闭linux子系统，windows开机启动"><a href="#关闭linux子系统，windows开机启动" class="headerlink" title="关闭linux子系统，windows开机启动"></a>关闭linux子系统，windows开机启动</h3><p>但是这样当我们关闭windows子系统的时候，整个就关闭了，就没有什么定时任务了，因此我们要创建一个windows的开启任务。</p>
+<p>在windows下：</p>
+<p>win+R 输入 shell:startup 打开目录</p>
+<p>新建一个 快捷方式</p>
+<p>输入 <strong>C:\Windows\System32\wsl.exe sudo /etc/init.d/cron start</strong> </p>
+<p>你发现这个命令和我们上面visudo的添加第一个命令一致，但是我开机启动时，还是要让我输入密码。。。</p>
+<p><strong>需要输入密码是因为wsl默认启动我的ubuntu，修改默认启动顺序，如果你只有一个系统就不会出现这个情况或者你用的系统是你第一个安装应该也是没有问题的</strong></p>
+<h4 id="查看、修改默认系统"><a href="#查看、修改默认系统" class="headerlink" title="查看、修改默认系统"></a>查看、修改默认系统</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wslconfig /list</span><br><span class="line">适用于 Linux 的 Windows 子系统:</span><br><span class="line">Ubuntu<span class="literal">-20</span>.<span class="number">04</span> (默认)</span><br><span class="line">Debian</span><br><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wslconfig /s Debian <span class="comment"># 修改默认</span></span><br><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wsl <span class="comment"># 进入系统</span></span><br><span class="line">libai@DESKTOP<span class="literal">-3SJEOBV</span>:/mnt/c/Users/dfk<span class="variable">$</span> uname <span class="literal">-a</span> <span class="comment"># 查看是否是 debian</span></span><br><span class="line">Linux DESKTOP<span class="literal">-3SJEOBV</span> <span class="number">4.4</span>.<span class="number">0</span><span class="literal">-18362</span><span class="literal">-Microsoft</span> <span class="comment">#836-Microsoft Mon May 05 16:04:00 PST 2020 x86_64 GNU/Linux</span></span><br><span class="line">libai@DESKTOP<span class="literal">-3SJEOBV</span>:/mnt/c/Users/dfk<span class="variable">$</span> <span class="built_in">cat</span> /etc/issue</span><br><span class="line">Debian GNU/Linux <span class="number">10</span> \n \l</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>命令帮助：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">对 Windows 上的 Linux 子系统进行操作管理</span><br><span class="line"></span><br><span class="line">用途：</span><br><span class="line">    /l, /list [/all]</span><br><span class="line">        列出已注册的分发版。</span><br><span class="line">        /all - 有选择地列出所有分发版，包括</span><br><span class="line">               当前正在安装或卸载的分发版。</span><br><span class="line"></span><br><span class="line">    /s, /setdefault &lt;DistributionName&gt;</span><br><span class="line">        将该分发版设为默认。</span><br><span class="line"></span><br><span class="line">    /t, /terminate &lt;DistributionName&gt;</span><br><span class="line">        终止分发。</span><br><span class="line"></span><br><span class="line">    /u, /unregister &lt;DistributionName&gt;</span><br><span class="line">        取消分发版注册。</span><br><span class="line"></span><br><span class="line">    /upgrade &lt;DistributionName&gt;</span><br><span class="line">        将分发版升级至 WslFs 文件系统格式。</span><br></pre></td></tr></table></figure>
+
+<h4 id="最后再次执行-快捷方式-看看-要不要密码"><a href="#最后再次执行-快捷方式-看看-要不要密码" class="headerlink" title="最后再次执行 快捷方式 看看 要不要密码"></a>最后再次执行 快捷方式 看看 要不要密码</h4><p>不要了 完美了。。。。。。</p>
+<h4 id="查看windows是否开启"><a href="#查看windows是否开启" class="headerlink" title="查看windows是否开启"></a>查看windows是否开启</h4><p>查看 任务管理系统，里面有没有一个cron的进程，有就是成功了的。</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://www.jianshu.com/p/fff3ccc3e04e">sudo和它的编辑工具visudo</a></li>
+<li><a href="%5Bhttps://naizi.moe/2020/01/24/wsl-crontab/#%E5%AE%89%E8%A3%85WSL%5D(https://naizi.moe/2020/01/24/wsl-crontab/#%E5%AE%89%E8%A3%85WSL)">Windows使用WSL配置crontab定时任务</a></li>
+<li><a href="https://sxi.io/how-to-start-stop-restart-cron-service-in-linux-centos-7/">How To Start/Stop/Restart Cron Service In Linux Centos 7</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>wsl</category>
+      </categories>
+      <tags>
+        <tag>wsl</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
