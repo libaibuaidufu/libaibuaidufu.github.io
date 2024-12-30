@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="libaibuaidufu" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  <meta name="description" content="李白不爱杜甫的日常" />
+  
+  
+  
+  <title>
+    
+      flask rbac 设计 
+      
+      
+      |
+    
+     李白不爱杜甫
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/uploads/favicon32.ico">
+    <link rel="icon" href="/uploads/favicon16.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/uploads/avatar.jpg" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">李白不爱杜甫</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文章</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/comments/">
+          <a href="/comments/">留言板</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">flask rbac 设计</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2024-10-29 13:29:17
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E4%BB%A3%E7%A0%81%E6%9D%A5%E4%BA%86/" title="代码来了">
+                    <b>#</b> 代码来了
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/flask/" title="flask">
+                    #flask
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/rbac/" title="rbac">
+                    #rbac
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>一直对rbac设计有点不确定，看了一些文章对他有一定的了解，因此也想动手写一写。</p>
+<span id="more"></span>
+
+<h3 id="flask-rbac-code"><a href="#flask-rbac-code" class="headerlink" title="flask rbac code"></a>flask rbac code</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging <span class="keyword">as</span> logger</span><br><span class="line"><span class="keyword">import</span> uuid</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, g</span><br><span class="line"><span class="keyword">from</span> flask_admin <span class="keyword">import</span> Admin</span><br><span class="line"><span class="keyword">from</span> flask_admin.contrib.sqla <span class="keyword">import</span> ModelView</span><br><span class="line"><span class="keyword">from</span> flask_curd_db <span class="keyword">import</span> FlaskCurdDb</span><br><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&quot;SECRET_KEY&quot;</span>] = <span class="built_in">str</span>(uuid.uuid4())</span><br><span class="line">app.config[<span class="string">&quot;SQLALCHEMY_DATABASE_URI&quot;</span>] = <span class="string">&quot;sqlite:///rbac.db&quot;</span></span><br><span class="line">app.config[<span class="string">&quot;SQLALCHEMY_TRACK_MODIFICATIONS&quot;</span>] = <span class="literal">True</span></span><br><span class="line">app.config[<span class="string">&#x27;FLASK_ADMIN_SWATCH&#x27;</span>] = <span class="string">&#x27;cerulean&#x27;</span></span><br><span class="line"></span><br><span class="line">db = SQLAlchemy(app)</span><br><span class="line">FlaskCurdDb(app, db, logger)</span><br><span class="line"></span><br><span class="line">admin = Admin(app, name=<span class="string">&#x27;flask-rbac&#x27;</span>, template_mode=<span class="string">&#x27;bootstrap3&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask_curd_db.db <span class="keyword">import</span> CRUDMixin</span><br><span class="line"></span><br><span class="line">tb_user_role = db.Table(</span><br><span class="line">    <span class="string">&#x27;tb_user_role&#x27;</span>,</span><br><span class="line">    db.Column(<span class="string">&quot;role_id&quot;</span>, db.Integer, db.ForeignKey(<span class="string">&quot;tb_role.id&quot;</span>), nullable=<span class="literal">False</span>),</span><br><span class="line">    db.Column(<span class="string">&quot;user_id&quot;</span>, db.Integer, db.ForeignKey(<span class="string">&quot;tb_user.id&quot;</span>), nullable=<span class="literal">False</span>)</span><br><span class="line">)</span><br><span class="line">tb_role_menu = db.Table(</span><br><span class="line">    <span class="string">&#x27;tb_role_menu&#x27;</span>,</span><br><span class="line">    db.Column(<span class="string">&quot;role_id&quot;</span>, db.Integer, db.ForeignKey(<span class="string">&quot;tb_role.id&quot;</span>), nullable=<span class="literal">False</span>),</span><br><span class="line">    db.Column(<span class="string">&quot;menu_id&quot;</span>, db.Integer, db.ForeignKey(<span class="string">&quot;tb_menu.id&quot;</span>), nullable=<span class="literal">False</span>)</span><br><span class="line">)</span><br><span class="line">tb_menu_pemission = db.Table(</span><br><span class="line">    <span class="string">&#x27;tb_menu_pemission&#x27;</span>,</span><br><span class="line">    db.Column(<span class="string">&quot;menu_id&quot;</span>, db.Integer, db.ForeignKey(<span class="string">&quot;tb_menu.id&quot;</span>), nullable=<span class="literal">False</span>),</span><br><span class="line">    db.Column(<span class="string">&quot;pemission_id&quot;</span>, db.Integer, db.ForeignKey(<span class="string">&quot;tb_pemission.id&quot;</span>), nullable=<span class="literal">False</span>)</span><br><span class="line">)</span><br><span class="line">tb_pemission_operation = db.Table(</span><br><span class="line">    <span class="string">&#x27;tb_pemission_operation&#x27;</span>,</span><br><span class="line">    db.Column(<span class="string">&quot;pemission_id&quot;</span>, db.Integer, db.ForeignKey(<span class="string">&quot;tb_pemission.id&quot;</span>), nullable=<span class="literal">False</span>),</span><br><span class="line">    db.Column(<span class="string">&quot;operation_id&quot;</span>, db.Integer, db.ForeignKey(<span class="string">&quot;tb_operation.id&quot;</span>), nullable=<span class="literal">False</span>),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Operation</span>(db.Model, CRUDMixin):</span><br><span class="line">    __tablename__ = <span class="string">&quot;tb_operation&quot;</span></span><br><span class="line">    name = db.Column(db.String(<span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Pemission</span>(db.Model, CRUDMixin):</span><br><span class="line">    __tablename__ = <span class="string">&quot;tb_pemission&quot;</span></span><br><span class="line">    name = db.Column(db.String(<span class="number">50</span>))</span><br><span class="line">    tb_pemission_operation = db.relationship(Operation, secondary=tb_pemission_operation,</span><br><span class="line">                                             backref=db.backref(<span class="string">&#x27;pemissions&#x27;</span>, lazy=<span class="string">&#x27;dynamic&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Menu</span>(db.Model, CRUDMixin):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;tb_menu&#x27;</span></span><br><span class="line">    name = db.Column(db.String(<span class="number">50</span>))</span><br><span class="line">    tb_menu_pemission = db.relationship(Pemission, secondary=tb_menu_pemission,</span><br><span class="line">                                        backref=db.backref(<span class="string">&#x27;menus&#x27;</span>, lazy=<span class="string">&#x27;dynamic&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Role</span>(db.Model, CRUDMixin):</span><br><span class="line">    __tablename__ = <span class="string">&quot;tb_role&quot;</span></span><br><span class="line">    name = db.Column(db.String(<span class="number">50</span>))</span><br><span class="line">    tb_role_menu = db.relationship(Menu, secondary=tb_role_menu,</span><br><span class="line">                                   backref=db.backref(<span class="string">&#x27;roles&#x27;</span>, lazy=<span class="string">&#x27;dynamic&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>(db.Model, CRUDMixin):</span><br><span class="line">    __tablename__ = <span class="string">&quot;tb_user&quot;</span></span><br><span class="line">    name = db.Column(db.String(<span class="number">50</span>))</span><br><span class="line">    tb_user_role = db.relationship(Role, secondary=tb_user_role,</span><br><span class="line">                                   backref=db.backref(<span class="string">&#x27;users&#x27;</span>, lazy=<span class="string">&#x27;dynamic&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">admin.add_view(ModelView(User, db.session))</span><br><span class="line">admin.add_view(ModelView(Role, db.session))</span><br><span class="line">admin.add_view(ModelView(Menu, db.session))</span><br><span class="line">admin.add_view(ModelView(Pemission, db.session))</span><br><span class="line">admin.add_view(ModelView(Operation, db.session))</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">UserLoginError</span>(<span class="params">BaseException</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message, status</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(message, status)</span><br><span class="line">        <span class="variable language_">self</span>.message = message</span><br><span class="line">        <span class="variable language_">self</span>.status = status</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.before_request</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">before_request</span>():</span><br><span class="line">    g.user = User.get_ins_by_id(<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(g.user.name)</span><br><span class="line">    g.user_roles = g.user.tb_user_role</span><br><span class="line">    <span class="built_in">print</span>(g.user_roles)</span><br><span class="line">    g.user_role_menus = []</span><br><span class="line">    <span class="keyword">for</span> role <span class="keyword">in</span> g.user_roles:</span><br><span class="line">        g.user_role_menus.extend(role.tb_role_menu)</span><br><span class="line">    g.user_role_menus = <span class="built_in">list</span>(<span class="built_in">set</span>(g.user_role_menus))</span><br><span class="line">    <span class="built_in">print</span>(g.user_role_menus)</span><br><span class="line">    <span class="comment"># g.user_role_menu_pemissions = []</span></span><br><span class="line">    <span class="comment"># for menu in g.user_role_menus:</span></span><br><span class="line">    <span class="comment">#     g.user_role_menu_pemissions.extend(menu.tb_menu_pemission)</span></span><br><span class="line">    <span class="comment"># g.user_role_menu_pemissions = list(set(g.user_role_menu_pemissions))</span></span><br><span class="line">    <span class="comment"># print(g.user_role_menu_pemissions)</span></span><br><span class="line">    <span class="comment"># g.user_role_menu_pemission_operation = &#123;&#125;</span></span><br><span class="line">    <span class="comment"># for pemission in g.user_role_menu_pemissions:</span></span><br><span class="line">    <span class="comment">#     g.user_role_menu_pemission_operation[pemission.name] = [operation.name for operation in</span></span><br><span class="line">    <span class="comment">#                                                             pemission.tb_pemission_operation]</span></span><br><span class="line">    <span class="comment"># print(g.user_role_menu_pemissions)</span></span><br><span class="line">    g.user_role_menu_pemissions = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> menu <span class="keyword">in</span> g.user_role_menus:</span><br><span class="line">        <span class="keyword">for</span> pemission <span class="keyword">in</span> menu.tb_menu_pemission:</span><br><span class="line">            g.user_role_menu_pemissions[menu.name] = &#123;pemission.name: [operation.name <span class="keyword">for</span> operation <span class="keyword">in</span></span><br><span class="line">                                                                       pemission.tb_pemission_operation]&#125;</span><br><span class="line">    <span class="built_in">print</span>(g.user_role_menu_pemissions)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">after_request</span>(<span class="params">reponse</span>):</span><br><span class="line">    <span class="keyword">return</span> reponse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_require</span>(<span class="params">fn</span>):</span><br><span class="line"><span class="meta">    @wraps(<span class="params">fn</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_dec</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        <span class="keyword">if</span> g.user.name == <span class="string">&quot;小黄&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> fn(*args, **kwargs)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;滚回去登录！！！&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _dec</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">user_operation_menu</span>(<span class="params">menu_name, pemission_name, operation_name</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">user_operation</span>(<span class="params">fn</span>):</span><br><span class="line"><span class="meta">        @wraps(<span class="params">fn</span>)</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">_dec</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">            <span class="keyword">if</span> menu_name <span class="keyword">in</span> g.user_role_menu_pemissions:</span><br><span class="line">                <span class="keyword">if</span> pemission_name <span class="keyword">in</span> g.user_role_menu_pemissions[menu_name]:</span><br><span class="line">                    <span class="keyword">if</span> operation_name <span class="keyword">in</span> g.user_role_menu_pemissions[menu_name][pemission_name]:</span><br><span class="line">                        <span class="keyword">return</span> fn(*args, **kwargs)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;没权限，玩**呢！！！&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> _dec</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> user_operation</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="meta">@login_require</span></span><br><span class="line"><span class="meta">@user_operation_menu(<span class="params"><span class="string">&quot;用户管理&quot;</span>, <span class="string">&quot;用户管理的权限&quot;</span>, <span class="string">&quot;查看&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World!&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    db.create_all()</span><br><span class="line">    app.run(debug=<span class="literal">True</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="require-文件"><a href="#require-文件" class="headerlink" title="require 文件"></a>require 文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Flask            1.1.2</span><br><span class="line">Flask-Admin      1.5.6</span><br><span class="line">Flask-Curd-Db    1.0.0</span><br><span class="line">Flask-SQLAlchemy 2.4.4</span><br></pre></td></tr></table></figure>
+
+<h3 id="设计与理解"><a href="#设计与理解" class="headerlink" title="设计与理解"></a>设计与理解</h3><h4 id="本案例中"><a href="#本案例中" class="headerlink" title="本案例中"></a>本案例中</h4><p>到此 发现设计一个颗粒到按钮还是比较容易，但是如何使用才是关键，例如上面的这种使用方法就很繁琐。</p>
+<p>如何验证到 【查看，删除，增加，修改】这一步的权限，需要进一步的思考更好的做法。</p>
+<p>可以在operation表中加一个唯一key，或者 从菜单-权限-操作 这个 形成一个唯一key，或者在视图中来操作一个。</p>
+<h4 id="以前看Lin-CMS-Flask学习到的"><a href="#以前看Lin-CMS-Flask学习到的" class="headerlink" title="以前看Lin-CMS-Flask学习到的"></a>以前看Lin-CMS-Flask学习到的</h4><p>对flask源码有一定了解的，可以知道 flask的 view_functions ，并且这些view_functions的function name是唯一的，然后利用一定的约束标准，对接口进行划分。直接在程序启动时，对函数名称进行收集，然后权限操作直接对应着函数名称。</p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/entry/6844903540884766733">https://juejin.im/entry/6844903540884766733</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/TaleLin/lin-cms-flask">https://github.com/TaleLin/lin-cms-flask</a></li>
+</ol>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/post/scrapy-scrapyd-scrapydweb-logparser-docker%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2.html" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2024-10-29 13:29:17
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E4%BB%A3%E7%A0%81%E6%9D%A5%E4%BA%86/" title="代码来了">
+                        <b>#</b> 代码来了
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/flask/" title="flask">
+                        #flask
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/rbac/" title="rbac">
+                        #rbac
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/post/flask%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80.html" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#flask-rbac-code"><span class="toc-text">flask rbac code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#require-%E6%96%87%E4%BB%B6"><span class="toc-text">require 文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%90%86%E8%A7%A3"><span class="toc-text">设计与理解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E6%A1%88%E4%BE%8B%E4%B8%AD"><span class="toc-text">本案例中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A5%E5%89%8D%E7%9C%8BLin-CMS-Flask%E5%AD%A6%E4%B9%A0%E5%88%B0%E7%9A%84"><span class="toc-text">以前看Lin-CMS-Flask学习到的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-text">参考：</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'gCNyW4RIETLbBYbENmjSSC8M-gzGzoHsz',
+        appKey: 'ECydfnAcQ3LpBHvVtKHLU6lw',
+        placeholder: '欢迎畅所欲言!',
+        avatar: 'mm',
+        lang: 'zh-CN'
+      })
+    }
+  </script>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/libaibuaidufu">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + flask%20rbac%20%E8%AE%BE%E8%AE%A1 + '&url=' + https%3A%2F%2Flibaibuaidufu.com%2Fpost%2Fflask-rbac-%25E8%25AE%25BE%25E8%25AE%25A1.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://libaibuaidufu.com/post/flask-rbac-%E8%AE%BE%E8%AE%A1.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

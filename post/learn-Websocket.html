@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="libaibuaidufu" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  <meta name="description" content="李白不爱杜甫的日常" />
+  
+  
+  
+  <title>
+    
+      learn Websocket 
+      
+      
+      |
+    
+     李白不爱杜甫
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/uploads/favicon32.ico">
+    <link rel="icon" href="/uploads/favicon16.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/uploads/avatar.jpg" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">李白不爱杜甫</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文章</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/comments/">
+          <a href="/comments/">留言板</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">learn Websocket</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2024-10-29 13:29:17
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/websocket/" title="websocket">
+                    <b>#</b> websocket
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/websocket/" title="websocket">
+                    #websocket
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>参考：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2017/05/websocket.html">http://www.ruanyifeng.com/blog/2017/05/websocket.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://socket.io/docs/client-api/#IO">https://socket.io/docs/client-api/#IO</a></li>
+<li><a target="_blank" rel="noopener" href="https://flask-socketio.readthedocs.io/en/latest/">https://flask-socketio.readthedocs.io/en/latest/</a></li>
+</ol>
+</blockquote>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>客服端发起连接 —–&gt;  服务端 connect事件 连接 —–&gt; 客户端 connect事件 反应。</p>
+<p> send 和 emit区别，send只能在 message事件上接受，emit可以发给任何事件接收。</p>
+<p>因此emit是首选。</p>
+<span id="more"></span>
+
+<h3 id="客户端-socket"><a href="#客户端-socket" class="headerlink" title="客户端  socket"></a>客户端  socket</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/socket.io/2.3.0/socket.io.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> socket = <span class="title function_">io</span>(<span class="string">&quot;ws://127.0.0.1:5000&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(socket.<span class="property">id</span>); <span class="comment">//undefined</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(socket.<span class="property">connected</span>); <span class="comment">// false</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    socket.<span class="title function_">on</span>(<span class="string">&#x27;connect&#x27;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(socket.<span class="property">id</span>); <span class="comment">//唯一id</span></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;connect&quot;</span>, evt);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(socket.<span class="property">connected</span>); <span class="comment">// true</span></span></span><br><span class="line"><span class="language-javascript">        socket.<span class="title function_">emit</span>(<span class="string">&quot;onmessage&quot;</span>, <span class="string">&quot;hello,world&quot;</span>)</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    socket.<span class="title function_">on</span>(<span class="string">&#x27;disconnect&#x27;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;disconnect&quot;</span>, evt);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(socket.<span class="property">connected</span>); <span class="comment">// false</span></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(socket.<span class="property">disconnected</span>); <span class="comment">// false</span></span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript">    socket.<span class="title function_">on</span>(<span class="string">&quot;onmessage&quot;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;onmessage&quot;</span>, evt);</span></span><br><span class="line"><span class="language-javascript">        socket.<span class="title function_">send</span>(<span class="string">&quot;gjjgjg&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        socket.<span class="title function_">disconnect</span>()</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript">    socket.<span class="title function_">on</span>(<span class="string">&quot;message&quot;</span>, <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// send 只能用在 message事件上</span></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;message&quot;</span>, evt);</span></span><br><span class="line"><span class="language-javascript">    &#125;)</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 监听窗口事件，当窗口关闭时，主动断开websocket连接，防止连接没断开就关闭窗口，server端报错</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">window</span>.<span class="property">onbeforeunload</span> = <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        socket.<span class="title function_">close</span>()</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    </span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-id"><a href="#socket-id" class="headerlink" title="socket.id"></a>socket.id</h4><p><em>字符串</em></p>
+<p>套接字会话的唯一标识符。在<code>connect</code>事件触发后设置，并在<code>reconnect</code>事件后更新。</p>
+<h4 id="socket-connected"><a href="#socket-connected" class="headerlink" title="socket.connected"></a>socket.connected</h4><p><em>布尔值</em></p>
+<p>套接字是否已连接到服务器。</p>
+<h4 id="socket-disconnected"><a href="#socket-disconnected" class="headerlink" title="socket.disconnected"></a>socket.disconnected</h4><p><em>布尔值</em></p>
+<p>套接字是否与服务器断开连接。</p>
+<h4 id="socket-open"><a href="#socket-open" class="headerlink" title="socket.open()"></a>socket.open()</h4><p>手动重连</p>
+<h4 id="socket-connect"><a href="#socket-connect" class="headerlink" title="socket.connect()"></a>socket.connect()</h4><p>同 ocket.open()</p>
+<h4 id="socket-on"><a href="#socket-on" class="headerlink" title="socket.on"></a>socket.on</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.on(&#x27;news&#x27;, (data) =&gt; &#123;  console.log(data);&#125;);// wit</span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-emit"><a href="#socket-emit" class="headerlink" title="socket.emit"></a>socket.emit</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.emit(&#x27;hello&#x27;, &#x27;world&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-send"><a href="#socket-send" class="headerlink" title="socket.send"></a>socket.send</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.send(&#x27;world&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-close"><a href="#socket-close" class="headerlink" title="socket.close()"></a>socket.close()</h4><p>手动关闭</p>
+<h4 id="socket-disconnect"><a href="#socket-disconnect" class="headerlink" title="socket.disconnect()"></a>socket.disconnect()</h4><p>同 socket.close()</p>
+<h4 id="socket-compress-value"><a href="#socket-compress-value" class="headerlink" title="socket.compress(value)"></a>socket.compress(value)</h4><p>压缩传输</p>
+<ul>
+<li><code>value</code> <em>（布尔值）</em></li>
+<li><strong>退货</strong> <code>Socket</code></li>
+</ul>
+<p>设置用于后续事件发射的修饰符，以使事件数据仅在值为时才被<em>压缩</em><code>true</code>。默认为<code>true</code>不调用该方法的时间。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.compress(false).emit(&#x27;an event&#x27;, &#123; some: &#x27;data&#x27; &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="socket-binary-value"><a href="#socket-binary-value" class="headerlink" title="socket.binary(value)"></a>socket.binary(value)</h4><p>指定发出的数据是否包含二进制。指定时提高性能。可以是<code>true</code>或<code>false</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.binary（false）.emit（&#x27;一个事件&#x27;，&#123; 一些：&#x27;数据&#x27; &#125;）;</span><br></pre></td></tr></table></figure>
+
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p><em>用很多没有介绍到的，可以查看文档进行学习。</em></p>
+<h4 id="普通socket"><a href="#普通socket" class="headerlink" title="普通socket"></a>普通socket</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">@Time    : 2020/9/27 10:13</span></span><br><span class="line"><span class="string">@File    : main.py</span></span><br><span class="line"><span class="string">@author  : dfkai</span></span><br><span class="line"><span class="string">@Software: PyCharm</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_socketio <span class="keyword">import</span> SocketIO, emit, send</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">socketio = SocketIO(app, cors_allowed_origins=<span class="string">&quot;*&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(<span class="params"><span class="string">&quot;connect&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">connect</span>(<span class="params">msg=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;connect&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br><span class="line">    <span class="comment"># emit(&quot;onmessage&quot;, &#123;&quot;data&quot;: &quot;hell world&quot;&#125;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(<span class="params"><span class="string">&quot;disconnect&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">disconnect</span>(<span class="params">msg=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;disconnect&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(<span class="params"><span class="string">&quot;onmessage&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">onmessage</span>(<span class="params">msg=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;onmessage&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br><span class="line">    send(&#123;<span class="string">&quot;data&quot;</span>: <span class="string">&quot;hell world&quot;</span>&#125;)</span><br><span class="line">    emit(<span class="string">&quot;onmessage&quot;</span>, &#123;<span class="string">&quot;data&quot;</span>: <span class="string">&quot;hell world&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(<span class="params"><span class="string">&quot;message&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">message</span>(<span class="params">msg=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;message&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br><span class="line">    send(<span class="string">&quot;googogogo&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    socketio.run(app, debug=<span class="literal">True</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="后台轮询任务"><a href="#后台轮询任务" class="headerlink" title="后台轮询任务"></a>后台轮询任务</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">@Time    : 2020/9/14 11:42</span></span><br><span class="line"><span class="string">@File    : back_socket.py</span></span><br><span class="line"><span class="string">@author  : dfkai</span></span><br><span class="line"><span class="string">@Software: PyCharm</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_socketio <span class="keyword">import</span> SocketIO, emit</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">socketio = SocketIO(app)</span><br><span class="line"></span><br><span class="line">thread_inspect = <span class="literal">None</span></span><br><span class="line">thread_json = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@socketio.on(<span class="params"><span class="string">&quot;connect&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handle_connect</span>():</span><br><span class="line">    <span class="keyword">global</span> thread_json, thread_inspect</span><br><span class="line">    <span class="keyword">if</span> thread_json <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;ine&quot;</span>)</span><br><span class="line">        thread_json = socketio.start_background_task(target=background_thread_for_json)</span><br><span class="line">    <span class="keyword">if</span> thread_inspect <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        thread_json = socketio.start_background_task(target=background_thread_for_inspect)</span><br><span class="line">    emit(<span class="string">&quot;message&quot;</span>, <span class="string">&quot;hhhe&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">background_thread_for_json</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        socketio.sleep(<span class="number">10</span>)</span><br><span class="line">        now = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        login_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_login_for_socket()&quot;</span></span><br><span class="line">        arra_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_arra_for_socket()&quot;</span></span><br><span class="line">        gather_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_gather_for_socket()&quot;</span></span><br><span class="line">        re_msg_dict = &#123;</span><br><span class="line">            <span class="string">&quot;login_json&quot;</span>: login_json,</span><br><span class="line">            <span class="string">&quot;arra_json&quot;</span>: arra_json,</span><br><span class="line">            <span class="string">&quot;gather_json&quot;</span>: gather_json</span><br><span class="line">        &#125;</span><br><span class="line">        socketio.emit(<span class="string">&quot;message&quot;</span>, re_msg_dict, namespace=<span class="string">&quot;/abc&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">background_thread_for_inspect</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        socketio.sleep(<span class="number">10</span>)</span><br><span class="line">        now = datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)</span><br><span class="line">        inspect_json = <span class="string">f&quot;<span class="subst">&#123;now&#125;</span> models.get_inspect_for_socket()&quot;</span></span><br><span class="line">        re_msg_dict = &#123;</span><br><span class="line">            <span class="string">&quot;inspect_json&quot;</span>: inspect_json</span><br><span class="line">        &#125;</span><br><span class="line">        socketio.emit(<span class="string">&quot;inspect&quot;</span>, re_msg_dict, namespace=<span class="string">&quot;/abc&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    socketio.run(app)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/09/27/gSl8aYbT251swOU.png"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/post/%E8%BD%AC%E8%BD%BD%E6%95%B4%E7%90%86-Python-ElasticSearch%EF%BC%8Cpython%E5%AF%B9ES%E8%BF%9B%E8%A1%8C%E5%86%99%E5%85%A5%E3%80%81%E6%9B%B4%E6%96%B0%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E6%90%9C%E7%B4%A2.html" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2024-10-29 13:29:17
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/websocket/" title="websocket">
+                        <b>#</b> websocket
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/websocket/" title="websocket">
+                        #websocket
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/post/python-%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83.html" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="toc-text">流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-socket"><span class="toc-text">客户端  socket</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-id"><span class="toc-text">socket.id</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-connected"><span class="toc-text">socket.connected</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-disconnected"><span class="toc-text">socket.disconnected</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-open"><span class="toc-text">socket.open()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-connect"><span class="toc-text">socket.connect()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-on"><span class="toc-text">socket.on</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-emit"><span class="toc-text">socket.emit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-send"><span class="toc-text">socket.send</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-close"><span class="toc-text">socket.close()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-disconnect"><span class="toc-text">socket.disconnect()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-compress-value"><span class="toc-text">socket.compress(value)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket-binary-value"><span class="toc-text">socket.binary(value)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-text">服务端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%99%AE%E9%80%9Asocket"><span class="toc-text">普通socket</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E8%BD%AE%E8%AF%A2%E4%BB%BB%E5%8A%A1"><span class="toc-text">后台轮询任务</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'gCNyW4RIETLbBYbENmjSSC8M-gzGzoHsz',
+        appKey: 'ECydfnAcQ3LpBHvVtKHLU6lw',
+        placeholder: '欢迎畅所欲言!',
+        avatar: 'mm',
+        lang: 'zh-CN'
+      })
+    }
+  </script>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/libaibuaidufu">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + learn%20Websocket + '&url=' + https%3A%2F%2Flibaibuaidufu.com%2Fpost%2Flearn-Websocket.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://libaibuaidufu.com/post/learn-Websocket.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

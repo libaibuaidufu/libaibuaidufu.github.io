@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="libaibuaidufu" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  <meta name="description" content="李白不爱杜甫的日常" />
+  
+  
+  
+  <title>
+    
+      转载-flask源码分析 
+      
+      
+      |
+    
+     李白不爱杜甫
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/uploads/favicon32.ico">
+    <link rel="icon" href="/uploads/favicon16.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/uploads/avatar.jpg" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">李白不爱杜甫</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文章</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/comments/">
+          <a href="/comments/">留言板</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">转载-flask源码分析</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2024-10-29 13:29:17
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E8%BD%AC%E8%BD%BD/" title="转载">
+                    <b>#</b> 转载
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/flask/" title="flask">
+                    #flask
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>本来想着写第二篇的，但是一直没有什么头绪，就把以前自己看过的文章转载一下，同时在温故而知新。然后在根据理解在进行写。我要转载也是因为别人写的好很详细。</p>
+<p>同时还有更详细的 就是此作者在后面的参考中的。当然我也是看过的，别人写的更加详细。以模块分类进行深度讲解。</p>
+<p>看了下面两篇可以让你对Flask有着更深的认识。</p>
+<p>后续我也会写一些自己的认识。</p>
+<span id="more"></span>
+
+<p>转载：<a target="_blank" rel="noopener" href="https://juejin.im/post/6844903533238566925">flask 源码解析</a></p>
+<p>文章系列：<a target="_blank" rel="noopener" href="https://cizixs.com/2017/01/10/flask-insight-introduction/">flask 源码解析：简介</a></p>
+<h1 id="flask-源码解析"><a href="#flask-源码解析" class="headerlink" title="flask 源码解析"></a>flask 源码解析</h1><p>本文简单的分析了 Flask 的源码，主要关注 WSGI、Flask 对象的数据结构、Flask 应用启动过程、请求处理过程、视图函数、URL 的映射、应用上下文和请求上下文。讲解这些主题时也不会面面俱到，请按照你阅读源码的需要自行探索。要读懂本文，你需要较为熟悉 Flask，比如已经用 Flask 写过一个小项目，并且有一定的阅读代码的能力，并对 web 框架的功能有基本了解。</p>
+<p>本文会不时更新，最近更新日期：2017年9月10日。</p>
+<p>这是 Flask 官方钦定的 Demo 代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params">‘/‘</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> ‘Hello, world!’</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == ‘__main__’:</span><br><span class="line">    app.run()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这篇文章从这个简单的代码开始，简要介绍了 WSGI、Flask 对象的数据结构、Flask 应用启动过程、请求处理过程、视图函数、URL 的映射、request 和 response 类（应用上下文和请求上下文），这些主题涵盖了一个 web 框架的核心。</p>
+<h2 id="WSGI"><a href="#WSGI" class="headerlink" title="WSGI"></a>WSGI</h2><p>在用户发起的请求到达服务器之后，会被一个 HTTP 服务器所接收，然后交给 web 应用程序做业务处理，这样 HTTP 服务器和 web 应用之间就需要一个接口，在 Python web 开发的世界里，Python 官方<strong>钦定</strong>了这个接口并命名为 WSGI，由 PEP333 所规定。只要服务器和框架都遵守这个约定，那么就能实现服务器和框架的任意组合。按照这个规定，一个面向 WSGI 的框架必须要实现这个方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">application</span>(<span class="params">environ, start_response</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在工作过程中，HTTP 服务器会调用上面这个方法，传入请求信息，即名为 <code>environ</code> 的字典和 <code>start_response</code> 函数，应用从 <code>environ</code> 中获取请求信息，在进行业务处理后调用 <code>start_response</code> 设置响应头，并返回响应体（必须是一个可遍历的对象，比如列表、字典）给 HTTP 服务器，HTTP 服务器再返回响应给用户。</p>
+<p>所以 Flask 作为一个开发 web 应用的 web 框架，负责解决的问题就是：</p>
+<ol>
+<li>作为一个应用，能够被 HTTP 服务器所调用，必须要有 <code>__call__</code> 方法</li>
+<li>通过传入的请求信息（URL、HTTP 方法等），找到正确的业务处理逻辑，即正确的视图函数</li>
+<li>处理业务逻辑，这些逻辑可能包括表单检查、数据库 CRUD 等（这个在这篇文章里不会涉及）</li>
+<li>返回正确的响应</li>
+<li>在同时处理多个请求时，还需要保护这些请求，知道应该用哪个响应去匹配哪个请求，即线程保护</li>
+</ol>
+<p>下面就来看看 Flask 是如何解决这些问题的。</p>
+<blockquote>
+<p>参考阅读：<a target="_blank" rel="noopener" href="http://python.jobbole.com/81524/">一起写一个 web 服务器</a>，该系列文章能够让你基本理解 web 服务器和框架是如何通过 WSGI 协同工作的。</p>
+</blockquote>
+<h2 id="应用的创建"><a href="#应用的创建" class="headerlink" title="应用的创建"></a>应用的创建</h2><blockquote>
+<p>源码阅读：<code>app.py</code> 中 <code>Flask</code> 类的代码。</p>
+</blockquote>
+<p>Demo 代码的第二行创建了一个 Flask 类的实例，传入的参数是当前模块的名字。我们先来看看 Flask 应用到底是什么，它的数据结构是怎样的。</p>
+<p><code>Flask</code> 是这样一个类：</p>
+<blockquote>
+<p>The flask object implements a WSGI application and acts as the central object. It is passed the name of the module or package of the application. Once it is created it will act as a central registry for the view functions, the URL rules, template configuration and much more.</p>
+</blockquote>
+<blockquote>
+<p>The name of the package is used to resolve resources from inside the package or the folder the module is contained in depending on if the package parameter resolves to an actual python package (a folder with an <code>__init__.py</code> file inside) or a standard module (just a <code>.py</code> file).</p>
+</blockquote>
+<blockquote>
+<p>一个 Flask 对象实际上是一个 WSGI 应用。它接收一个模块或包的名字作为参数。它被创建之后，所有的视图函数、URL 规则、模板设置等都会被注册到它上面。之所以要传入模块或包的名字，是为了定位一些资源。</p>
+</blockquote>
+<p>Flask 类有这样一些属性：</p>
+<ul>
+<li><code>request_class = Request</code> 设置请求的类型</li>
+<li><code>response_class = Response</code> 设置响应的类型</li>
+</ul>
+<p>这两个类型都来源于它的依赖库 <code>werkzeug</code> 并做了简单的拓展。</p>
+<p>Flask 对象的 <code>__init__</code> 方法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, package_name</span>):</span><br><span class="line">    <span class="comment">#: Flask 对象有这样一个字典来保存所有的视图函数</span></span><br><span class="line">    <span class="variable language_">self</span>.view_functions = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#: 这个字典用来保存所有的错误处理视图函数</span></span><br><span class="line">    <span class="comment">#: 字典的 key 是错误类型码</span></span><br><span class="line">    <span class="variable language_">self</span>.error_handlers = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#: 这个列表用来保存在请求被分派之前应当执行的函数</span></span><br><span class="line">    <span class="variable language_">self</span>.before_request_funcs = []</span><br><span class="line"></span><br><span class="line">    <span class="comment">#: 在接收到第一个请求的时候应当执行的函数</span></span><br><span class="line">    <span class="variable language_">self</span>.before_first_request_funcs = []</span><br><span class="line"></span><br><span class="line">    <span class="comment">#: 这个列表中的函数在请求完成之后被调用，响应对象会被传给这些函数</span></span><br><span class="line">    <span class="variable language_">self</span>.after_request_funcs = []</span><br><span class="line"></span><br><span class="line">    <span class="comment">#: 这里设置了一个 url_map 属性，并把它设置为一个 Map 对象</span></span><br><span class="line">    <span class="variable language_">self</span>.url_map = Map()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>到这里一个 Flask 对象创建完毕并被变量 <code>app</code> 所指向，其实它就是一个保存了一些配置信息，绑定了一些视图函数并且有个 URL 映射对象（<code>url_map</code>）的对象。但我们还不知道这个 Map 对象是什么，有什么作用，从名字上看，似乎其作用是映射 URL 到视图函数。源代码第 21 行有 <code>from werkzeug.routing import Map, Rule</code>，那我们就来看看 <code>werkzeug</code> 这个库中对 Map 的定义：</p>
+<blockquote>
+<p>The map class stores all the URL rules and some configuration parameters. Some of the configuration values are only stored on the <code>Map</code> instance since those affect all rules, others are just defaults and can be overridden for each rule. Note that you have to specify all arguments besides the <code>rules</code> as keyword arguments!</p>
+</blockquote>
+<p>可以看到这个类的对象储存了所有的 URL 规则和一些配置信息。由于 <code>werkzeug</code> 的映射机制比较复杂，我们下文中讲到映射机制的时候再深入了解，现在只要记住 Flask 应用（即一个 <code>Flask</code> 类的实例）存储了视图函数，并通过 <code>url_map</code> 这个变量存储了一个 URL 映射机构就可以了。</p>
+<h2 id="应用启动过程"><a href="#应用启动过程" class="headerlink" title="应用启动过程"></a>应用启动过程</h2><blockquote>
+<p>源码阅读：<code>app.py</code> 中 <code>Flask</code> 类的代码和 <code>werkzeug.serving</code> 的代码，特别注意 <code>run_simple</code> <code>BaseWSGIServer</code> <code>WSGIRequestHandler</code>。</p>
+</blockquote>
+<p>Demo 代码的第 6 行是一个限制，表示如果 Python 解释器是直接运行该文件或包的，则运行 Flask 程序：在 Python 中，如果直接执行一个模块或包，那么解释器就会把当前模块或包的 <code>__name__</code> 设置为为 <code>__main_</code>。</p>
+<p>第 7 行中的 <code>run</code> 方法启动了 Flask 应用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self, host=<span class="literal">None</span>, port=<span class="literal">None</span>, debug=<span class="literal">None</span>, **options</span>):</span><br><span class="line">    <span class="keyword">from</span> werkzeug.serving <span class="keyword">import</span> run_simple</span><br><span class="line">    <span class="keyword">if</span> host <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        host = <span class="string">&#x27;127.0.0.1&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> port <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        server_name = <span class="variable language_">self</span>.config[<span class="string">&#x27;SERVER_NAME&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> server_name <span class="keyword">and</span> <span class="string">&#x27;:&#x27;</span> <span class="keyword">in</span> server_name:</span><br><span class="line">            port = <span class="built_in">int</span>(server_name.rsplit(<span class="string">&#x27;:&#x27;</span>, <span class="number">1</span>)[<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            port = <span class="number">5000</span></span><br><span class="line">    <span class="keyword">if</span> debug <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>.debug = <span class="built_in">bool</span>(debug)</span><br><span class="line">    options.setdefault(<span class="string">&#x27;use_reloader&#x27;</span>, <span class="variable language_">self</span>.debug)</span><br><span class="line">    options.setdefault(<span class="string">&#x27;use_debugger&#x27;</span>, <span class="variable language_">self</span>.debug)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        run_simple(host, port, <span class="variable language_">self</span>, **options)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="comment"># reset the first request information if the development server</span></span><br><span class="line">        <span class="comment"># reset normally.  This makes it possible to restart the server</span></span><br><span class="line">        <span class="comment"># without reloader and that stuff from an interactive shell.</span></span><br><span class="line">        <span class="variable language_">self</span>._got_first_request = <span class="literal">False</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到这个方法基本上是在配置参数，实际上启动服务器的是 <code>werkzeug</code> 的 <code>run_simple</code> 方法，该方法在默认情况下启动了服务器 <code>BaseWSGIServer</code>，继承自 Python 标准库中的 <code>HTTPServer.TCPServer</code>。注意在调用 <code>run_simple</code> 时，Flask 对象把自己 <code>self</code> 作为参数传进去了，这是正确的，因为服务器在收到请求的时候，必须要知道应该去调用谁的 <code>__call__</code> 方法。</p>
+<p>按照标准库中 <code>HTTPServer.TCPServer</code> 的模式，服务器必须有一个类来作为 request handler 来处理收到的请求，而不是由 <code>HTTPServer.TCPServer</code> 本身的实例来处理，<code>werkzeug</code> 提供了 <code>WSGIRequestHandler</code> 类来作为 request handler，这个类在被 <code>BaseWSGIServer</code> 调用时，会执行这个函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">execute</span>(<span class="params">app</span>):</span><br><span class="line">    application_iter = app(environ, start_response)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> application_iter:</span><br><span class="line">            write(data)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> headers_sent:</span><br><span class="line">            write(<span class="string">b&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(application_iter, <span class="string">&#x27;close&#x27;</span>):</span><br><span class="line">            application_iter.close()</span><br><span class="line">        application_iter = <span class="literal">None</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>函数的第一行就是按照 WSGI 要求的，调用了 app 并把 <code>environ</code> 和 <code>start_response</code> 传入。我们再看看 flask 中是如何按照 WSGI 要求对服务器的调用进行呼应的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__call__</span>(<span class="params">self, environ, start_response</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">self</span>.wsgi_app(environ, start_response)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">wsgi_app</span>(<span class="params">self, environ, start_response</span>):</span><br><span class="line">    ctx = <span class="variable language_">self</span>.request_context(environ)</span><br><span class="line">    ctx.push()</span><br><span class="line">    error = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = <span class="variable language_">self</span>.full_dispatch_request()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            error = e</span><br><span class="line">            response = <span class="variable language_">self</span>.handle_exception(e)</span><br><span class="line">        <span class="keyword">return</span> response(environ, start_response)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.should_ignore_error(error):</span><br><span class="line">            error = <span class="literal">None</span></span><br><span class="line">        ctx.auto_pop(error)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到 Flask 按照 WSGI 的要求实现了 <code>__call__</code> 方法，因此成为了一个可调用的对象。但它不是在直接在 <code>__call__</code> 里写逻辑的，而是调用了 <code>wsgi_app</code> 方法，这是为了中间件的考虑，不展开谈了。这个方法返回的 <code>response(environ, start_response)</code> 中，<code>response</code> 是 <code>werkzueg.response</code> 类的一个实例，它也是个可以调用的对象，这个对象会负责生成最终的可遍历的响应体，并调用 <code>start_response</code> 形成响应头。</p>
+<h2 id="请求处理过程"><a href="#请求处理过程" class="headerlink" title="请求处理过程"></a>请求处理过程</h2><blockquote>
+<p>源码阅读：<code>app.Flask</code> 的代码。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">wsgi_app</span>(<span class="params">self, environ, start_response</span>):</span><br><span class="line">    ctx = <span class="variable language_">self</span>.request_context(environ)</span><br><span class="line">    ctx.push()</span><br><span class="line">    error = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = <span class="variable language_">self</span>.full_dispatch_request()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            error = e</span><br><span class="line">            response = <span class="variable language_">self</span>.handle_exception(e)</span><br><span class="line">        <span class="keyword">return</span> response(environ, start_response)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.should_ignore_error(error):</span><br><span class="line">            error = <span class="literal">None</span></span><br><span class="line">        ctx.auto_pop(error)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>wsgi_app</code> 方法中里面的内容就是对请求处理过程的一个高度抽象。</p>
+<p>首先，在接收到服务器传过来的请求时，Flask 调用 <code>request_context</code> 函数建立了一个 <code>RequestContext</code> 请求上下文对象，并把它压入 <code>_request_ctx_stack</code> 栈。关于上下文和栈的内容下文会再讲到，你现在需要知道的是，这些操作是为了 flask 在处理多个请求的时候不会混淆。之后，Flask 会调用 <code>full_dispatch_request</code> 方法对这个请求进行分发，开始实际的请求处理过程，这个过程中会生成一个响应对象并最终通过调用 <code>response</code> 对象来返回给服务器。如果当中出错，就声称相应的错误信息。不管是否出错，最终 Flask 都会把请求上下文推出栈。</p>
+<p><code>full_dispatch_request</code> 是请求分发的入口，我们再来看它的实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">full_dispatch_request</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="variable language_">self</span>.try_trigger_before_first_request_functions()</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        rv = <span class="variable language_">self</span>.preprocess_request()</span><br><span class="line">        <span class="keyword">if</span> rv <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            rv = <span class="variable language_">self</span>.dispatch_request()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        rv = <span class="variable language_">self</span>.handle_user_exception(e)</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">self</span>.finalize_request(rv)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>首先调用 <code>try_trigger_before_first_request_functions</code> 方法来尝试调用 <code>before_first_request</code> 列表中的函数，如果 <code>Flask</code> 的 <code>_got_first_request</code> 属性为 <code>False</code>，<code>before_first_request</code> 中的函数就会被执行，执行一次之后，<code>_got_first_request</code> 就会被设置为 <code>True</code> 从而不再执行这些函数。</p>
+<p>然后调用 <code>preprocess_request</code> 方法，这个方法调用 <code>before_request_funcs</code> 列表中所有的方法，如果这些 <code>before_request_funcs</code> 方法中返回了某种东西，那么就不会真的去分发这个请求。比如说，一个 <code>before_request_funcs</code> 方法是用来检测用户是否登录的，如果用户没有登录，那么这个方法就会调用 <code>abort</code> 方法从而返回一个错误，Flask 就不会分发这个请求而是直接报 401 错误。</p>
+<p>如果 <code>before_request_funcs</code> 中的函数没有返回，那么再调用 <code>dispatch_request</code> 方法进行请求分发。这个方法首先会查看 URL 规则中有没有相应的 <code>endpoint</code> 和 <code>value</code> 值，如果有，那么就调用 <code>view_functions</code> 中相应的视图函数（<code>endpoint</code> 作为键值）并把参数值传入（<code>**req.view_args</code>），如果没有就由 <code>raise_routing_exception</code> 进行处理。视图函数的返回值或者错误处理视图函数的返回值会返回给 <code>wsgi_app</code> 方法中的 <code>rv</code> 变量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dispatch_request</span>(<span class="params">self</span>):</span><br><span class="line">        req = _request_ctx_stack.top.request</span><br><span class="line">        <span class="keyword">if</span> req.routing_exception <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="variable language_">self</span>.raise_routing_exception(req)</span><br><span class="line">        rule = req.url_rule</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">getattr</span>(rule, <span class="string">&#x27;provide_automatic_options&#x27;</span>, <span class="literal">False</span>) \</span><br><span class="line">           <span class="keyword">and</span> req.method == <span class="string">&#x27;OPTIONS&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.make_default_options_response()</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.view_functions[rule.endpoint](**req.view_args)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">finalize_request</span>(<span class="params">self, rv, from_error_handler=<span class="literal">False</span></span>):</span><br><span class="line">    response = <span class="variable language_">self</span>.make_response(rv)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = <span class="variable language_">self</span>.process_response(response)</span><br><span class="line">        request_finished.send(<span class="variable language_">self</span>, response=response)</span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> from_error_handler:</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line">        <span class="variable language_">self</span>.logger.exception(<span class="string">&#x27;Request finalizing failed with an &#x27;</span></span><br><span class="line">                              <span class="string">&#x27;error while handling an error&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_response</span>(<span class="params">self, rv</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(rv, <span class="variable language_">self</span>.response_class):</span><br><span class="line">        <span class="keyword">return</span> rv</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(rv, basestring):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.response_class(rv)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(rv, <span class="built_in">tuple</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.response_class(*rv)</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">self</span>.response_class.force_type(rv, request.environ)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后 Flask 就会根据 <code>rv</code> 生成响应，这个 <code>make_response</code> 方法会查看 rv 是否是要求的返回值类型，否则生成正确的返回类型。比如 Demo 中返回值是字符串，就会满足 <code>isinstance(rv, basestring)</code> 判断并从字符串生成响应。这一步完成之后，Flask 查看是否有后处理视图函数需要执行（在 <code>process_response</code> 方法中），并最终返回一个完全处理好的 <code>response</code> 对象。</p>
+<h2 id="视图函数注册"><a href="#视图函数注册" class="headerlink" title="视图函数注册"></a>视图函数注册</h2><p>在请求处理过程一节中，我们已经看到了 Flask 是如何调用试图函数的，这一节我们要关注 Flask 如何构建和请求分派相关的数据结构。我们将主要关注 <code>view_functions</code>，因为其他的数据结构如 <code>before_request_funcs</code> 的构建过程大同小异，甚至更为简单。我们也将仔细讲解在应用的创建一节中遗留的问题，即 <code>url_map</code> 到底是什么。</p>
+<p>Demo 代码的第 4 行用修饰器 <code>route</code> 注册一个视图函数，这是 Flask 中受到广泛称赞的一个设计。在 Flask 类的 <code>route</code> 方法中，可以看到它调用了 <code>add_url_rule</code> 方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">route</span>(<span class="params">self, rule, **options</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">f</span>):</span><br><span class="line">        endpoint = options.pop(<span class="string">&#x27;endpoint&#x27;</span>, <span class="literal">None</span>)</span><br><span class="line">        <span class="variable language_">self</span>.add_url_rule(rule, endpoint, f, **options)</span><br><span class="line">        <span class="keyword">return</span> f</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_url_rule</span>(<span class="params">self, rule, endpoint, **options</span>):</span><br><span class="line">    <span class="keyword">if</span> endpoint <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        endpoint = _endpoint_from_view_func(view_func)</span><br><span class="line">    options[<span class="string">&#x27;endpoint&#x27;</span>] = endpoint</span><br><span class="line">    methods = options.pop(<span class="string">&#x27;methods&#x27;</span>, <span class="literal">None</span>)</span><br><span class="line">    <span class="keyword">if</span> methods <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        methods = <span class="built_in">getattr</span>(view_func, <span class="string">&#x27;methods&#x27;</span>, <span class="literal">None</span>) <span class="keyword">or</span> (<span class="string">&#x27;GET&#x27;</span>,)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(methods, string_types):</span><br><span class="line">        <span class="keyword">raise</span> TypeError(<span class="string">&#x27;Allowed methods have to be iterables of strings, &#x27;</span></span><br><span class="line">                        <span class="string">&#x27;for example: @app.route(..., methods=[&quot;POST&quot;])&#x27;</span>)</span><br><span class="line">    methods = <span class="built_in">set</span>(item.upper() <span class="keyword">for</span> item <span class="keyword">in</span> methods)</span><br><span class="line"></span><br><span class="line">    required_methods = <span class="built_in">set</span>(<span class="built_in">getattr</span>(view_func, <span class="string">&#x27;required_methods&#x27;</span>, ()))</span><br><span class="line"></span><br><span class="line">    provide_automatic_options = <span class="built_in">getattr</span>(view_func,</span><br><span class="line">        <span class="string">&#x27;provide_automatic_options&#x27;</span>, <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> provide_automatic_options <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;OPTIONS&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> methods:</span><br><span class="line">            provide_automatic_options = <span class="literal">True</span></span><br><span class="line">            required_methods.add(<span class="string">&#x27;OPTIONS&#x27;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            provide_automatic_options = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    methods |= required_methods</span><br><span class="line"></span><br><span class="line">    rule = <span class="variable language_">self</span>.url_rule_class(rule, methods=methods, **options)</span><br><span class="line">    rule.provide_automatic_options = provide_automatic_options</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">self</span>.url_map.add(rule)</span><br><span class="line">    <span class="keyword">if</span> view_func <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        old_func = <span class="variable language_">self</span>.view_functions.get(endpoint)</span><br><span class="line">        <span class="keyword">if</span> old_func <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> old_func != view_func:</span><br><span class="line">            <span class="keyword">raise</span> AssertionError(<span class="string">&#x27;View function mapping is overwriting an &#x27;</span></span><br><span class="line">                                 <span class="string">&#x27;existing endpoint function: %s&#x27;</span> % endpoint)</span><br><span class="line">        <span class="variable language_">self</span>.view_functions[endpoint] = view_func</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个方法负责注册视图函数，并实现 URL 到视图函数的映射。首先，它要准备好一个视图函数所支持的 HTTP 方法（基本上一半多的代码都是在做这个），然后通过 <code>url_rule_class</code> 创建一个 <code>rule</code> 对象，并把这个对象添加到自己的 <code>url_map</code> 里。我们那个遗留问题在这里就得到解答了：<code>rule</code> 对象是一个保存合法的（Flask 应用所支持的） URL、方法、<code>endpoint</code>（在 <code>**options</code> 中） 及它们的对应关系的数据结构，而 <code>url_map</code> 是保存这些对象的集合。然后，这个方法将视图函数添加到 <code>view_functions</code> 当中，<code>endpoint</code> 作为它的键，其值默认是函数名。</p>
+<p>我们再来深入了解一下 <code>rule</code> ，它被定义在 <code>werkzeug.routing.Rule</code> 中：</p>
+<blockquote>
+<p>A Rule represents one URL pattern. There are some options for <code>Rule</code> that change the way it behaves and are passed to the <code>Rule</code> constructor. 一个 Rule 对象代表了一种 URL 模式，可以通过传入参数来改变它的许多行为。</p>
+</blockquote>
+<p>Rule 的 <code>__init__</code> 方法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, string, defaults=<span class="literal">None</span>, subdomain=<span class="literal">None</span>, methods=<span class="literal">None</span>,</span></span><br><span class="line"><span class="params">                 build_only=<span class="literal">False</span>, endpoint=<span class="literal">None</span>, strict_slashes=<span class="literal">None</span>,</span></span><br><span class="line"><span class="params">                 redirect_to=<span class="literal">None</span>, alias=<span class="literal">False</span>, host=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> string.startswith(<span class="string">&#x27;/&#x27;</span>):</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">&#x27;urls must start with a leading slash&#x27;</span>)</span><br><span class="line">    <span class="variable language_">self</span>.rule = string</span><br><span class="line">    <span class="variable language_">self</span>.is_leaf = <span class="keyword">not</span> string.endswith(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">self</span>.<span class="built_in">map</span> = <span class="literal">None</span></span><br><span class="line">    <span class="variable language_">self</span>.strict_slashes = strict_slashes</span><br><span class="line">    <span class="variable language_">self</span>.subdomain = subdomain</span><br><span class="line">    <span class="variable language_">self</span>.host = host</span><br><span class="line">    <span class="variable language_">self</span>.defaults = defaults</span><br><span class="line">    <span class="variable language_">self</span>.build_only = build_only</span><br><span class="line">    <span class="variable language_">self</span>.alias = alias</span><br><span class="line">    <span class="keyword">if</span> methods <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>.methods = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(methods, <span class="built_in">str</span>):</span><br><span class="line">            <span class="keyword">raise</span> TypeError(<span class="string">&#x27;param `methods` should be `Iterable[str]`, not `str`&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.methods = <span class="built_in">set</span>([x.upper() <span class="keyword">for</span> x <span class="keyword">in</span> methods])</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;HEAD&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> <span class="variable language_">self</span>.methods <span class="keyword">and</span> <span class="string">&#x27;GET&#x27;</span> <span class="keyword">in</span> <span class="variable language_">self</span>.methods:</span><br><span class="line">            <span class="variable language_">self</span>.methods.add(<span class="string">&#x27;HEAD&#x27;</span>)</span><br><span class="line">    <span class="variable language_">self</span>.endpoint = endpoint</span><br><span class="line">    <span class="variable language_">self</span>.redirect_to = redirect_to</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> defaults:</span><br><span class="line">        <span class="variable language_">self</span>.arguments = <span class="built_in">set</span>(<span class="built_in">map</span>(<span class="built_in">str</span>, defaults))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="variable language_">self</span>.arguments = <span class="built_in">set</span>()</span><br><span class="line">    <span class="variable language_">self</span>._trace = <span class="variable language_">self</span>._converters = <span class="variable language_">self</span>._regex = <span class="variable language_">self</span>._weights = <span class="literal">None</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>一个 Rule 被创建后，通过 <code>Map</code> 的 <code>add</code> 方法被绑定到 <code>Map</code> 对象上，我们之前说过 <code>flask.url_map</code> 就是一个 <code>Map</code> 对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">self, rulefactory</span>):</span><br><span class="line">    <span class="keyword">for</span> rule <span class="keyword">in</span> rulefactory.get_rules(<span class="variable language_">self</span>):</span><br><span class="line">        rule.bind(<span class="variable language_">self</span>)</span><br><span class="line">        <span class="variable language_">self</span>._rules.append(rule)</span><br><span class="line">        <span class="variable language_">self</span>._rules_by_endpoint.setdefault(rule.endpoint, []).append(rule)</span><br><span class="line">    <span class="variable language_">self</span>._remap = <span class="literal">True</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>而 <code>Rule</code> 的 <code>bind</code> 方法的内容，就是添加 <code>Rule</code> 对应的 <code>Map</code>，然后调用 <code>compile</code> 方法生成一个正则表达式，<code>compile</code> 方法比较复杂，就不展开了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bind</span>(<span class="params">self, <span class="built_in">map</span>, rebind=<span class="literal">False</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Bind the url to a map and create a regular expression based on</span></span><br><span class="line"><span class="string">    the information from the rule itself and the defaults from the map.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :internal:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="variable language_">self</span>.<span class="built_in">map</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> <span class="keyword">not</span> rebind:</span><br><span class="line">        <span class="keyword">raise</span> RuntimeError(<span class="string">&#x27;url rule %r already bound to map %r&#x27;</span> %</span><br><span class="line">                           (<span class="variable language_">self</span>, <span class="variable language_">self</span>.<span class="built_in">map</span>))</span><br><span class="line">    <span class="variable language_">self</span>.<span class="built_in">map</span> = <span class="built_in">map</span></span><br><span class="line">    <span class="keyword">if</span> <span class="variable language_">self</span>.strict_slashes <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>.strict_slashes = <span class="built_in">map</span>.strict_slashes</span><br><span class="line">    <span class="keyword">if</span> <span class="variable language_">self</span>.subdomain <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>.subdomain = <span class="built_in">map</span>.default_subdomain</span><br><span class="line">    <span class="variable language_">self</span>.<span class="built_in">compile</span>()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在 Flask 应用收到请求时，这些被绑定到 <code>url_map</code> 上的 <code>Rule</code> 会被查看，来找到它们对应的视图函数。这是在请求上下文中实现的，我们先前在 <code>dispatch_request</code> 方法中就见过——我们是从 <code>_request_ctx_stack.top.request</code> 得到 <code>rule</code> 并从这个 <code>rule</code> 找到 <code>endpoint</code>，最终找到用来处理该请求的正确的视图函数的。所以，接下来我们需要看请求上下的具体实现，并且看一看 Flask 是如何从 <code>url_map</code> 中找到这个 <code>rule</code> 的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dispatch_request</span>(<span class="params">self</span>):</span><br><span class="line">    req = _request_ctx_stack.top.request</span><br><span class="line">    <span class="keyword">if</span> req.routing_exception <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>.raise_routing_exception(req)</span><br><span class="line">    rule = req.url_rule</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">getattr</span>(rule, <span class="string">&#x27;provide_automatic_options&#x27;</span>, <span class="literal">False</span>) \</span><br><span class="line">       <span class="keyword">and</span> req.method == <span class="string">&#x27;OPTIONS&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.make_default_options_response()</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">self</span>.view_functions[rule.endpoint](**req.view_args)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="请求上下文"><a href="#请求上下文" class="headerlink" title="请求上下文"></a>请求上下文</h2><blockquote>
+<p>源码阅读：<code>ctx.RequestContext</code> 的代码。</p>
+</blockquote>
+<p>请求上下文是如何、在何时被创建的呢？我们先前也见过，在服务器调用应用的时候，Flask 的 <code>wsgi_app</code> 中有这样的语句，就是创建了请求上下文并压栈。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">wsgi_app</span>(<span class="params">self, environ, start_response</span>):</span><br><span class="line">    ctx = <span class="variable language_">self</span>.request_context(environ)</span><br><span class="line">    ctx.push()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>request_context</code> 方法非常简单，就是创建了 <code>RequestContext</code> 类的一个实例，这个类被定义在 <code>flask.ctx</code> 文件中，它包含了一系列关于请求的信息，<strong>最重要的是</strong>它自身的 <code>request</code> 属性指向了一个 <code>Request</code> 类的实例，这个类继承自 <code>werkzeug.Request</code>，在 <code>RequestContext</code> 的创建过程中，它会根据传入的 <code>environ</code> 创建一个 <code>werkzeug.Request</code> 的实例。</p>
+<p>接着 <code>RequestContext</code> 的 <code>push</code> 方法被调用，这个方法将自己推到 <code>_request_ctx_stack</code> 的栈顶。</p>
+<p><code>_request_ctx_stack</code> 被定义在 <code>flask.global</code> 文件中，它是一个 <code>LocalStack</code> 类的实例，是 <code>werkzeug.local</code> 所实现的，如果你对 Python 的 threading 熟悉的话，就会发现这里实现了线程隔离，就是说，在 Python 解释器运行到 <code>_request_ctx_stack</code> 相关代码的时候，解释器会根据当前进程来选择正确的实例。</p>
+<p>但是，在整个分析 Flask 源码的过程中，我们也没发现 Flask 在被调用之后创建过线程啊，那么为什么要做线程隔离呢？看我们开头提到的 <code>run</code> 函数，其实它可以传一个 <code>threaded</code> 参数。当不传这个函数的时候，我们启动的是 <code>BasicWSGIServer</code>，这个服务器是单线程单进程的，Flask 的线程安全自然没有意义，但是当我们传入这个参数的时候，我们启动的是 <code>ThreadedWSGIServer</code>，这时 Flask 的线程安全就是有意义的了，在其他多线程的服务器中也是一样。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="一个请求的旅程"><a href="#一个请求的旅程" class="headerlink" title="一个请求的旅程"></a>一个请求的旅程</h3><p>这里，我们通过追踪一个请求到达服务器并返回（当然是通过“变成”一个相应）的旅程，串讲本文的内容。</p>
+<ol>
+<li>在请求发出之前，Flask 注册好了所有的视图函数和 URL 映射，服务器在自己身上注册了 Flask 应用。</li>
+<li>请求到达服务器，服务器准备好 <code>environ</code> 和 <code>make_response</code> 函数，然后调用了自己身上注册的 Flask 应用。</li>
+<li>应用实现了 WSGI 要求的 <code>application(environ, make_response)</code> 方法。在 Flask 中，这个方法是个被 <code>__call__</code> 中转的叫做 <code>wsgi_app</code> 的方法。它首先通过 <code>environ</code> 创建了请求上下文，并将它推入栈，使得 flask 在处理当前请求的过程中都可以访问到这个请求上下文。</li>
+<li>然后 Flask 开始处理这个请求，依次调用 <code>before_first_request_funcs</code> <code>before_request_funcs</code> <code>view_functions</code> 中的函数，并最终通过 <code>finalize_request</code> 生成一个 <code>response</code> 对象，当中只要有函数返回值，后面的函数组就不会再执行，<code>after_request_funcs</code> 进行 <code>response</code> 生成后的后处理。</li>
+<li>Flask 调用这个 <code>response</code> 对象，最终调用了 <code>make_response</code> 函数，并返回了一个可遍历的响应内容。</li>
+<li>服务器发送响应。</li>
+</ol>
+<h3 id="Flask-和-werkzeug"><a href="#Flask-和-werkzeug" class="headerlink" title="Flask 和 werkzeug"></a>Flask 和 werkzeug</h3><p>在分析过程中，可以很明显地看出 Flask 和 <code>werkzeug</code> 是强耦合的，实际上 <code>werkzeug</code> 是 Flask 唯一不可或缺的依赖，一些非常细节的工作，其实都是 <code>werkzeug</code> 库完成的，在本文的例子中，它至少做了这些事情：</p>
+<ol>
+<li>封装 <code>Response</code> 和 <code>Request</code> 类型供 Flask 使用，在实际开发中，我们在请求和响应对象上的操作，调用的其实是 <code>werkzeug</code> 的方法。</li>
+<li>实现 URL 到视图函数的映射，并且能把 URL 中的参数传给该视图函数。我们看到了 Flask 的 url_map 属性并且看到了它如何绑定视图函数和错误处理函数，但是具体的映射规则的实践，和在响应过程中的 URL 解析，都是由 werkzeug 完成的。</li>
+<li>通过 LocalProxy 类生成的 <code>_request_ctx_stack</code> 对 Flask 实现线程保护。</li>
+</ol>
+<p>对于 Flask 的源码分析先暂时到这里。有时间的话，我会分析 Flask 中的模板渲染、<code>import request</code>、蓝图和一些好用的变量及函数，或者深入分析 <code>werkzeug</code> 库。</p>
+<h3 id="参考阅读"><a href="#参考阅读" class="headerlink" title="参考阅读"></a>参考阅读</h3><ol>
+<li><a target="_blank" rel="noopener" href="http://cizixs.com/2017/01/10/flask-insight-introduction">flask 源码解析系列文章</a>，你可以在读完本文了解主线之后，再看这系列文章了解更加细节的东西。</li>
+<li><a target="_blank" rel="noopener" href="http://python.jobbole.com/81524/">一起写一个 web 服务器</a>。</li>
+</ol>
+<h2 id="文章更新记录"><a href="#文章更新记录" class="headerlink" title="文章更新记录"></a>文章更新记录</h2><ul>
+<li>2017年9月10日：利用 0.12.0 版本进行分析，重新调整了结构和行文顺序，增加了许多内容。</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/post/flask%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80.html" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2024-10-29 13:29:17
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E8%BD%AC%E8%BD%BD/" title="转载">
+                        <b>#</b> 转载
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/flask/" title="flask">
+                        #flask
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/post/wsl-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1-crontab%E6%9D%83%E9%99%90.html" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#flask-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="toc-text">flask 源码解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#WSGI"><span class="toc-text">WSGI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">应用的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">应用启动过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-text">请求处理过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0%E6%B3%A8%E5%86%8C"><span class="toc-text">视图函数注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-text">请求上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E8%AF%B7%E6%B1%82%E7%9A%84%E6%97%85%E7%A8%8B"><span class="toc-text">一个请求的旅程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flask-%E5%92%8C-werkzeug"><span class="toc-text">Flask 和 werkzeug</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%98%85%E8%AF%BB"><span class="toc-text">参考阅读</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95"><span class="toc-text">文章更新记录</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'gCNyW4RIETLbBYbENmjSSC8M-gzGzoHsz',
+        appKey: 'ECydfnAcQ3LpBHvVtKHLU6lw',
+        placeholder: '欢迎畅所欲言!',
+        avatar: 'mm',
+        lang: 'zh-CN'
+      })
+    }
+  </script>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/libaibuaidufu">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%BD%AC%E8%BD%BD-flask%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90 + '&url=' + https%3A%2F%2Flibaibuaidufu.com%2Fpost%2F%25E8%25BD%25AC%25E8%25BD%25BD-flask%25E6%25BA%2590%25E7%25A0%2581%25E5%2588%2586%25E6%259E%2590.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://libaibuaidufu.com/post/%E8%BD%AC%E8%BD%BD-flask%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

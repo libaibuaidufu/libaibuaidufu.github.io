@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="libaibuaidufu" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  <meta name="description" content="李白不爱杜甫的日常" />
+  
+  
+  
+  <title>
+    
+      wsl 定时任务 crontab权限 
+      
+      
+      |
+    
+     李白不爱杜甫
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/uploads/favicon32.ico">
+    <link rel="icon" href="/uploads/favicon16.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/uploads/avatar.jpg" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">李白不爱杜甫</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文章</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/comments/">
+          <a href="/comments/">留言板</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">wsl 定时任务 crontab权限</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2024-10-29 13:29:17
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/wsl/" title="wsl">
+                    <b>#</b> wsl
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/wsl/" title="wsl">
+                    #wsl
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/linux/" title="linux">
+                    #linux
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>可能有一些乱,但是不影响整体思路。</p>
+<h3 id="安装-wsl"><a href="#安装-wsl" class="headerlink" title="安装 wsl"></a>安装 wsl</h3><p>首先在windows上 打开 <strong>启动或关闭windows功能</strong>  选择 <strong>适用于 Linux 的 windows 子系统</strong> 打勾</p>
+<p>然后取 windows应用市场 搜索 wsl ，下载你喜欢的一个 linux子系统</p>
+<p>我这边安装了一个 debian，一个ubuntu。</p>
+<p>如果你没有开启<strong>适用于 Linux 的 windows 子系统</strong> 是无法安装的。</p>
+<p><strong>记得一定要安装windows terminal 这个太提升体验了</strong></p>
+<span id="more"></span>
+
+<h3 id="配置linux子系统"><a href="#配置linux子系统" class="headerlink" title="配置linux子系统"></a>配置linux子系统</h3><p>进入 debian系统</p>
+<h4 id="挂载windows和linux的共享盘"><a href="#挂载windows和linux的共享盘" class="headerlink" title="挂载windows和linux的共享盘"></a>挂载windows和linux的共享盘</h4><p>可以先在linux子系统和windows之间建立一个共享盘</p>
+<p>挂载 windows D盘的wsl_linux 到 debian到 win10目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /mnt/d/wsl_linux ~/win10 </span><br></pre></td></tr></table></figure>
+
+<h4 id="换国内源"><a href="#换国内源" class="headerlink" title="换国内源"></a>换国内源</h4><p>清华源地址:<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/debian/">https://mirrors.tuna.tsinghua.edu.cn/help/debian/</a></p>
+<p><strong>这是debian10</strong></p>
+<p>在windows中 创建一个 sources.list ,同样也可以在linux下创建，看你喜欢</p>
+<p>把内容直接复制到sources.list 里面，因为无法拉去 https ，所以可以吧所有的https改为http</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+
+<p>然后把 文件复制到 &#x2F;etc&#x2F;apt中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> ~/win10/sources.list /etc/apt/sources.list</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="comment">#安装 ca证书 就可以拉去 https</span></span><br><span class="line"><span class="built_in">sudo</span> apt install apt-transport-https ca-certificates</span><br><span class="line"><span class="comment">#此时就可以修改所有http为 https了</span></span><br><span class="line"><span class="comment"># 然后在执行一次</span></span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="comment"># 安装一些我需要的软件</span></span><br><span class="line"><span class="built_in">sudo</span> apt install crul wget vim -y</span><br></pre></td></tr></table></figure>
+
+<p>此时debian的系统就调试的差不多了。</p>
+<h3 id="设置定时任务-crontab-及其权限"><a href="#设置定时任务-crontab-及其权限" class="headerlink" title="设置定时任务 crontab 及其权限"></a>设置定时任务 crontab 及其权限</h3><p>设置定时任务 crontab  ，因为crontab定时任务的命令网上太多了一搜一大堆，我这里就不复制，粘贴了。</p>
+<h4 id="编辑定时任务"><a href="#编辑定时任务" class="headerlink" title="编辑定时任务"></a>编辑定时任务</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一次 他需要让你选择打开使用的编辑器 选择 vim就好了 或者 选择自己熟悉的</span></span><br><span class="line">crontab -e</span><br><span class="line">0 21 * * * <span class="built_in">cd</span> /home/libai/fping-4.2/src/ &amp;&amp; <span class="built_in">sudo</span> /bin/bash /home/libai/fping-4.2/src/cf.sh &gt;&gt; /var/log/cf_log.log</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">crontab -l</span><br><span class="line"><span class="comment"># 重启 这样才会设置任务 ### 认识错误 不用重启  他会自己去读取</span></span><br><span class="line"><span class="built_in">sudo</span> service cron restart <span class="comment"># debian</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart crond.service <span class="comment"># centos</span></span><br></pre></td></tr></table></figure>
+
+<p>我的这个任务是每天晚上九点 执行一次。</p>
+<p>因为执行命令需要root权限。我们需要设置执行我们这个命令时候，不需要输入密码。</p>
+<h4 id="设置-visudo-，定时任务权限"><a href="#设置-visudo-，定时任务权限" class="headerlink" title="设置 visudo ，定时任务权限"></a>设置 visudo ，定时任务权限</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开 visudo</span></span><br><span class="line"><span class="built_in">sudo</span> visudo</span><br><span class="line"><span class="comment"># 在末尾添加 这个用的是nano编辑器</span></span><br><span class="line">%<span class="built_in">sudo</span> ALL=NOPASSWD: /etc/init.d/cron start</span><br><span class="line">%<span class="built_in">sudo</span> ALL=NOPASSWD: /bin/bash /home/libai/fping-4.2/src/cf.sh</span><br><span class="line"><span class="comment"># 这里的命令要和上面crontab -e 命令保持一致 路径也一样 不然还是要输入密码的</span></span><br><span class="line"><span class="comment"># 路径 和 目录写清楚 可从下面参考里面看详细的visudo命令解释</span></span><br><span class="line"><span class="comment"># who     where=(whom)    commands</span></span><br><span class="line"><span class="comment"># 用户    主机=（以谁的身份） commands</span></span><br><span class="line"><span class="comment"># nano 命令</span></span><br><span class="line"><span class="comment"># 保存</span></span><br><span class="line">Ctrl+O 然后回车一下就可以了</span><br><span class="line"><span class="comment"># 推出</span></span><br><span class="line">Ctrl+X</span><br></pre></td></tr></table></figure>
+
+<p>此时定时任务就可以起飞了，同时把任务日志保存一下，看看是不是真的运行了。同时运行有什么问题，也可以处理。** &gt;&gt; &#x2F;var&#x2F;log&#x2F;cf_log.log** 注意创建此文件同时注意权限 <strong>chmod 777 cf_log.log</strong></p>
+<h3 id="关闭linux子系统，windows开机启动"><a href="#关闭linux子系统，windows开机启动" class="headerlink" title="关闭linux子系统，windows开机启动"></a>关闭linux子系统，windows开机启动</h3><p>但是这样当我们关闭windows子系统的时候，整个就关闭了，就没有什么定时任务了，因此我们要创建一个windows的开启任务。</p>
+<p>在windows下：</p>
+<p>win+R 输入 shell:startup 打开目录</p>
+<p>新建一个 快捷方式</p>
+<p>输入 <strong>C:\Windows\System32\wsl.exe sudo &#x2F;etc&#x2F;init.d&#x2F;cron start</strong> </p>
+<p>你发现这个命令和我们上面visudo的添加第一个命令一致，但是我开机启动时，还是要让我输入密码。。。</p>
+<p><strong>需要输入密码是因为wsl默认启动我的ubuntu，修改默认启动顺序，如果你只有一个系统就不会出现这个情况或者你用的系统是你第一个安装应该也是没有问题的</strong></p>
+<h4 id="查看、修改默认系统"><a href="#查看、修改默认系统" class="headerlink" title="查看、修改默认系统"></a>查看、修改默认系统</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wslconfig /list</span><br><span class="line">适用于 Linux 的 Windows 子系统:</span><br><span class="line">Ubuntu<span class="literal">-20</span>.<span class="number">04</span> (默认)</span><br><span class="line">Debian</span><br><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wslconfig /s Debian <span class="comment"># 修改默认</span></span><br><span class="line"><span class="built_in">PS</span> C:\Users\dfk&gt; wsl <span class="comment"># 进入系统</span></span><br><span class="line">libai@DESKTOP<span class="literal">-3SJEOBV</span>:/mnt/c/Users/dfk<span class="variable">$</span> uname <span class="literal">-a</span> <span class="comment"># 查看是否是 debian</span></span><br><span class="line">Linux DESKTOP<span class="literal">-3SJEOBV</span> <span class="number">4.4</span>.<span class="number">0</span><span class="literal">-18362-Microsoft</span> <span class="comment">#836-Microsoft Mon May 05 16:04:00 PST 2020 x86_64 GNU/Linux</span></span><br><span class="line">libai@DESKTOP<span class="literal">-3SJEOBV</span>:/mnt/c/Users/dfk<span class="variable">$</span> <span class="built_in">cat</span> /etc/issue</span><br><span class="line">Debian GNU/Linux <span class="number">10</span> \n \l</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>命令帮助：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">对 Windows 上的 Linux 子系统进行操作管理</span><br><span class="line"></span><br><span class="line">用途：</span><br><span class="line">    /l, /list [/all]</span><br><span class="line">        列出已注册的分发版。</span><br><span class="line">        /all - 有选择地列出所有分发版，包括</span><br><span class="line">               当前正在安装或卸载的分发版。</span><br><span class="line"></span><br><span class="line">    /s, /setdefault &lt;DistributionName&gt;</span><br><span class="line">        将该分发版设为默认。</span><br><span class="line"></span><br><span class="line">    /t, /terminate &lt;DistributionName&gt;</span><br><span class="line">        终止分发。</span><br><span class="line"></span><br><span class="line">    /u, /unregister &lt;DistributionName&gt;</span><br><span class="line">        取消分发版注册。</span><br><span class="line"></span><br><span class="line">    /upgrade &lt;DistributionName&gt;</span><br><span class="line">        将分发版升级至 WslFs 文件系统格式。</span><br></pre></td></tr></table></figure>
+
+<h4 id="最后再次执行-快捷方式-看看-要不要密码"><a href="#最后再次执行-快捷方式-看看-要不要密码" class="headerlink" title="最后再次执行 快捷方式 看看 要不要密码"></a>最后再次执行 快捷方式 看看 要不要密码</h4><p>不要了 完美了。。。。。。</p>
+<h4 id="查看windows是否开启"><a href="#查看windows是否开启" class="headerlink" title="查看windows是否开启"></a>查看windows是否开启</h4><p>查看 任务管理系统，里面有没有一个cron的进程，有就是成功了的。</p>
+<p>参考：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fff3ccc3e04e">sudo和它的编辑工具visudo</a></li>
+<li><a href="%5Bhttps://naizi.moe/2020/01/24/wsl-crontab/#%E5%AE%89%E8%A3%85WSL%5D(https://naizi.moe/2020/01/24/wsl-crontab/#%E5%AE%89%E8%A3%85WSL)">Windows使用WSL配置crontab定时任务</a></li>
+<li><a target="_blank" rel="noopener" href="https://sxi.io/how-to-start-stop-restart-cron-service-in-linux-centos-7/">How To Start&#x2F;Stop&#x2F;Restart Cron Service In Linux Centos 7</a></li>
+</ol>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/post/%E8%BD%AC%E8%BD%BD-flask%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.html" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2024-10-29 13:29:17
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/wsl/" title="wsl">
+                        <b>#</b> wsl
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/wsl/" title="wsl">
+                        #wsl
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/linux/" title="linux">
+                        #linux
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/post/cloudflare-%E5%8A%A8%E6%80%81%E4%BF%AE%E6%94%B9-dns.html" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-wsl"><span class="toc-text">安装 wsl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AElinux%E5%AD%90%E7%B3%BB%E7%BB%9F"><span class="toc-text">配置linux子系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%82%E8%BD%BDwindows%E5%92%8Clinux%E7%9A%84%E5%85%B1%E4%BA%AB%E7%9B%98"><span class="toc-text">挂载windows和linux的共享盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90"><span class="toc-text">换国内源</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1-crontab-%E5%8F%8A%E5%85%B6%E6%9D%83%E9%99%90"><span class="toc-text">设置定时任务 crontab 及其权限</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-text">编辑定时任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE-visudo-%EF%BC%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E6%9D%83%E9%99%90"><span class="toc-text">设置 visudo ，定时任务权限</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%ADlinux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%8Cwindows%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="toc-text">关闭linux子系统，windows开机启动</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E3%80%81%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E7%B3%BB%E7%BB%9F"><span class="toc-text">查看、修改默认系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%86%8D%E6%AC%A1%E6%89%A7%E8%A1%8C-%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F-%E7%9C%8B%E7%9C%8B-%E8%A6%81%E4%B8%8D%E8%A6%81%E5%AF%86%E7%A0%81"><span class="toc-text">最后再次执行 快捷方式 看看 要不要密码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bwindows%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AF"><span class="toc-text">查看windows是否开启</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'gCNyW4RIETLbBYbENmjSSC8M-gzGzoHsz',
+        appKey: 'ECydfnAcQ3LpBHvVtKHLU6lw',
+        placeholder: '欢迎畅所欲言!',
+        avatar: 'mm',
+        lang: 'zh-CN'
+      })
+    }
+  </script>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/libaibuaidufu">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + wsl%20%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%20crontab%E6%9D%83%E9%99%90 + '&url=' + https%3A%2F%2Flibaibuaidufu.com%2Fpost%2Fwsl-%25E5%25AE%259A%25E6%2597%25B6%25E4%25BB%25BB%25E5%258A%25A1-crontab%25E6%259D%2583%25E9%2599%2590.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://libaibuaidufu.com/post/wsl-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1-crontab%E6%9D%83%E9%99%90.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

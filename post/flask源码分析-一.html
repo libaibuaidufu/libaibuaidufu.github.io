@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="libaibuaidufu" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  <meta name="description" content="李白不爱杜甫的日常" />
+  
+  
+  
+  <title>
+    
+      flask源码分析(一) 
+      
+      
+      |
+    
+     李白不爱杜甫
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/uploads/favicon32.ico">
+    <link rel="icon" href="/uploads/favicon16.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/uploads/avatar.jpg" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">李白不爱杜甫</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文章</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/comments/">
+          <a href="/comments/">留言板</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">flask源码分析(一)</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2024-10-29 13:29:17
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/flask/" title="flask">
+                    <b>#</b> flask
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/flask/" title="flask">
+                    #flask
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>对于flask源码，已经看过几次，每次都是看了忘，忘了看，这次就好生记录一下。也算是认真学习。</p>
+<span id="more"></span>
+
+<h2 id="Flask-class"><a href="#Flask-class" class="headerlink" title="Flask class"></a>Flask class</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br></pre></td></tr></table></figure>
+
+<p>一般 我们都是这样开头的，那我们就 从最开始的 <code>__name__</code> 开始介绍。</p>
+<h3 id="Flask-的一个参数-import-name"><a href="#Flask-的一个参数-import-name" class="headerlink" title="Flask 的一个参数 import_name"></a>Flask 的一个参数 import_name</h3><p>通过进入源码了解到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">admonition:: About the First Parameter</span><br><span class="line">        The idea of the first parameter is to give Flask an idea of what</span><br><span class="line">        belongs to your application.  This name is used to find resources</span><br><span class="line">        on the filesystem, can be used by extensions to improve debugging</span><br><span class="line">        information and a lot more.</span><br><span class="line"></span><br><span class="line">        So it&#x27;s important what you provide there.  If you are using a single</span><br><span class="line">        module, `__name__` is always the correct value.  If you however are</span><br><span class="line">        using a package, it&#x27;s usually recommended to hardcode the name of</span><br><span class="line">        your package there.</span><br><span class="line"></span><br><span class="line">        For example if your application is defined in :file:`yourapplication/app.py`</span><br><span class="line">        you should create it with one of the two versions below::</span><br><span class="line"></span><br><span class="line">            app = Flask(&#x27;yourapplication&#x27;)</span><br><span class="line">            app = Flask(__name__.split(&#x27;.&#x27;)[0])</span><br><span class="line"></span><br><span class="line">        Why is that?  The application will work even with `__name__`, thanks</span><br><span class="line">        to how resources are looked up.  However it will make debugging more</span><br><span class="line">        painful.  Certain extensions can make assumptions based on the</span><br><span class="line">        import name of your application.  For example the Flask-SQLAlchemy</span><br><span class="line">        extension will look for the code in your application that triggered</span><br><span class="line">        an SQL query in debug mode.  If the import name is not properly set</span><br><span class="line">        up, that debugging information is lost.  (For example it would only</span><br><span class="line">        pick up SQL queries in `yourapplication.app` and not</span><br><span class="line">        `yourapplication.views.frontend`)</span><br><span class="line">##### 谷歌翻译</span><br><span class="line">告诫：：关于第一个参数</span><br><span class="line"></span><br><span class="line">        第一个参数的想法是让Flask了解属于您的应用程序。此名称用于查找资源在文件系统上，扩展可以使用它来改进调试信息等等。</span><br><span class="line"></span><br><span class="line">        因此，您在此处提供的内容很重要。如果您使用单个在模块中，“ __ name__”始终是正确的值。如果你是使用软件包，通常建议对代码名称进行硬编码您的包裹在那里。</span><br><span class="line"></span><br><span class="line">        例如，如果您的应用程序是在：file：`yourapplication / app.py`中定义的</span><br><span class="line">		您应该使用以下两个版本之一创建它：：</span><br><span class="line">            app = Flask(&#x27;yourapplication&#x27;)</span><br><span class="line">            app = Flask(__name__.split(&#x27;.&#x27;)[0])</span><br><span class="line"></span><br><span class="line">        这是为什么？由于如何查找资源，该应用程序甚至可以与“ __name__”一起使用。但是，这会使调试更加痛苦。某些扩展可以根据您的应用程序的导入名称进行假设。例如，Flask-SQLAlchemy扩展将在您的应用程序中查找在调试模式下触发SQL查询的代码。如果导入名称设置不正确，则该调试信息将丢失。 （例如，它将仅在`yourapplication.app`中而不是`yourapplication.views.frontend`中拾取SQL查询。）</span><br></pre></td></tr></table></figure>
+
+<h4 id="第一个参数-单模块"><a href="#第一个参数-单模块" class="headerlink" title="第一个参数 单模块"></a>第一个参数 单模块</h4><p>如果只是使用单模块，那么使用<code>__name__</code> 总是对的。</p>
+<p>什么是单模块就是一个文件搞定所有。</p>
+<h4 id="第一个参数-多内容"><a href="#第一个参数-多内容" class="headerlink" title="第一个参数 多内容"></a>第一个参数 多内容</h4><p>目录结构是：<br>├─.idea<br>│  └─inspectionProfiles<br>├─to_the_world_package<br>│  ├─static<br>│  └─templates<br>└─<strong>pycache</strong></p>
+<p>file: <code>to_the_world_package/to-the-world.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"><span class="keyword">from</span> flask.helpers <span class="keyword">import</span> get_root_path</span><br><span class="line"><span class="keyword">from</span> .hello <span class="keyword">import</span> data</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(__name__)</span><br><span class="line">app = Flask(<span class="string">&quot;to_the_world_package&quot;</span>)</span><br><span class="line"><span class="comment"># app = Flask(__name__.split(&quot;.&quot;)[0])</span></span><br><span class="line"><span class="comment"># app = Flask(__name__)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(app.import_name)</span><br><span class="line"><span class="built_in">print</span>(app.template_folder)</span><br><span class="line"><span class="built_in">print</span>(app.root_path)</span><br><span class="line">import_name = <span class="string">&quot;to_the_world_package&quot;</span></span><br><span class="line">mod = sys.modules.get(import_name)</span><br><span class="line"><span class="built_in">print</span>(mod.__file__)</span><br><span class="line"><span class="built_in">print</span>(os.path.abspath(mod.__file__))</span><br><span class="line"><span class="built_in">print</span>(os.path.dirname(os.path.abspath(mod.__file__)))</span><br><span class="line"></span><br><span class="line">import_name = <span class="string">&quot;to_the_world_package.to-the-world&quot;</span></span><br><span class="line">mod = sys.modules.get(import_name)</span><br><span class="line"><span class="built_in">print</span>(mod.__file__)</span><br><span class="line"><span class="built_in">print</span>(os.path.abspath(mod.__file__))</span><br><span class="line"><span class="built_in">print</span>(os.path.dirname(os.path.abspath(mod.__file__)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># app.run(debug=True, host=&#x27;0.0.0.0&#x27;, port=8080)</span></span><br><span class="line">    app.run(debug=<span class="literal">True</span>, port=<span class="number">8080</span>)</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">to_the_world_package.to-the-world</span></span><br><span class="line"><span class="string">to_the_world_package.to-the-world</span></span><br><span class="line"><span class="string">templates</span></span><br><span class="line"><span class="string">C:\Users\libai\dfk-common\日常\flask-rbac\to_the_world_package</span></span><br><span class="line"><span class="string"># import_name = &quot;to_the_world_package&quot;</span></span><br><span class="line"><span class="string">C:\Users\libai\dfk-common\日常\flask-rbac\to_the_world_package\__init__.py</span></span><br><span class="line"><span class="string">C:\Users\libai\dfk-common\日常\flask-rbac\to_the_world_package\__init__.py</span></span><br><span class="line"><span class="string">C:\Users\libai\dfk-common\日常\flask-rbac\to_the_world_package</span></span><br><span class="line"><span class="string"># import_name = &quot;to_the_world_package.to-the-world&quot;</span></span><br><span class="line"><span class="string">C:\Users\libai\dfk-common\日常\flask-rbac\to_the_world_package\to-the-world.py</span></span><br><span class="line"><span class="string">C:\Users\libai\dfk-common\日常\flask-rbac\to_the_world_package\to-the-world.py</span></span><br><span class="line"><span class="string">C:\Users\libai\dfk-common\日常\flask-rbac\to_the_world_package</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>从这里来看 无论使用  <code>__name__</code>  还是 packeage_name 还是 <code>__name__.split(&quot;.&quot;)[0]</code> 都可以，因为</p>
+<p><code>get_root_path</code>方法 会把root_path给改回来。</p>
+<p><strong>Flask 的第一个参数 主要是 为了 让Flask找文件位置，就是找到所谓的root_path，然后就可以找到root_path下的文件，例如 static 或者 templates,如果root_path位置不对，就会无法使用 static 或者 templates，因此可以自己设定位置,设定 static_folder，template_folder，或者直接设置root_path</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params"></span></span><br><span class="line"><span class="params">    self,</span></span><br><span class="line"><span class="params">    import_name,</span></span><br><span class="line"><span class="params">    static_url_path=<span class="literal">None</span>,</span></span><br><span class="line"><span class="params">    static_folder=<span class="string">&quot;static&quot;</span>,</span></span><br><span class="line"><span class="params">    static_host=<span class="literal">None</span>,</span></span><br><span class="line"><span class="params">    host_matching=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">    subdomain_matching=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">    template_folder=<span class="string">&quot;templates&quot;</span>,</span></span><br><span class="line"><span class="params">    instance_path=<span class="literal">None</span>,</span></span><br><span class="line"><span class="params">    instance_relative_config=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">    root_path=<span class="literal">None</span>,</span></span><br><span class="line"><span class="params"></span>):</span><br></pre></td></tr></table></figure>
+
+<h4 id="这里写一个真实的"><a href="#这里写一个真实的" class="headerlink" title="这里写一个真实的"></a>这里写一个真实的</h4><p>目录精简下来：</p>
+<p>app:</p>
+<p>├─.idea<br>│  └─inspectionProfiles<br>├─config<br>│  └─config.py<br>├─controllers<br>│  ├─app<br>│  ├─impl<br>│  ├─web<br>│  └─wx<br>├─log<br>├─models<br>├─static<br>│  └─dept_img<br>└─Main.py</p>
+<p>我们在config目录下的 config.py中进行了配置，但是在主目录下Main.py进行注册启动。</p>
+<p>因此 我们config下的config.py中如何写 Flask呢？</p>
+<p>我去看看了以前的</p>
+<h5 id="以前我们是设定template-folder-和-static-folder"><a href="#以前我们是设定template-folder-和-static-folder" class="headerlink" title="以前我们是设定template_folder 和 static_folder"></a>以前我们是设定template_folder 和 static_folder</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app = Flask(__name__, template_folder=<span class="string">&#x27;../templates&#x27;</span>, 和 static_folder=<span class="string">&quot;../static&quot;</span>, static_url_path=<span class="string">&quot;/static&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="现在我们知道第一个参数的意义，那我们可以直接这样写就可以了"><a href="#现在我们知道第一个参数的意义，那我们可以直接这样写就可以了" class="headerlink" title="现在我们知道第一个参数的意义，那我们可以直接这样写就可以了"></a>现在我们知道第一个参数的意义，那我们可以直接这样写就可以了</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(__name__)</span><br><span class="line">app = Flask(<span class="string">&quot;app&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(app.root_path)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">config.config</span></span><br><span class="line"><span class="string">I:\libaibuaidufu\app</span></span><br><span class="line"><span class="string">此时的app，root_path 就是对的。</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/post/flask-rbac-%E8%AE%BE%E8%AE%A1.html" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2024-10-29 13:29:17
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/flask/" title="flask">
+                        <b>#</b> flask
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/flask/" title="flask">
+                        #flask
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/post/%E8%BD%AC%E8%BD%BD-flask%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.html" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Flask-class"><span class="toc-text">Flask class</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flask-%E7%9A%84%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0-import-name"><span class="toc-text">Flask 的一个参数 import_name</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0-%E5%8D%95%E6%A8%A1%E5%9D%97"><span class="toc-text">第一个参数 单模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0-%E5%A4%9A%E5%86%85%E5%AE%B9"><span class="toc-text">第一个参数 多内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E5%86%99%E4%B8%80%E4%B8%AA%E7%9C%9F%E5%AE%9E%E7%9A%84"><span class="toc-text">这里写一个真实的</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%A5%E5%89%8D%E6%88%91%E4%BB%AC%E6%98%AF%E8%AE%BE%E5%AE%9Atemplate-folder-%E5%92%8C-static-folder"><span class="toc-text">以前我们是设定template_folder 和 static_folder</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%8E%B0%E5%9C%A8%E6%88%91%E4%BB%AC%E7%9F%A5%E9%81%93%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%8C%E9%82%A3%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E8%BF%99%E6%A0%B7%E5%86%99%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86"><span class="toc-text">现在我们知道第一个参数的意义，那我们可以直接这样写就可以了</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'gCNyW4RIETLbBYbENmjSSC8M-gzGzoHsz',
+        appKey: 'ECydfnAcQ3LpBHvVtKHLU6lw',
+        placeholder: '欢迎畅所欲言!',
+        avatar: 'mm',
+        lang: 'zh-CN'
+      })
+    }
+  </script>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/libaibuaidufu">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + flask%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90(%E4%B8%80) + '&url=' + https%3A%2F%2Flibaibuaidufu.com%2Fpost%2Fflask%25E6%25BA%2590%25E7%25A0%2581%25E5%2588%2586%25E6%259E%2590-%25E4%25B8%2580.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://libaibuaidufu.com/post/flask%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="libaibuaidufu" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  <meta name="description" content="李白不爱杜甫的日常" />
+  
+  
+  
+  <title>
+    
+      Android逆向流程 
+      
+      
+      |
+    
+     李白不爱杜甫
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/uploads/favicon32.ico">
+    <link rel="icon" href="/uploads/favicon16.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/uploads/avatar.jpg" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">李白不爱杜甫</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文章</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/comments/">
+          <a href="/comments/">留言板</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Android逆向流程</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2024-10-29 13:29:17
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Android%E9%80%86%E5%90%91/" title="Android逆向">
+                    <b>#</b> Android逆向
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="标签"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Android/" title="Android">
+                    #Android
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>工具地址：</p>
+<ol>
+<li>kstools <a target="_blank" rel="noopener" href="https://github.com/fourbrother/kstools">https://github.com/fourbrother/kstools</a></li>
+<li>52爱盘工具 <a target="_blank" rel="noopener" href="https://down.52pojie.cn/Tools/Android_Tools/">https://down.52pojie.cn/Tools/Android_Tools/</a></li>
+<li>AndroidKiller (下面同理都在爱盘里面有)</li>
+<li>apkIDE</li>
+<li>apktools</li>
+<li>dex2jar</li>
+<li>jadx</li>
+<li>jd-gui</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="kstools-爆破-签名校验"><a href="#kstools-爆破-签名校验" class="headerlink" title="kstools 爆破 签名校验"></a>kstools 爆破 签名校验</h3><p>有一些程序有签名的校验，当你修改完，打包的时候后，可以安装，但是打开闪退，或者弹出提示框，大部分就是有签名校验。</p>
+<p>下载kstools工具，没有加固的就使用kstools.bat,直接搞定。注意appt的配置，我是用的apkIDE里面的appt。</p>
+<h3 id="AndroidKiller-集成软件"><a href="#AndroidKiller-集成软件" class="headerlink" title="AndroidKiller 集成软件"></a>AndroidKiller 集成软件</h3><p>AndroidKiller  集成了常用的软件，配上可视化操作，十分好上手，就是里面的插件有点久了，需要自己手动替换为爱盘里面的最新版插件。</p>
+<ol>
+<li>配置java环境，配置最新版的apktools.</li>
+<li>把爆破签名后生成的apk，拖进去，可自己动反编译。</li>
+<li>如果未修改签名，有一些app无法编译成功，会在编译死，需要关闭再次打开才可以，最好先爆破一下</li>
+<li>修改smail文件，保存</li>
+<li>编译，然后连接手机，安装</li>
+<li>测试是否可用</li>
+</ol>
+<h3 id="单独使用工具"><a href="#单独使用工具" class="headerlink" title="单独使用工具"></a>单独使用工具</h3><h4 id="apktools-资源编译"><a href="#apktools-资源编译" class="headerlink" title="apktools 资源编译"></a>apktools 资源编译</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">java -jar apktool_2.3.1.jar d -f KeyValueTest.apk -o KeyValueTest</span><br><span class="line">参数说明：</span><br><span class="line">-f 如果目标文件夹已存在，则强制删除现有文件夹（默认如果目标文件夹已存在，则解码失败）。</span><br><span class="line">-o 指定解码目标文件夹的名称（默认使用APK文件的名字来命名目标文件夹）。</span><br><span class="line">-s 不反编译dex文件，也就是说classes.dex文件会被保留（默认会将dex文件解码成smali文件）。</span><br><span class="line">-r 不反编译资源文件，也就是说resources.arsc文件会被保留（默认会将resources.arsc解码成具体的资源文件）</span><br></pre></td></tr></table></figure>
+
+<h4 id="dex2jar-代码编译-或者-jadx-代码编译"><a href="#dex2jar-代码编译-或者-jadx-代码编译" class="headerlink" title="dex2jar 代码编译 或者 jadx 代码编译"></a>dex2jar 代码编译 或者 jadx 代码编译</h4><p><strong>dex2jar</strong></p>
+<p>将apk文件修改后缀为zip然后解压或者直接解压，找到<strong>classes.dex</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d2j-dex2jar.bat classes.dex</span><br></pre></td></tr></table></figure>
+
+<p>生成了classes-dex2jar.jar 一个jar包。</p>
+<p><strong>jadx</strong></p>
+<p>jadx更加方便快捷，打开bin文件中的jadx-gui.bat然后直接选择APK即可,虽然jadx也可反编译资源文件，但有时候并不准确</p>
+<h4 id="jd-gui-查看jar包"><a href="#jd-gui-查看jar包" class="headerlink" title="jd-gui 查看jar包"></a>jd-gui 查看jar包</h4><p><strong>启动 jd-gui</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jd-gui.jar</span><br></pre></td></tr></table></figure>
+
+<p><strong>把生成的classes-dex2jar.jar 拖进去，就可以查看源码了，但是不能修改，可以帮助理解</strong></p>
+<h4 id="重新打包签名"><a href="#重新打包签名" class="headerlink" title="重新打包签名"></a>重新打包签名</h4><h5 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar apktool_2.3.1.jar b KeyValueTest</span><br></pre></td></tr></table></figure>
+
+<p>目录下会生成build和dist目录,dist 就有新的apk</p>
+<h5 id="生成keystore证书"><a href="#生成keystore证书" class="headerlink" title="生成keystore证书"></a>生成keystore证书</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -genkey -v -keystore myApp.keystore -<span class="built_in">alias</span> myApp.keystore -keyalg RSA -validity 30000</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>dec</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>keytool</td>
+<td>工具名称（固定写法）</td>
+</tr>
+<tr>
+<td>)-genkey</td>
+<td>执行的是生成数字证书操作（固定写法）</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>打印生成证书的详细信息</td>
+</tr>
+<tr>
+<td>-keystore myApp.keystore</td>
+<td>生成的证书的文件名为”myApp.keystore”(根据需求，设置你的证书名)</td>
+</tr>
+<tr>
+<td>alias myApp.keystore</td>
+<td>证书的别名为”myApp.keystore”。(一般和上面的文件名相同，可以不同，但要记好，签名时会用**(A)**)</td>
+</tr>
+<tr>
+<td>-keyalg RSA</td>
+<td>生成密钥文件采用的算法为RSA(固定写法)</td>
+</tr>
+<tr>
+<td>-validity 3000</td>
+<td>该数字证书的有效期为30000天，30000天之后该证书将失效</td>
+</tr>
+</tbody></table>
+<h5 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jarsigner -verbose -keystore myApp.keystore -signedjar android-release-signed.apk android-release-unsigned.apk myApp.keystore</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>dec</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jarsigner</td>
+<td>工具称名（固定写法）</td>
+</tr>
+<tr>
+<td>-verbose</td>
+<td>显示出签名详细信息</td>
+</tr>
+<tr>
+<td>-keystore myApp.keystore myApp.keystore</td>
+<td>要使用的签名证书文件</td>
+</tr>
+<tr>
+<td>-signedjar android-release-signed.apk</td>
+<td>签名后的文件名</td>
+</tr>
+<tr>
+<td>android-release-unsigned.apk</td>
+<td>要签名的文件</td>
+</tr>
+<tr>
+<td>myApp.keystore</td>
+<td>别名，即(A)步中的别名</td>
+</tr>
+</tbody></table>
+<p>我这个还是比较简单的流程，还有深入的smail学习，因为逆向主要还是修改smail语句。或者大佬的修改so文件，还有hook，去签名校验，还有去壳等。</p>
+<p>路还是很长的。</p>
+<p>例如：smail，baksmail这个软件我还没有使用到。</p>
+<p>参考：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaoshen666/p/11008255.html">https://www.cnblogs.com/xiaoshen666/p/11008255.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weitao_666/article/details/97615961">https://blog.csdn.net/weitao_666/article/details/97615961</a></li>
+</ol>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/post/cloudflare-%E5%8A%A8%E6%80%81%E4%BF%AE%E6%94%B9-dns.html" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2024-10-29 13:29:17
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Android%E9%80%86%E5%90%91/" title="Android逆向">
+                        <b>#</b> Android逆向
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="标签"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Android/" title="Android">
+                        #Android
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/post/gitlab-%E7%94%9F%E4%BA%A7%E5%AE%89%E5%85%A8%E4%BA%8B%E6%95%85%E8%AE%B0%E5%BD%95.html" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#kstools-%E7%88%86%E7%A0%B4-%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C"><span class="toc-text">kstools 爆破 签名校验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AndroidKiller-%E9%9B%86%E6%88%90%E8%BD%AF%E4%BB%B6"><span class="toc-text">AndroidKiller 集成软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="toc-text">单独使用工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#apktools-%E8%B5%84%E6%BA%90%E7%BC%96%E8%AF%91"><span class="toc-text">apktools 资源编译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dex2jar-%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91-%E6%88%96%E8%80%85-jadx-%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91"><span class="toc-text">dex2jar 代码编译 或者 jadx 代码编译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jd-gui-%E6%9F%A5%E7%9C%8Bjar%E5%8C%85"><span class="toc-text">jd-gui 查看jar包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E6%89%93%E5%8C%85%E7%AD%BE%E5%90%8D"><span class="toc-text">重新打包签名</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%93%E5%8C%85"><span class="toc-text">打包</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%9F%E6%88%90keystore%E8%AF%81%E4%B9%A6"><span class="toc-text">生成keystore证书</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D"><span class="toc-text">签名</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'gCNyW4RIETLbBYbENmjSSC8M-gzGzoHsz',
+        appKey: 'ECydfnAcQ3LpBHvVtKHLU6lw',
+        placeholder: '欢迎畅所欲言!',
+        avatar: 'mm',
+        lang: 'zh-CN'
+      })
+    }
+  </script>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/libaibuaidufu">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Android%E9%80%86%E5%90%91%E6%B5%81%E7%A8%8B + '&url=' + https%3A%2F%2Flibaibuaidufu.com%2Fpost%2F%25E5%25AE%2589%25E5%258D%2593%25E9%2580%2586%25E5%2590%2591%25E6%25B5%2581%25E7%25A8%258B.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://libaibuaidufu.com/post/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E6%B5%81%E7%A8%8B.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
