@@ -169,6 +169,78 @@
       </tags>
   </entry>
   <entry>
+    <title>github、gitlab、ssh密钥登录</title>
+    <url>/post/github%E3%80%81gitlab%E3%80%81ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95.html</url>
+    <content><![CDATA[<p>一直对ssh密钥登录半知半解，以前都是跟着教程自己走一遍，每次都去查看，这次就认真记录一下，可能遇到的情况。github多账号登录问题，github、gitlab多网站账户密钥问题以及ssh密钥登录问题。</p>
+<span id="more"></span>
+
+<h2 id="gitlab、gitlab"><a href="#gitlab、gitlab" class="headerlink" title="gitlab、gitlab"></a>gitlab、gitlab</h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line">or</span><br><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"><span class="comment">#####输出 </span></span><br><span class="line">Generating public/private ed25519 key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/libai/.ssh/id_ed25519): <span class="comment"># 文件存储位置</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment"># 输入密钥 密码 可留空</span></span><br><span class="line">Enter same passphrase again: <span class="comment"># 确认密码</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /c/Users/libai/.ssh/id_ed25519 <span class="comment"># 储存位置 私钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /c/Users/libai/.ssh/id_ed25519.pub <span class="comment"># 存储位置 公钥</span></span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:JiEaUc9F3/yd6WsU2nAnl5PHTcIXyS5K/4RnIV+Cx2Y dufukai@zhengzihui.com</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ED25519 256]--+</span></span><br><span class="line"><span class="string">|  ...  .o    ...o|</span></span><br><span class="line"><span class="string">|   . o . . o  ooo|</span></span><br><span class="line"><span class="string">|  . . +   . oo.=+|</span></span><br><span class="line"><span class="string">|   o . .   ..=EXX|</span></span><br><span class="line"><span class="string">|  .   . S . o+@*O|</span></span><br><span class="line"><span class="string">|       o   . +.B |</span></span><br><span class="line"><span class="string">|              *. |</span></span><br><span class="line"><span class="string">|               o.|</span></span><br><span class="line"><span class="string">|              .. |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="复制公钥到-github、gitlab"><a href="#复制公钥到-github、gitlab" class="headerlink" title="复制公钥到 github、gitlab"></a>复制公钥到 github、gitlab</h3><blockquote>
+<p><strong>id_ed25519</strong> 为私钥</p>
+<p>id_ed25519.pub 为公钥</p>
+</blockquote>
+<p>打开公钥id_ed25519.pub，复制内容 到github或者 gitlab中。</p>
+<h3 id="测试ssh连接"><a href="#测试ssh连接" class="headerlink" title="测试ssh连接"></a>测试ssh连接</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">or</span><br><span class="line">ssh -T git@192.168.5.130 <span class="comment"># 自建gitlab地址</span></span><br><span class="line"></span><br><span class="line">您可能会看到类似如下的警告：</span><br><span class="line"></span><br><span class="line">&gt; The authenticity of host <span class="string">&#x27;github.com (IP ADDRESS)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">&gt; RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</span></span><br><span class="line"><span class="string">&gt; Are you sure you want to continue connecting (yes/no)?</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">输入 yes</span></span><br><span class="line"><span class="string">就可以了</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="github、gitlab不同邮箱（同样适用多个github不同邮箱）"><a href="#github、gitlab不同邮箱（同样适用多个github不同邮箱）" class="headerlink" title="github、gitlab不同邮箱（同样适用多个github不同邮箱）"></a>github、gitlab不同邮箱（同样适用多个github不同邮箱）</h3><p>上面生成密钥 -C 指定邮箱 ，如果你有多个github或者gitlab帐号，且使用不同邮箱。需要修改公钥和私钥名称配置<code>config</code>。</p>
+<p>当创建第一个github的密钥过后，修改公钥和私钥为<code>github_id_ed25519</code>、公钥为<code>github_id_ed25519.pub</code>，当然加上邮箱更好。<code>xx@gmail_github_id_ed25519</code></p>
+<p>在创建第二个gitlab。</p>
+<p>然后你就有了</p>
+<ol>
+<li><code>github_id_ed25519</code></li>
+<li><code>github_id_ed25519.pub</code></li>
+<li><code>gitlab_id_ed25519</code></li>
+<li><code>gitlab_id_ed25519.pub</code></li>
+</ol>
+<p>然后windows在<code>C:\Users\用户名\.ssh</code>，linux在 <code>~/.ssh</code>下。</p>
+<p>配置<code>config</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 添加config配置文件</span><br><span class="line"># vi ~/.ssh/config</span><br><span class="line"></span><br><span class="line"># 文件内容如下：</span><br><span class="line"># gitlab</span><br><span class="line"># github</span><br><span class="line">Host github-libaibuaidufu</span><br><span class="line">    HostName github.com</span><br><span class="line">    User libaibuaidufu</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~/.ssh/github_id_ed25519</span><br><span class="line"></span><br><span class="line">Host github-dfkai</span><br><span class="line">    HostName github.com</span><br><span class="line">    User dfkai</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~/.ssh/xxx@qq.com_github_id_ed25519</span><br><span class="line"></span><br><span class="line">Host 192.168.5.130</span><br><span class="line">    HostName 192.168.5.130</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~/.ssh/gitlab_id_ed25519</span><br><span class="line"></span><br><span class="line"># 配置文件参数</span><br><span class="line"># Host : Host可以看作是一个你要识别的模式，对识别的模式，进行配置对应的的主机名和ssh文件</span><br><span class="line"># HostName : 要登录主机的主机名</span><br><span class="line"># User : 登录名</span><br><span class="line"># IdentityFile : 指明上面User对应的identityFile路径  私钥位置</span><br><span class="line"># Port : 指定端口 默认 22</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以在不同的账户之间都是用到ssh了。</p>
+<p>测试连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@host 上面的host</span><br><span class="line"></span><br><span class="line">ssh -T git@github-libaibuaidufu</span><br><span class="line"></span><br><span class="line">ssh -T git@github-dfkai</span><br><span class="line"></span><br><span class="line">ssh -T git@192.168.5.130</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器SSH连接"><a href="#服务器SSH连接" class="headerlink" title="服务器SSH连接"></a>服务器SSH连接</h2><h3 id="客户端创建密钥"><a href="#客户端创建密钥" class="headerlink" title="客户端创建密钥"></a>客户端创建密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line">一顿回车，如果需要修改配置请看上面的介绍</span><br><span class="line"></span><br><span class="line">生成id_rsa私钥，id_rsa.pub 公钥</span><br></pre></td></tr></table></figure>
+
+<h3 id="复制公钥内容到-服务器"><a href="#复制公钥内容到-服务器" class="headerlink" title="复制公钥内容到 服务器"></a>复制公钥内容到 服务器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"></span><br><span class="line">vi authorized_keys</span><br><span class="line"></span><br><span class="line">粘贴公钥内容到里面去</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">复制公钥文件到 服务器 ~/.ssh</span><br><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> id_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line"></span><br><span class="line">反正最后一定要复制进去，不管用什么方法</span><br><span class="line"></span><br><span class="line">设置权限 1可执行 2 可写  4 可读</span><br><span class="line"><span class="built_in">chmod</span> 600 authorized_keys <span class="comment"># 可读可写</span></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh <span class="comment"># 可读可写可执行</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置ssh-打开密钥登录"><a href="#配置ssh-打开密钥登录" class="headerlink" title="配置ssh,打开密钥登录"></a>配置ssh,打开密钥登录</h3><p>编辑<code>/etc/ssh/sshd_config </code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br></pre></td></tr></table></figure>
+
+<p>另外，请留意 root 用户能否通过 SSH 登录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：当你完成全部设置，并以密钥方式登录成功后，再禁用密码登录：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PasswordAuthentication no</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后，重启 SSH 服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@host .ssh]$ service sshd restart</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="连接服务器"><a href="#连接服务器" class="headerlink" title="连接服务器"></a>连接服务器</h3><p>使用xshell，输入服务器，选择密钥登录，选择你客户机上的私钥<code>id_rsa</code>,如果设置了私钥密码(看上面介绍),请输入私钥密码，没有就留空。则完成登录。</p>
+<p>或者 </p>
+<p>输入命令连接</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh 192.168.5.106</span><br><span class="line">xshell会让你输入用户名</span><br><span class="line">然后让你输入密码 或者选择密钥</span><br><span class="line">则完成登录 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>能不能跟简单一点呢。</p>
+<p>当然可以，例如上面我们配置的<code>config</code>一样</p>
+<p>在客户端加上以上配置。<code>~/.ssh/config</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host 192.168.5.106</span><br><span class="line">    HostName 192.168.5.106</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    User root</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后测试</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh 192.168.5.106 </span><br><span class="line">就可以直接连接了</span><br><span class="line">使用xshell 依然会让你输入用户名和选择密钥位置</span><br><span class="line"></span><br><span class="line">使用cmd 或者 bash 则没有了 可能是xshell限制</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+        <tag>ssh</tag>
+        <tag>密钥登录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>github actions 自动部署 hexo</title>
     <url>/post/github-actions-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2-hexo.html</url>
     <content><![CDATA[<p>github actions 自动部署 hexo,感觉还是有点问题。有很多方法可以解决，但是我这里就不折腾了。</p>
@@ -261,78 +333,6 @@
       </categories>
       <tags>
         <tag>gitlab</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>github、gitlab、ssh密钥登录</title>
-    <url>/post/github%E3%80%81gitlab%E3%80%81ssh%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95.html</url>
-    <content><![CDATA[<p>一直对ssh密钥登录半知半解，以前都是跟着教程自己走一遍，每次都去查看，这次就认真记录一下，可能遇到的情况。github多账号登录问题，github、gitlab多网站账户密钥问题以及ssh密钥登录问题。</p>
-<span id="more"></span>
-
-<h2 id="gitlab、gitlab"><a href="#gitlab、gitlab" class="headerlink" title="gitlab、gitlab"></a>gitlab、gitlab</h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line">or</span><br><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"><span class="comment">#####输出 </span></span><br><span class="line">Generating public/private ed25519 key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/libai/.ssh/id_ed25519): <span class="comment"># 文件存储位置</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment"># 输入密钥 密码 可留空</span></span><br><span class="line">Enter same passphrase again: <span class="comment"># 确认密码</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /c/Users/libai/.ssh/id_ed25519 <span class="comment"># 储存位置 私钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /c/Users/libai/.ssh/id_ed25519.pub <span class="comment"># 存储位置 公钥</span></span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:JiEaUc9F3/yd6WsU2nAnl5PHTcIXyS5K/4RnIV+Cx2Y dufukai@zhengzihui.com</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ED25519 256]--+</span></span><br><span class="line"><span class="string">|  ...  .o    ...o|</span></span><br><span class="line"><span class="string">|   . o . . o  ooo|</span></span><br><span class="line"><span class="string">|  . . +   . oo.=+|</span></span><br><span class="line"><span class="string">|   o . .   ..=EXX|</span></span><br><span class="line"><span class="string">|  .   . S . o+@*O|</span></span><br><span class="line"><span class="string">|       o   . +.B |</span></span><br><span class="line"><span class="string">|              *. |</span></span><br><span class="line"><span class="string">|               o.|</span></span><br><span class="line"><span class="string">|              .. |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
-
-<h3 id="复制公钥到-github、gitlab"><a href="#复制公钥到-github、gitlab" class="headerlink" title="复制公钥到 github、gitlab"></a>复制公钥到 github、gitlab</h3><blockquote>
-<p><strong>id_ed25519</strong> 为私钥</p>
-<p>id_ed25519.pub 为公钥</p>
-</blockquote>
-<p>打开公钥id_ed25519.pub，复制内容 到github或者 gitlab中。</p>
-<h3 id="测试ssh连接"><a href="#测试ssh连接" class="headerlink" title="测试ssh连接"></a>测试ssh连接</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">or</span><br><span class="line">ssh -T git@192.168.5.130 <span class="comment"># 自建gitlab地址</span></span><br><span class="line"></span><br><span class="line">您可能会看到类似如下的警告：</span><br><span class="line"></span><br><span class="line">&gt; The authenticity of host <span class="string">&#x27;github.com (IP ADDRESS)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">&gt; RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</span></span><br><span class="line"><span class="string">&gt; Are you sure you want to continue connecting (yes/no)?</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">输入 yes</span></span><br><span class="line"><span class="string">就可以了</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="github、gitlab不同邮箱（同样适用多个github不同邮箱）"><a href="#github、gitlab不同邮箱（同样适用多个github不同邮箱）" class="headerlink" title="github、gitlab不同邮箱（同样适用多个github不同邮箱）"></a>github、gitlab不同邮箱（同样适用多个github不同邮箱）</h3><p>上面生成密钥 -C 指定邮箱 ，如果你有多个github或者gitlab帐号，且使用不同邮箱。需要修改公钥和私钥名称配置<code>config</code>。</p>
-<p>当创建第一个github的密钥过后，修改公钥和私钥为<code>github_id_ed25519</code>、公钥为<code>github_id_ed25519.pub</code>，当然加上邮箱更好。<code>xx@gmail_github_id_ed25519</code></p>
-<p>在创建第二个gitlab。</p>
-<p>然后你就有了</p>
-<ol>
-<li><code>github_id_ed25519</code></li>
-<li><code>github_id_ed25519.pub</code></li>
-<li><code>gitlab_id_ed25519</code></li>
-<li><code>gitlab_id_ed25519.pub</code></li>
-</ol>
-<p>然后windows在<code>C:\Users\用户名\.ssh</code>，linux在 <code>~/.ssh</code>下。</p>
-<p>配置<code>config</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 添加config配置文件</span><br><span class="line"># vi ~/.ssh/config</span><br><span class="line"></span><br><span class="line"># 文件内容如下：</span><br><span class="line"># gitlab</span><br><span class="line"># github</span><br><span class="line">Host github-libaibuaidufu</span><br><span class="line">    HostName github.com</span><br><span class="line">    User libaibuaidufu</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~/.ssh/github_id_ed25519</span><br><span class="line"></span><br><span class="line">Host github-dfkai</span><br><span class="line">    HostName github.com</span><br><span class="line">    User dfkai</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~/.ssh/xxx@qq.com_github_id_ed25519</span><br><span class="line"></span><br><span class="line">Host 192.168.5.130</span><br><span class="line">    HostName 192.168.5.130</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    IdentityFile ~/.ssh/gitlab_id_ed25519</span><br><span class="line"></span><br><span class="line"># 配置文件参数</span><br><span class="line"># Host : Host可以看作是一个你要识别的模式，对识别的模式，进行配置对应的的主机名和ssh文件</span><br><span class="line"># HostName : 要登录主机的主机名</span><br><span class="line"># User : 登录名</span><br><span class="line"># IdentityFile : 指明上面User对应的identityFile路径  私钥位置</span><br><span class="line"># Port : 指定端口 默认 22</span><br></pre></td></tr></table></figure>
-
-<p>这样就可以在不同的账户之间都是用到ssh了。</p>
-<p>测试连接：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@host 上面的host</span><br><span class="line"></span><br><span class="line">ssh -T git@github-libaibuaidufu</span><br><span class="line"></span><br><span class="line">ssh -T git@github-dfkai</span><br><span class="line"></span><br><span class="line">ssh -T git@192.168.5.130</span><br></pre></td></tr></table></figure>
-
-<h2 id="服务器SSH连接"><a href="#服务器SSH连接" class="headerlink" title="服务器SSH连接"></a>服务器SSH连接</h2><h3 id="客户端创建密钥"><a href="#客户端创建密钥" class="headerlink" title="客户端创建密钥"></a>客户端创建密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line">一顿回车，如果需要修改配置请看上面的介绍</span><br><span class="line"></span><br><span class="line">生成id_rsa私钥，id_rsa.pub 公钥</span><br></pre></td></tr></table></figure>
-
-<h3 id="复制公钥内容到-服务器"><a href="#复制公钥内容到-服务器" class="headerlink" title="复制公钥内容到 服务器"></a>复制公钥内容到 服务器</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"></span><br><span class="line">vi authorized_keys</span><br><span class="line"></span><br><span class="line">粘贴公钥内容到里面去</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">复制公钥文件到 服务器 ~/.ssh</span><br><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> id_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line"></span><br><span class="line">反正最后一定要复制进去，不管用什么方法</span><br><span class="line"></span><br><span class="line">设置权限 1可执行 2 可写  4 可读</span><br><span class="line"><span class="built_in">chmod</span> 600 authorized_keys <span class="comment"># 可读可写</span></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh <span class="comment"># 可读可写可执行</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="配置ssh-打开密钥登录"><a href="#配置ssh-打开密钥登录" class="headerlink" title="配置ssh,打开密钥登录"></a>配置ssh,打开密钥登录</h3><p>编辑<code>/etc/ssh/sshd_config </code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br></pre></td></tr></table></figure>
-
-<p>另外，请留意 root 用户能否通过 SSH 登录：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：当你完成全部设置，并以密钥方式登录成功后，再禁用密码登录：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PasswordAuthentication no</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>最后，重启 SSH 服务：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@host .ssh]$ service sshd restart</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="连接服务器"><a href="#连接服务器" class="headerlink" title="连接服务器"></a>连接服务器</h3><p>使用xshell，输入服务器，选择密钥登录，选择你客户机上的私钥<code>id_rsa</code>,如果设置了私钥密码(看上面介绍),请输入私钥密码，没有就留空。则完成登录。</p>
-<p>或者 </p>
-<p>输入命令连接</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh 192.168.5.106</span><br><span class="line">xshell会让你输入用户名</span><br><span class="line">然后让你输入密码 或者选择密钥</span><br><span class="line">则完成登录 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>能不能跟简单一点呢。</p>
-<p>当然可以，例如上面我们配置的<code>config</code>一样</p>
-<p>在客户端加上以上配置。<code>~/.ssh/config</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host 192.168.5.106</span><br><span class="line">    HostName 192.168.5.106</span><br><span class="line">    PreferredAuthentications publickey</span><br><span class="line">    User root</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后测试</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh 192.168.5.106 </span><br><span class="line">就可以直接连接了</span><br><span class="line">使用xshell 依然会让你输入用户名和选择密钥位置</span><br><span class="line"></span><br><span class="line">使用cmd 或者 bash 则没有了 可能是xshell限制</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
-        <tag>ssh</tag>
-        <tag>密钥登录</tag>
       </tags>
   </entry>
   <entry>
@@ -685,36 +685,6 @@
       </tags>
   </entry>
   <entry>
-    <title>scrapy + scrapyd + scrapydweb + logparser + docker分布式部署</title>
-    <url>/post/scrapy-scrapyd-scrapydweb-logparser-docker%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2.html</url>
-    <content><![CDATA[<p>在工作中使用，特此在这记录一下，并写成docker文件，方便部署使用。</p>
-<span id="more"></span>
-
-<h5 id="1-构建-scrapyd-logparser"><a href="#1-构建-scrapyd-logparser" class="headerlink" title="1.构建 scrapyd_logparser"></a>1.构建 scrapyd_logparser</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd scrapyd_logparser</span><br><span class="line">docker build -t scrapyd_logparser .</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-运行-scrapyd-logparser"><a href="#2-运行-scrapyd-logparser" class="headerlink" title="2.运行 scrapyd_logparser"></a>2.运行 scrapyd_logparser</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 6800:6800 --name scrapyd_1 scrapyd_logparser</span><br><span class="line"># docker run -d -p 6800:6800 -v /root/scrapyd_logparser:/code --name scrapyd_1 scrapyd_logparser</span><br><span class="line"># 可以外联出文件 可以进行配置修改</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-构建-scrapydweb"><a href="#3-构建-scrapydweb" class="headerlink" title="3.构建 scrapydweb"></a>3.构建 scrapydweb</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd scrapydweb</span><br><span class="line">docker build -t scrapydweb .</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-运行-scrapydweb"><a href="#4-运行-scrapydweb" class="headerlink" title="4.运行 scrapydweb"></a>4.运行 scrapydweb</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 5000:5000 -v /root/scrapydweb:/code --name scrapydweb scrapydweb</span><br><span class="line"># 外链出文件 好修改配置 进行更新部署</span><br><span class="line"># 修改配置</span><br><span class="line">vim scrapydweb_settings_v10.py </span><br><span class="line"># 重启</span><br><span class="line">docker restart scrapydweb</span><br></pre></td></tr></table></figure>
-
-<h5 id="5-多机部署"><a href="#5-多机部署" class="headerlink" title="5.多机部署"></a>5.多机部署</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">在其他机器中 部署 文件 执行 1，2 步</span><br><span class="line">同时在 scrapydweb 的配置文件 添加在 新主机的ip</span><br><span class="line"></span><br><span class="line"># 以下添加</span><br><span class="line">SCRAPYD_SERVERS = [</span><br><span class="line">    &#x27;192.168.5.131:6800&#x27;,</span><br><span class="line">	&#x27;192.168.5.131:6805&#x27;,</span><br><span class="line">    # &#x27;username:password@localhost:6801#group&#x27;,</span><br><span class="line">    # (&#x27;username&#x27;, &#x27;password&#x27;, &#x27;localhost&#x27;, &#x27;6801&#x27;, &#x27;group&#x27;),</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><strong>源码</strong>: <a href="https://github.com/libaibuaidufu/scrapyd_web_log">https://github.com/libaibuaidufu/scrapyd_web_log</a><br><strong>注</strong>： 可以自己查看 一下 scrapydweb 配置文件 修改，和 scrapyd 配置文件修改</p>
-<p>参考：</p>
-<ol>
-<li><a href="https://github.com/my8100/scrapydweb">scrapydweb</a></li>
-<li><a href="https://github.com/my8100/logparser">logparser</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>代码来了</category>
-      </categories>
-      <tags>
-        <tag>scrapy</tag>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>scrapy+scrapyd 部署使用</title>
     <url>/post/scrapy-scrapyd-%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.html</url>
     <content><![CDATA[<h3 id="scrapyd-部署"><a href="#scrapyd-部署" class="headerlink" title="scrapyd 部署"></a>scrapyd 部署</h3><p><strong>注</strong>：example 为项目名称</p>
@@ -744,6 +714,36 @@
       <tags>
         <tag>scrapy</tag>
         <tag>scrapyd</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>scrapy + scrapyd + scrapydweb + logparser + docker分布式部署</title>
+    <url>/post/scrapy-scrapyd-scrapydweb-logparser-docker%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2.html</url>
+    <content><![CDATA[<p>在工作中使用，特此在这记录一下，并写成docker文件，方便部署使用。</p>
+<span id="more"></span>
+
+<h5 id="1-构建-scrapyd-logparser"><a href="#1-构建-scrapyd-logparser" class="headerlink" title="1.构建 scrapyd_logparser"></a>1.构建 scrapyd_logparser</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd scrapyd_logparser</span><br><span class="line">docker build -t scrapyd_logparser .</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-运行-scrapyd-logparser"><a href="#2-运行-scrapyd-logparser" class="headerlink" title="2.运行 scrapyd_logparser"></a>2.运行 scrapyd_logparser</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 6800:6800 --name scrapyd_1 scrapyd_logparser</span><br><span class="line"># docker run -d -p 6800:6800 -v /root/scrapyd_logparser:/code --name scrapyd_1 scrapyd_logparser</span><br><span class="line"># 可以外联出文件 可以进行配置修改</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-构建-scrapydweb"><a href="#3-构建-scrapydweb" class="headerlink" title="3.构建 scrapydweb"></a>3.构建 scrapydweb</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd scrapydweb</span><br><span class="line">docker build -t scrapydweb .</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-运行-scrapydweb"><a href="#4-运行-scrapydweb" class="headerlink" title="4.运行 scrapydweb"></a>4.运行 scrapydweb</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 5000:5000 -v /root/scrapydweb:/code --name scrapydweb scrapydweb</span><br><span class="line"># 外链出文件 好修改配置 进行更新部署</span><br><span class="line"># 修改配置</span><br><span class="line">vim scrapydweb_settings_v10.py </span><br><span class="line"># 重启</span><br><span class="line">docker restart scrapydweb</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-多机部署"><a href="#5-多机部署" class="headerlink" title="5.多机部署"></a>5.多机部署</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">在其他机器中 部署 文件 执行 1，2 步</span><br><span class="line">同时在 scrapydweb 的配置文件 添加在 新主机的ip</span><br><span class="line"></span><br><span class="line"># 以下添加</span><br><span class="line">SCRAPYD_SERVERS = [</span><br><span class="line">    &#x27;192.168.5.131:6800&#x27;,</span><br><span class="line">	&#x27;192.168.5.131:6805&#x27;,</span><br><span class="line">    # &#x27;username:password@localhost:6801#group&#x27;,</span><br><span class="line">    # (&#x27;username&#x27;, &#x27;password&#x27;, &#x27;localhost&#x27;, &#x27;6801&#x27;, &#x27;group&#x27;),</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>源码</strong>: <a href="https://github.com/libaibuaidufu/scrapyd_web_log">https://github.com/libaibuaidufu/scrapyd_web_log</a><br><strong>注</strong>： 可以自己查看 一下 scrapydweb 配置文件 修改，和 scrapyd 配置文件修改</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://github.com/my8100/scrapydweb">scrapydweb</a></li>
+<li><a href="https://github.com/my8100/logparser">logparser</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>代码来了</category>
+      </categories>
+      <tags>
+        <tag>scrapy</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
