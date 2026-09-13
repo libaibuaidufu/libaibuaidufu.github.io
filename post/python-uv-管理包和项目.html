@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="libaibuaidufu" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  <meta name="description" content="李白不爱杜甫的日常" />
+  
+  
+  
+  <title>
+    
+      python uv 管理包和项目 
+      
+      
+      |
+    
+     李白不爱杜甫
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/uploads/favicon32.ico">
+    <link rel="icon" href="/uploads/favicon16.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-54GFSBD4W4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-54GFSBD4W4');
+    </script>
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/uploads/avatar.jpg" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">李白不爱杜甫</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文章</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/comments/">
+          <a href="/comments/">留言板</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">python uv 管理包和项目</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+          2026-09-13 20:12:59
+        </span>
+        
+      </div>
+      <div class="markdown-body">
+        <h1 id="Python-包管理的新纪元：uv-全指南"><a href="#Python-包管理的新纪元：uv-全指南" class="headerlink" title="Python 包管理的新纪元：uv 全指南"></a>Python 包管理的新纪元：uv 全指南</h1><p>在 Python 社区中，包管理一直是个让人头疼的问题。从传统的 <code>pip</code> 到 <code>pip-tools</code>，再到复杂的 <code>poetry</code> 和 <code>pyenv</code>，各有千秋但也各有痛点。直到 <strong>uv</strong> 的出现——这个由 Rust 编写、速度快到令人发指的工具，正在统一 Python 的开发流程。</p>
+<hr>
+<h2 id="一、-安装与环境准备"><a href="#一、-安装与环境准备" class="headerlink" title="一、 安装与环境准备"></a>一、 安装与环境准备</h2><p><code>uv</code> 的设计理念是“单文件、零依赖”。</p>
+<h3 id="1-快速安装"><a href="#1-快速安装" class="headerlink" title="1. 快速安装"></a>1. 快速安装</h3><ul>
+<li><p><strong>Windows (PowerShell):</strong></p>
+<p>PowerShell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell -ExecutionPolicy ByPass -c &quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>macOS&#x2F;Linux:</strong></p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -LsSf https://astral.sh/uv/install.sh | sh</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-自动管理-Python-版本"><a href="#2-自动管理-Python-版本" class="headerlink" title="2. 自动管理 Python 版本"></a>2. 自动管理 Python 版本</h3><p><code>uv</code> 可以直接帮你下载 Python 解释器，无需再额外安装 <code>pyenv</code> 或去官网下载：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uv python install 3.12          # 安装指定版本</span><br><span class="line">uv python list                 # 查看可用版本</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、-基础使用：从零开始一个项目"><a href="#二、-基础使用：从零开始一个项目" class="headerlink" title="二、 基础使用：从零开始一个项目"></a>二、 基础使用：从零开始一个项目</h2><p><code>uv</code> 强推“项目制”工作流，不再需要你手动去激活虚拟环境。</p>
+<h3 id="1-初始化"><a href="#1-初始化" class="headerlink" title="1. 初始化"></a>1. 初始化</h3><p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uv init my-project</span><br><span class="line">cd my-project</span><br></pre></td></tr></table></figure>
+
+<p>这会生成 <code>pyproject.toml</code> 和 <code>.python-version</code> 文件。</p>
+<h3 id="2-管理依赖"><a href="#2-管理依赖" class="headerlink" title="2. 管理依赖"></a>2. 管理依赖</h3><ul>
+<li><strong>添加依赖：</strong> <code>uv add requests</code></li>
+<li><strong>添加开发依赖：</strong> <code>uv add --dev pytest</code></li>
+<li><strong>删除依赖：</strong> <code>uv remove requests</code></li>
+<li><strong>同步环境：</strong> <code>uv sync</code> (根据配置文件强制将本地环境调整为一致)</li>
+</ul>
+<h3 id="3-运行项目"><a href="#3-运行项目" class="headerlink" title="3. 运行项目"></a>3. 运行项目</h3><p>你甚至不需要执行 <code>source .venv/bin/activate</code>。直接运行：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv run main.py</span><br></pre></td></tr></table></figure>
+
+<p><code>uv</code> 会自动在 <code>.venv</code> 中执行代码。如果环境没创建，它会自动创建并安装依赖。</p>
+<hr>
+<h2 id="三、-复杂使用：进阶技巧"><a href="#三、-复杂使用：进阶技巧" class="headerlink" title="三、 复杂使用：进阶技巧"></a>三、 复杂使用：进阶技巧</h2><h3 id="1-运行单文件脚本（无需项目）"><a href="#1-运行单文件脚本（无需项目）" class="headerlink" title="1. 运行单文件脚本（无需项目）"></a>1. 运行单文件脚本（无需项目）</h3><p>如果你只有一个 <code>script.py</code>，但它依赖 <code>pandas</code>，你可以直接运行：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv run --with pandas script.py</span><br></pre></td></tr></table></figure>
+
+<p><code>uv</code> 会在临时环境中安装 <code>pandas</code> 并执行，运行完即焚，保持系统整洁。</p>
+<h3 id="2-使用-uvx-运行工具"><a href="#2-使用-uvx-运行工具" class="headerlink" title="2. 使用 uvx 运行工具"></a>2. 使用 uvx 运行工具</h3><p>类似于 Node.js 的 <code>npx</code>，可以不安装包而直接运行其命令：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uvx ruff check .       # 使用 ruff 检查代码</span><br><span class="line">uvx textual-paint      # 运行一个终端画板小工具</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-依赖分组-Dependency-Groups"><a href="#3-依赖分组-Dependency-Groups" class="headerlink" title="3. 依赖分组 (Dependency Groups)"></a>3. 依赖分组 (Dependency Groups)</h3><p>根据最新的 PEP 735，<code>uv</code> 支持将依赖分组管理（如 <code>dev</code>、<code>docs</code>、<code>test</code>）：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv add --group docs mkdocs</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、-常见配置与避坑指南"><a href="#四、-常见配置与避坑指南" class="headerlink" title="四、 常见配置与避坑指南"></a>四、 常见配置与避坑指南</h2><h3 id="1-网络与国内源配置"><a href="#1-网络与国内源配置" class="headerlink" title="1. 网络与国内源配置"></a>1. 网络与国内源配置</h3><p>在中国开发，网络往往是最大的障碍。可以在项目根目录创建 <code>uv.toml</code> 或在 <code>pyproject.toml</code> 中配置：</p>
+<p>Ini, TOML</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[[tool.uv.index]]</span><br><span class="line">name = &quot;aliyun&quot;</span><br><span class="line">url = &quot;https://mirrors.aliyun.com/pypi/simple/&quot;</span><br><span class="line">default = true</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-403-Forbidden-或超时错误"><a href="#2-403-Forbidden-或超时错误" class="headerlink" title="2. 403 Forbidden 或超时错误"></a>2. 403 Forbidden 或超时错误</h3><ul>
+<li><p><strong>403 错误：</strong> 通常是镜像源（如清华源）触发了流量保护。建议切换至阿里云或腾讯云。</p>
+</li>
+<li><p><strong>超时：</strong> <code>uv</code> 下载极快，如果网络波动，可以调高超时时间：</p>
+<p>PowerShell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$env:UV_HTTP_TIMEOUT = 120</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-代理设置"><a href="#3-代理设置" class="headerlink" title="3. 代理设置"></a>3. 代理设置</h3><p><code>uv</code> 遵循标准环境变量：<code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code>。</p>
+<hr>
+<h2 id="五、-文件作用解析：它们都是干什么的？"><a href="#五、-文件作用解析：它们都是干什么的？" class="headerlink" title="五、 文件作用解析：它们都是干什么的？"></a>五、 文件作用解析：它们都是干什么的？</h2><table>
+<thead>
+<tr>
+<th><strong>文件 &#x2F; 文件夹</strong></th>
+<th><strong>作用</strong></th>
+<th><strong>是否提交到 Git</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>pyproject.toml</code></strong></td>
+<td>项目的核心配置文件，定义依赖、元数据和工具配置。</td>
+<td><strong>是</strong></td>
+</tr>
+<tr>
+<td><strong><code>uv.lock</code></strong></td>
+<td>锁定文件。精确记录每个包的版本和哈希值，确保团队环境一致。</td>
+<td><strong>是</strong></td>
+</tr>
+<tr>
+<td><strong><code>.python-version</code></strong></td>
+<td>指定该项目使用的 Python 版本。</td>
+<td><strong>是</strong></td>
+</tr>
+<tr>
+<td><strong><code>.venv/</code></strong></td>
+<td>存放 Python 解释器和已安装包的物理目录。</td>
+<td><strong>否</strong></td>
+</tr>
+<tr>
+<td><strong><code>uv.toml</code></strong></td>
+<td>(可选) <code>uv</code> 的专项配置文件，如设置镜像源、并发限制等。</td>
+<td><strong>是</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、-为什么选择-uv？"><a href="#六、-为什么选择-uv？" class="headerlink" title="六、 为什么选择 uv？"></a>六、 为什么选择 uv？</h2><ol>
+<li><strong>快：</strong> 底层 Rust 编写，带全局缓存，安装过的包在第二个项目中瞬间“链接”完成。</li>
+<li><strong>全：</strong> 一个工具顶替了 <code>pip</code>、<code>venv</code>、<code>pyenv</code>、<code>pip-tools</code>。</li>
+<li><strong>稳：</strong> <code>uv.lock</code> 提供了比传统 <code>requirements.txt</code> 更可靠的复现性。</li>
+</ol>
+<hr>
+<p>希望这篇文章能帮你快速上手这个 Python 开发者的神器！如果你正在寻找一个能让你从环境泥潭中解脱出来的方案，<code>uv</code> 就是唯一的答案。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/post/windows%E8%AE%BE%E7%BD%AE%E8%BD%AF%E4%BB%B6%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4.html" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="更新时间"></i>
+              2026-09-13 20:12:59
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/post/%E9%9B%B7%E7%94%B5%E6%A8%A1%E6%8B%9F%E5%99%A8%209%20(Android%209)%20%E5%AE%89%E8%A3%85%20Fiddler5%20HTTPS%20%E7%B3%BB%E7%BB%9F%E8%AF%81%E4%B9%A6%E6%95%99%E7%A8%8B.html" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-%E5%8C%85%E7%AE%A1%E7%90%86%E7%9A%84%E6%96%B0%E7%BA%AA%E5%85%83%EF%BC%9Auv-%E5%85%A8%E6%8C%87%E5%8D%97"><span class="toc-text">Python 包管理的新纪元：uv 全指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E5%AE%89%E8%A3%85%E4%B8%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-text">一、 安装与环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85"><span class="toc-text">1. 快速安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86-Python-%E7%89%88%E6%9C%AC"><span class="toc-text">2. 自动管理 Python 版本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="toc-text">二、 基础使用：从零开始一个项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">1. 初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%AE%A1%E7%90%86%E4%BE%9D%E8%B5%96"><span class="toc-text">2. 管理依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE"><span class="toc-text">3. 运行项目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E5%A4%8D%E6%9D%82%E4%BD%BF%E7%94%A8%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8A%80%E5%B7%A7"><span class="toc-text">三、 复杂使用：进阶技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BF%90%E8%A1%8C%E5%8D%95%E6%96%87%E4%BB%B6%E8%84%9A%E6%9C%AC%EF%BC%88%E6%97%A0%E9%9C%80%E9%A1%B9%E7%9B%AE%EF%BC%89"><span class="toc-text">1. 运行单文件脚本（无需项目）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-uvx-%E8%BF%90%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="toc-text">2. 使用 uvx 运行工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BE%9D%E8%B5%96%E5%88%86%E7%BB%84-Dependency-Groups"><span class="toc-text">3. 依赖分组 (Dependency Groups)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97"><span class="toc-text">四、 常见配置与避坑指南</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%9B%BD%E5%86%85%E6%BA%90%E9%85%8D%E7%BD%AE"><span class="toc-text">1. 网络与国内源配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-403-Forbidden-%E6%88%96%E8%B6%85%E6%97%B6%E9%94%99%E8%AF%AF"><span class="toc-text">2. 403 Forbidden 或超时错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE"><span class="toc-text">3. 代理设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81-%E6%96%87%E4%BB%B6%E4%BD%9C%E7%94%A8%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%AE%83%E4%BB%AC%E9%83%BD%E6%98%AF%E5%B9%B2%E4%BB%80%E4%B9%88%E7%9A%84%EF%BC%9F"><span class="toc-text">五、 文件作用解析：它们都是干什么的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-uv%EF%BC%9F"><span class="toc-text">六、 为什么选择 uv？</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'gCNyW4RIETLbBYbENmjSSC8M-gzGzoHsz',
+        appKey: 'ECydfnAcQ3LpBHvVtKHLU6lw',
+        placeholder: '欢迎畅所欲言!',
+        avatar: 'mm',
+        lang: 'zh-CN'
+      })
+    }
+  </script>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/libaibuaidufu">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2026 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>首次搜索，正在载入索引文件，请稍后……<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>没有找到内容，请尝试更换检索词。<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>未找到search.xml文件，具体请参考：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>请求失败，尝试重新刷新页面或稍后重试。<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + python%20uv%20%E7%AE%A1%E7%90%86%E5%8C%85%E5%92%8C%E9%A1%B9%E7%9B%AE + '&url=' + https%3A%2F%2Fblog.541841235.xyz%2Fpost%2Fpython-uv-%25E7%25AE%25A1%25E7%2590%2586%25E5%258C%2585%25E5%2592%258C%25E9%25A1%25B9%25E7%259B%25AE.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://blog.541841235.xyz/post/python-uv-%E7%AE%A1%E7%90%86%E5%8C%85%E5%92%8C%E9%A1%B9%E7%9B%AE.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
